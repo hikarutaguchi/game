@@ -1,2 +1,11 @@
-﻿  SceneMng.cpp
-  memory remind.vcxproj -> C:\Users\1816045\Desktop\ゲーム制作\memory remind\Debug\memory remind.exe
+﻿  main.cpp
+  Obj.cpp
+  SceneMng.cpp
+  VECTOR2.cpp
+  コードを生成中...
+SceneMng.obj : error LNK2019: 未解決の外部シンボル "public: __thiscall BaseScene::~BaseScene(void)" (??1BaseScene@@QAE@XZ) が関数 "public: void * __thiscall BaseScene::`scalar deleting destructor'(unsigned int)" (??_GBaseScene@@QAEPAXI@Z) で参照されました。
+SceneMng.obj : error LNK2019: 未解決の外部シンボル "public: __thiscall TitleScene::TitleScene(void)" (??0TitleScene@@QAE@XZ) が関数 "class std::unique_ptr<class TitleScene,struct std::default_delete<class TitleScene> > __cdecl std::make_unique<class TitleScene,0>(void)" (??$make_unique@VTitleScene@@$$V$0A@@std@@YA?AV?$unique_ptr@VTitleScene@@U?$default_delete@VTitleScene@@@std@@@0@XZ) で参照されました。
+SceneMng.obj : error LNK2019: 未解決の外部シンボル "public: __thiscall TitleScene::~TitleScene(void)" (??1TitleScene@@QAE@XZ) が関数 "public: void * __thiscall TitleScene::`scalar deleting destructor'(unsigned int)" (??_GTitleScene@@QAEPAXI@Z) で参照されました。
+SceneMng.obj : error LNK2019: 未解決の外部シンボル "public: __thiscall ModeScene::ModeScene(void)" (??0ModeScene@@QAE@XZ) が関数 "class std::unique_ptr<class ModeScene,struct std::default_delete<class ModeScene> > __cdecl std::make_unique<class ModeScene,0>(void)" (??$make_unique@VModeScene@@$$V$0A@@std@@YA?AV?$unique_ptr@VModeScene@@U?$default_delete@VModeScene@@@std@@@0@XZ) で参照されました。
+SceneMng.obj : error LNK2019: 未解決の外部シンボル "public: __thiscall ModeScene::~ModeScene(void)" (??1ModeScene@@QAE@XZ) が関数 "public: void * __thiscall ModeScene::`scalar deleting destructor'(unsigned int)" (??_GModeScene@@QAEPAXI@Z) で参照されました。
+D:\game\memory remind\Debug\memory remind.exe : fatal error LNK1120: 5 件の未解決の外部参照
