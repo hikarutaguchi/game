@@ -1,2 +1,10 @@
-﻿  TitleScene.cpp
-  memory remind.vcxproj -> C:\Users\1816045\Desktop\memory remind\Debug\memory remind.exe
+﻿  BaseScene.cpp
+  ImageMng.cpp
+  main.cpp
+  ModeScene.cpp
+  Obj.cpp
+  SceneMng.cpp
+  TitleScene.cpp
+  VECTOR2.cpp
+  コードを生成中...
+  memory remind.vcxproj -> D:\game\memory remind2\Debug\memory remind.exe
