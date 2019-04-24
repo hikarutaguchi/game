@@ -4,6 +4,7 @@
 #include <vector>
 #include <array>
 #include "VECTOR2.h"
+#include "MapID.h"
 
 #define lpMapCtl MapCtl::GetInstance()
 
