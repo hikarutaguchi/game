@@ -1,0 +1,30 @@
+#pragma once
+#include <memory>
+
+
+#define GAME_SCREEN_X 40			// ｹﾞｰﾑｴﾘｱ表示のｵﾌｾｯﾄ横
+#define GAME_SCREEN_Y 75			// ｹﾞｰﾑｴﾘｱ表示のｵﾌｾｯﾄ縦
+
+#define GAME_SCREEN_SIZE_X 1088		// ｹﾞｰﾑｴﾘｱｻｲｽﾞ横
+#define GAME_SCREEN_SIZE_Y 832		// ｹﾞｰﾑｴﾘｱｻｲｽﾞ縦
+
+#define SCREEN_SIZE_X 1328			// 画面解像度横
+#define SCREEN_SIZE_Y 1072			// 画面解像度縦
+
+#define CHIP_SIZE 64				// ﾏｽ目ｻｲｽﾞ
+
+class Game_ctr;						// Game_ctrあとから登場
+class BaseScene;					// BaseSceneがあとから出てくるぞ宣言
+using unique_Base = std::unique_ptr<BaseScene>;
+
+
+class BaseScene
+{
+public:
+	virtual ~BaseScene();
+	virtual unique_Base Updata(unique_Base own, const Game_ctr &controller) = 0;	// 純粋仮想関数UpDate
+private:
+	virtual int Init(void) = 0;														// 純粋仮想関数Init
+};
+
+
