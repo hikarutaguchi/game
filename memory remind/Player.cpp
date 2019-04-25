@@ -103,17 +103,17 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 			reStartCnt = RE_START_TIME;
 		}
 	}
-	//炎とプレイヤーの判定
-	if (!fireGuardFlag)
-	{
-		if (lpMapCtl.GetFireMapData(pos))	//炎があったら死亡
-		{
-			if (DethProcess())	//死亡処理したら返す
-			{
-				return;
-			}
-		}
-	}
+	////炎とプレイヤーの判定
+	//if (!fireGuardFlag)
+	//{
+	//	if (lpMapCtl.GetFireMapData(pos))	//炎があったら死亡
+	//	{
+	//		if (DethProcess())	//死亡処理したら返す
+	//		{
+	//			return;
+	//		}
+	//	}
+	//}
 	reStartCnt -= (reStartCnt > 0);		// reStartCnt > 0は真偽真の場合１引かれる
 	visible = true;
 	if ((reStartCnt / 5) % 2)	//3ﾌﾚｰﾑに一回false
