@@ -1,4 +1,6 @@
-
+#include <type_traits>
+#include <memory>
+#include "DxLib.h"
 #include "MapCtl.h"
 
 
@@ -8,10 +10,10 @@ bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipsize	/*const VECTOR
 	mapSize = VECTOR2(size.x / chipsize.x, size.y / chipsize.y);
 	MapCtl::chipSize = chipsize;
 
-	auto createMap = [=](auto &base, auto&front, auto initNum)
-	{
-		base.resize(mapSize.x * mapSize.y);
-		front.resize(mapSize.y);
+	auto createMap = [=](auto& base, auto& front, auto initNum) {
+
+		base.resize(mapSize.x * mapSize.y);	//óvëfÇ∆ÇµÇƒëSëÃÇÃª≤ΩﬁÇämï€
+		front.resize(mapSize.y);			//ècÇ…âΩå¬Ç¢ÇÍÇÈÇ©
 		for (unsigned int count = 0; count < front.size(); count++)
 		{
 			front[count] = &base[mapSize.x * count];
@@ -22,6 +24,8 @@ bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipsize	/*const VECTOR
 			base[j] = initNum;
 		}
 	};
+
+	createMap(mapDataBase, mapData, MAP_ID::FLOOR1);
 
 	return false;
 }

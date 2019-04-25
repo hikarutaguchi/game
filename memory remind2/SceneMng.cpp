@@ -2,6 +2,7 @@
 #include "VECTOR2.h"
 #include "TitleScene.h"
 #include "ModeScene.h"
+#include "GameScene.h"
 #include "SceneMng.h"
 
 SceneMng::SceneMng()
