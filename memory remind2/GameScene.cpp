@@ -1,12 +1,14 @@
 #include "GameScene.h"
-
-
+#include "ImageMng.h"
+#include "Obj.h"
+#include "Player.h"
 
 GameScene::GameScene()
 {
 	ClsDrawScreen();
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
+	VECTOR2 co(300, 300);
 	//VECTOR2 offset(lpSceneMng.GetDrawOffset());
 	for (; tmp1.x <= GAME_SCREEN_SIZE_X; tmp1.x += CHIP_SIZE)
 	{
@@ -21,7 +23,9 @@ GameScene::GameScene()
 		tmp2.y = tmp1.y;
 		DrawLine(tmp1/* + offset*/, tmp2/* + offset*/, 0xffffff, true);
 	}
+	
 	ScreenFlip();
+	
 }
 
 

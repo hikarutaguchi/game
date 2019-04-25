@@ -1,5 +1,6 @@
 #include "DxLib.h"
 #include "Obj.h"
+#include "ImageMng.h"
 
 
 
@@ -12,9 +13,9 @@ Obj::Obj()
 {
 }
 
-bool Obj::init(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt)
+bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt)
 {
-	//lpimageMng.GetID(fileName, divSize, divCnt);
+	lpImageMng.GetID(fileName, divSize, divCnt);
 	imageName = fileName;
 	this->divSize = divSize;
 	this->divCnt = divCnt;
@@ -22,9 +23,9 @@ bool Obj::init(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt)
 	return true;
 }
 
-bool Obj::init(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, VECTOR2 pos)
+bool Obj::Init(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, VECTOR2 pos)
 {
-	init(fileName, divSize, divCnt);
+	Init(fileName, divSize, divCnt);
 	SetPos(pos);
 	return true;
 }
@@ -67,18 +68,18 @@ void Obj::Draw(void)
 
 	animCnt++;
 
-	//if (id < IMAGE_ID(imageName).size())
-	//{
-	//	DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[id], true);
-	//}
+	if (id < IMAGE_ID(imageName).size())
+	{
+		DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[id], true);
+	}
 }
 
 void Obj::Draw(unsigned int id)
 {
-	//if (id < IMAGE_ID(imageName).size())
-	//{
-	//	DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[id], true);
-	//}
+	/*if (id < IMAGE_ID(imageName).size())
+	{
+		DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[id], true);
+	}*/
 	return;
 }
 

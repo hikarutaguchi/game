@@ -128,6 +128,7 @@
     <ClCompile Include="MapID.cpp" />
     <ClCompile Include="ModeScene.cpp" />
     <ClCompile Include="Obj.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneMng.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="VECTOR2.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="MapID.h" />
     <ClInclude Include="ModeScene.h" />
     <ClInclude Include="Obj.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SceneMng.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="VECTOR2.h" />
