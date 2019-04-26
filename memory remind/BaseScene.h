@@ -2,8 +2,8 @@
 #include <memory>
 
 
-#define GAME_SCREEN_X 40			// ｹﾞｰﾑｴﾘｱ表示のｵﾌｾｯﾄ横
-#define GAME_SCREEN_Y 75			// ｹﾞｰﾑｴﾘｱ表示のｵﾌｾｯﾄ縦
+#define GAME_SCREEN_X 120			// ｹﾞｰﾑｴﾘｱ表示のｵﾌｾｯﾄ横
+#define GAME_SCREEN_Y 120			// ｹﾞｰﾑｴﾘｱ表示のｵﾌｾｯﾄ縦
 
 #define GAME_SCREEN_SIZE_X 960		// ｹﾞｰﾑｴﾘｱｻｲｽﾞ横
 #define GAME_SCREEN_SIZE_Y 704		// ｹﾞｰﾑｴﾘｱｻｲｽﾞ縦
