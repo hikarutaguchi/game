@@ -125,7 +125,6 @@
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="EditCursor.cpp" />
     <ClCompile Include="EditScene.cpp" />
-    <ClCompile Include="FIRE_DIR.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Game_ctr.cpp" />
     <ClCompile Include="ImageMng.cpp" />
@@ -143,7 +142,6 @@
     <ClInclude Include="classObj.h" />
     <ClInclude Include="EditCursor.h" />
     <ClInclude Include="EditScene.h" />
-    <ClInclude Include="FIRE_DIR.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Game_ctr.h" />
     <ClInclude Include="ImageMng.h" />

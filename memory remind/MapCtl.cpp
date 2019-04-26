@@ -6,7 +6,6 @@
 #include "MapCtl.h"
 #include "EditScene.h"
 #include "Player.h"
-#include "FIRE_DIR.h"
 
 struct DataHeader {
 	char fileID[13];					// ファイルのID情報
@@ -33,23 +32,6 @@ struct DataHeader {
 
 void MapCtl::Updata(void)
 {
-	//数字が入っていたら減算処理を行う。
-	for (auto& data : fire_mapDataBase)		// 取り出したﾃﾞｰﾀを変更しないとなので参照する。場所に対してｱｸｾｽして取り出す感じ。
-	{
-		if (data)//ﾃﾞｰﾀを4方向-1していく。
-		{
-			for (auto dir : FIRE_DIR())
-			{
-				//if (data & (0xff << (static_cast<int>(dir) * 8)))	// 該当ﾃﾞｰﾀに数字があるかﾁｪｯｸ
-				//{
-				//	data -= (1 << (static_cast<int>(dir) * 8));
-				//}
-				data -= (( (data & (0xff << (static_cast<int>(dir) * 8)) ) > 0) << (static_cast<int>(dir) * 8));
-					_RPTN(_CRT_WARN, "fire:%d\n", (data >> (static_cast<int>(dir) * 8)) & 0xff);
-			}
-			
-		}
-	}
 }
 
 void MapCtl::Draw(bool editModeFlag)
@@ -111,75 +93,6 @@ void MapCtl::Draw(bool editModeFlag)
 			}
 		}
 	}
-	DrawFire();
-}
-
-void MapCtl::DrawFire(void)
-{
-	
-	//爆弾の縦ｱﾆﾒｰｼｮﾝの選択計算
-	auto revNum = [](int cnt) 
-	{
-		return ((FIRE_ANIM_TOP - abs( FIRE_ANIM_TOP - (FIRE_ANIM_TOTAL_FRAME - cnt) / FIRE_ANIM_FRAME )) * FIRE_ANIM_PTN_X);
-	};
-
-
-	//ここでﾌﾞﾚﾝﾄﾞﾓｰﾄﾞなどを使って、透明感などを出しても良い
-	for (int y = 0; y < mapSize.y; y++)
-	{
-		for (int x = 0; x < mapSize.x; x++)
-		{
-			if ((fire_mapData[y][x] & 0xffff0000) && (fire_mapData[y][x] & 0x0000ffff))			//上下と左右の炎ﾃﾞｰﾀを確定して取る
-			{
-				//炎がクロスしている場合
-				auto cnt = 0;
-
-				auto numCmp = [=](auto num) {return num > cnt ? num : cnt;};
-				for (auto fire_dir : FIRE_DIR())
-				{
-					cnt = numCmp(fire_mapData[y][x] >> ((static_cast<unsigned int>(fire_dir) * 8)) & 0xff);
-				}
-
-				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/fire.png")[revNum(cnt)],true);
-			}
-			else
-			{
-				//炎がクロスしていないか、炎がない場合
-				for (auto fire_dir : FIRE_DIR())
-				{
-					//該当場所に炎があるかﾁｪｯｸ
-					auto cnt = (fire_mapData[y][x] >> ( (static_cast<unsigned int>(fire_dir) * 8) ) & 0xff);	//該当場所のﾃﾞｰﾀを一番下位のﾊﾞｲﾄに残す、0xffはﾏｽｸﾃﾞｰﾀという。
-					if (cnt)
-					{
-						//尻尾にするかしないか処理
-						auto endFlag = [=]() 
-						{
-							//自分が今進行している方向+1ﾏｽに炎があるかどうか
-							VECTOR2 addPos {x,y};	//ﾏｽ目
-							if (fire_dir < FIRE_DIR::UP)		//左右
-							{
-								addPos.x += ((static_cast<unsigned int>(fire_dir) * 2) - 1);
-							}
-							else
-							{	//上下
-								addPos.y += (((static_cast<unsigned int>(fire_dir) - 2) * 2) - 1);
-							}
-							if (addPos >= VECTOR2(0,0) && (addPos < mapSize))	//範囲ﾁｪｯｸをする	addPosがmapSize
-							{
-								// ﾃﾞｰﾀを下位ﾊﾞｲﾄまで降ろして0xffとｱﾝﾄﾞをとるか,ﾏｽｸﾃﾞｰﾀとｱﾝﾄﾞを取る
-								return (1 - ((fire_mapData[addPos.y][addPos.x] >> (static_cast<unsigned int>(fire_dir) * 8) & 0xff) > 0));
-							}
-							return 1;		//範囲外なら1を返す
-						};
-						//DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y,lpImageMng.GetID("image/fire.png")[0],true);
-						DrawRotaGraph(drawOffset.x + x * chipSize.x + chipSize.x / 2, drawOffset.y + y * chipSize.y + chipSize.y / 2,
-										1.0, RAD(rotaPtnTbl[static_cast<unsigned int>(fire_dir)]), lpImageMng.GetID("image/fire.png")[revNum(cnt) + 1], true);
-					}
-				}
-
-			}
-		}
-	}
 }
 
 bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipSize, const VECTOR2 drawOffset)
@@ -207,10 +120,6 @@ bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipSize, const VECTOR2
 	};
 
 	createMap(mapDataBase,		mapData,	  MAP_ID::NON);
-	createMap(fire_mapDataBase, fire_mapData, 0);
-
-	//炎の画像の空読み
-	lpImageMng.GetID("image/fire.png", { 20,20 }, { 3,4 });
 
 	if (bgImage <= 0)	//	背景が作られてなかったら入る
 	{
@@ -253,31 +162,6 @@ bool MapCtl::SetMapData(const VECTOR2 & pos, MAP_ID id)
 	return SetData(mapData, pos, id);
 }
 
-bool MapCtl::SetFireMapData(const VECTOR2 & pos, FIRE_DIR dir)
-{
-	auto actType = fireActTbl[static_cast<unsigned int>(GetMapData(pos))];
-	//ストップかBREAKの場合はreturnfalse
-	if (actType == FIRE_ACT::STOP || actType == FIRE_ACT::STOP_BREAK)
-	{
-		return false;
-	}
-	if (actType == FIRE_ACT::ERR)
-	{
-		_RPTN(_CRT_WARN, "FIRE_ACT_ERR:%d\n", fireActTbl[static_cast<unsigned int>(GetMapData(pos))]);
-		return false;
-	}
-
-	auto fire = [=]() {
-		unsigned int rtnID = GetFireMapData(pos);	//現在のビット
-		rtnID &=  (~(0xff << (static_cast<unsigned int>(dir)) * 8));	// 今のビットを落とす
-		rtnID |= (FIRE_ANIM_TOTAL_FRAME << (static_cast<unsigned int>(dir) * 8));			// 新しく書き込むデータ	
-
-		return rtnID;
-	};
-
-	return SetData(fire_mapData, pos, fire());
-}
-
 template<typename mapType, typename idType>
 bool MapCtl::SetData(mapType maps, const VECTOR2 & pos, idType id)		//inlineは使用するプログラムにそのまま展開
 {
@@ -297,11 +181,6 @@ bool MapCtl::SetData(mapType maps, const VECTOR2 & pos, idType id)		//inlineは使
 MAP_ID MapCtl::GetMapData(const VECTOR2 & pos)
 {
 	return GetData(mapData, pos, MAP_ID::WALL2);
-}
-
-unsigned int MapCtl::GetFireMapData(const VECTOR2 & pos)
-{
-	return GetData(fire_mapData, pos, 0);
 }
 
 template<typename mapType, typename idType>
@@ -419,28 +298,6 @@ MapCtl::~MapCtl()
 
 void MapCtl::InitTblData(void)
 {
-	rotaPtnTbl = {
-		180.0,		//左
-		0.0,		//右
-		270.0,		//上
-		90.0		//下
-	};
-
-	fireActTbl = {
-		FIRE_ACT::ERR,				//CUR,				// ｶｰｿﾙ
-		FIRE_ACT::ERR,				//FLOOR1,
-		FIRE_ACT::ERR,				//FLOOR2,
-		FIRE_ACT::NON,				//BOMB,
-		FIRE_ACT::NON,				//NON,
-		FIRE_ACT::STOP,				//WALL1,
-		FIRE_ACT::STOP,				//WALL2,
-		FIRE_ACT::STOP_BREAK,		//BLOCK,			// 壊せるやつ	
-		FIRE_ACT::POP_ENEMY,		//ITEM_FIRE,
-		FIRE_ACT::POP_ENEMY,		//ITEM_BOMB,
-		FIRE_ACT::POP_ENEMY,		//ITEM_CTL,		// 起爆ｺﾝﾄﾛｰﾙ
-		FIRE_ACT::POP_ENEMY,		//ITEM_SPEED,
-	};
-
 }
 
 bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//

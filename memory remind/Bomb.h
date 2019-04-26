@@ -1,6 +1,5 @@
 #pragma once
 #include <array>
-#include "FIRE_DIR.h"
 #include "Obj.h"
 
 enum class FIRE_LENGTH {
@@ -24,9 +23,5 @@ private:
 
 	int count;															// ”š”­¶³İÄ	
 
-	unsigned int fireLength[static_cast<unsigned int>(FIRE_LENGTH::MAX)]; // ‰Š‚Ì’·‚³‚ğŠi”[‚·‚é”z—ñ
-
-	const std::array<VECTOR2,static_cast<unsigned int>(FIRE_DIR::MAX)> dirPos;
-	std::array<bool, static_cast<unsigned int>(FIRE_DIR::MAX)> fireDirFlag;		// ‰Š‚ªL‚Ñ‚Ä‚¢‚¢‚©Ì×¸Ş
 };
 
