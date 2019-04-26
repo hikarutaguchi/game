@@ -94,7 +94,7 @@ const VECTOR2 & Obj::GetPos(void)
 //∑∞ÇÕstringå^ÇÃanimName
 bool Obj::AddAnim(std::string animName, int id_x, int id_y, int frame, int inv, bool loop)
 {
-	animTable[animName][ANIM_TBL_START_ID] = (id_y * divCnt.y) + id_y;
+	animTable[animName][ANIM_TBL_START_ID] = (id_y * divCnt.x) + id_x;
 	animTable[animName][ANIM_TBL_FRAME]	   = frame;
 	animTable[animName][ANIM_TBL_INV]	   = inv;
 	animTable[animName][ANIM_TBL_LOOP]	   = loop;

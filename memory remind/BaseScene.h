@@ -5,11 +5,11 @@
 #define GAME_SCREEN_X 40			// ｹﾞｰﾑｴﾘｱ表示のｵﾌｾｯﾄ横
 #define GAME_SCREEN_Y 75			// ｹﾞｰﾑｴﾘｱ表示のｵﾌｾｯﾄ縦
 
-#define GAME_SCREEN_SIZE_X 1088		// ｹﾞｰﾑｴﾘｱｻｲｽﾞ横
-#define GAME_SCREEN_SIZE_Y 832		// ｹﾞｰﾑｴﾘｱｻｲｽﾞ縦
+#define GAME_SCREEN_SIZE_X 960		// ｹﾞｰﾑｴﾘｱｻｲｽﾞ横
+#define GAME_SCREEN_SIZE_Y 704		// ｹﾞｰﾑｴﾘｱｻｲｽﾞ縦
 
-#define SCREEN_SIZE_X 1328			// 画面解像度横
-#define SCREEN_SIZE_Y 1072			// 画面解像度縦
+#define SCREEN_SIZE_X 1200			// 画面解像度横
+#define SCREEN_SIZE_Y 944			// 画面解像度縦
 
 #define CHIP_SIZE 64				// ﾏｽ目ｻｲｽﾞ
 
