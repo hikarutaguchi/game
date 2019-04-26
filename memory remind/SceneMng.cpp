@@ -3,7 +3,8 @@
 #include "SceneMng.h"
 #include "ImageMng.h"
 #include "EditCursor.h"
-#include "EditScene.h"
+//#include "EditScene.h"
+#include "TitleScene.h"
 #include "MapCtl.h"
 #include "Player.h"
 #include "Game_ctr.h"
@@ -23,7 +24,7 @@ SceneMng::~SceneMng()
 
 void SceneMng::Run(void)
 {
-	activeScene = std::make_unique<EditScene>();
+	activeScene = std::make_unique<TitleScene>();
 	// ---------- ¹Þ°ÑÙ°Ìß
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{

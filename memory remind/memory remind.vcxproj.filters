@@ -43,6 +43,9 @@
     <ClCompile Include="SceneMng.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>ソースファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bomb.h">
@@ -85,6 +88,9 @@
       <Filter>ヘッダーファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="classObj.h">
+      <Filter>ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
       <Filter>ヘッダーファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
