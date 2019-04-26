@@ -68,7 +68,7 @@ bool SceneMng::SysInit(void)
 	// ¼½ÃÑˆ—
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, 16);		// 65536FÓ°ÄŞ‚Éİ’è
 	ChangeWindowMode(true);								// true:window@false:ÌÙ½¸Ø°İ
-	SetWindowText("bomberman");
+	SetWindowText("memory remind");
 	if (DxLib_Init() == -1) return false;				// DX×²ÌŞ×Ø‰Šú‰»ˆ—
 	SetDrawScreen(DX_SCREEN_BACK);						// ‚Ğ‚Æ‚Ü‚¸ÊŞ¯¸ÊŞ¯Ì§‚É•`‰æ
 	gameCtr = std::make_unique<Game_ctr>();				// ¹Ş°ÑºİÄÛ°×°¸×½‚Ì’†g‚ğì¬
