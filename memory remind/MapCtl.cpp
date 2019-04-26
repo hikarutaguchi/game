@@ -39,18 +39,18 @@ void MapCtl::Draw(bool editModeFlag)
 	if (!editModeFlag)
 	{
 		DrawGraph(0, 0, bgImage, false);
-		//int AnimCnt = 0;
-		//for (int y = 0; y < mapSize.y; y++)
-		//{
-		//	AnimCnt = y % 2;
-		//	for (int x = 0; x < mapSize.x; x++)
-		//	{
-		//		{
-		//			DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/map.png")[(AnimCnt % 2) + 1], true);
-		//			AnimCnt++;
-		//		}
-		//	}
-		//}
+		int AnimCnt = 0;
+		for (int y = 0; y < mapSize.y; y++)
+		{
+			AnimCnt = y % 2;
+			for (int x = 0; x < mapSize.x; x++)
+			{
+				{
+					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/.png")[0], true);
+					AnimCnt++;
+				}
+			}
+		}
 	}
 	for (int y = 0; y < mapSize.y; y++)
 	{
@@ -135,7 +135,7 @@ bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipSize, const VECTOR2
 			for (int x = 0; x < mapSize.x; x++)
 			{
 				{
-					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/map.png")[(AnimCnt % 2) + 1], true);
+					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[0], true);
 					AnimCnt++;
 				}
 			}
@@ -321,7 +321,7 @@ bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
 					break;
 				}
 				{
-					obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y),drawOffset + VECTOR2(0, -20)));	//²Ý½ÀÝ½
+					//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y),drawOffset + VECTOR2(0, -20)));	//²Ý½ÀÝ½
 					makeflag = true;
 				}
 				break;
@@ -341,8 +341,12 @@ bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
 				// ´×°
 				break;
 			}
+			//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y), drawOffset + VECTOR2(0, -20)));	//²Ý½ÀÝ½
 		}
+		ListObj_itr obj;
+		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(200,200), drawOffset + VECTOR2(0, -20)));	//²Ý½ÀÝ½
 	}
+
 	return true;
 }
 
