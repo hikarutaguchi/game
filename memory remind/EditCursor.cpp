@@ -43,33 +43,52 @@ void EditCursor::Draw(void)
 
 void EditCursor::SetMove(weekListObj objList,const Game_ctr &controller)
 {
+		GetJoypadNum();
+	int Pad1;
+	Pad1 = GetJoypadInputState(DX_INPUT_PAD1);        //入力状態をPadに格納
+	for (int i = 0; i < 28; i++)
+	{      //ボタン28個分ループ
+		if (Pad1 & (1 << i)) 
+		{             //ボタンiの入力フラグが立っていたら
+			DrawFormatString(0, i * 15, GetColor(200, 255, 255), "%dのキーが押されています", i);
+		}
+	}
+	int Pad2;
+	Pad2 = GetJoypadInputState(DX_INPUT_PAD2);        //入力状態をPadに格納
+	for (int i = 0; i < 28; i++)
+	{      //ボタン28個分ループ
+		if (Pad2 & (1 << i))
+		{             //ボタンiの入力フラグが立っていたら
+			DrawFormatString(0, i * 15, GetColor(200, 255, 255), "%dのキーが押されています", i);
+		}
+	}
 	//auto cnt = controller.GetCtr(); これでもOK
 	KEY_ARRAY cnt	 = controller.GetCtr(KEY_TYPE_NOW);
 	KEY_ARRAY cntOld = controller.GetCtr(KEY_TYPE_OLD);
 	VECTOR2 tmpPos(pos);
 	//tmpPosで空移動
-	if (cnt[KEY_INPUT_NUMPAD4])
+	if (PAD_INPUT_LEFT & Pad1)
 	{
 		if (tmpPos.x > 0)
 		{
 			tmpPos.x -= divSize.x;
 		}
 	}
-	if (cnt[KEY_INPUT_NUMPAD6])
+	if (PAD_INPUT_RIGHT & Pad1)
 	{
 		if (tmpPos.x < lpScene.GetInstance().GetGameSize().x - divSize.x)
 		{
 			tmpPos.x += divSize.x;
 		}
 	}
-	if (cnt[KEY_INPUT_NUMPAD2])
+	if (PAD_INPUT_DOWN & Pad1)
 	{
 		if (tmpPos.y < lpScene.GetInstance().GetGameSize().y - divSize.y)
 		{
 			tmpPos.y += divSize.y;
 		}
 	}
-	if (cnt[KEY_INPUT_NUMPAD8])
+	if (PAD_INPUT_UP & Pad1)
 	{
 		if (tmpPos.y > 0)
 		{
