@@ -58,7 +58,7 @@ Player::Player(VECTOR2 setupPos ,VECTOR2 drawOffset) :Obj(drawOffset)
 		//true,	// ITEM_RANDOM,		// ±≤√—◊›¿ﬁ—èoåª
 	};
 
-	Init("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
+	//Init("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
 	InitAnim();
 	afterkeyFlag = false;
 	reStartCnt = 0U;
