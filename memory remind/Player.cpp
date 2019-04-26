@@ -79,7 +79,7 @@ Player::~Player()
 
 bool Player::InitAnim(void)
 {
-	AddAnim("’âŽ~", 0, 0, 4, 20 ,true);
+	AddAnim("’âŽ~", 0, 0, 4, 15 ,true);
 	AddAnim("ˆÚ“®", 0, 2, 2, 20 ,true);
 	AddAnim("Ž€–S", 4, 0, 4, 8, false);
 	return true;
