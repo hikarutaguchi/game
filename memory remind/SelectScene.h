@@ -12,6 +12,7 @@ public:
 
 private:
 	int Init(void);
+	bool nextScene;
 	void Draw();
 	sharedListObj objList;			// ²İ½Àİ½‚µ‚½î•ñ‚ğ“o˜^
 	int Pad[4];						// ƒpƒbƒhî•ñ
