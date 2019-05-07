@@ -41,7 +41,6 @@ unique_Base GameScene::Updata(unique_Base own, const Game_ctr & controller)
 
 bool GameScene::GameDraw(void)
 {
-	lpImageMng.GetID("image/flame.png", VECTOR2(120, 120), VECTOR2(2, 2));		//プレイヤーのフレームを読み込み
 
 	//ｿｰﾃｨﾝｸﾞ　y座標を基準に小さい順から描画する
 	//ｵﾌﾞｼﾞｪｸﾄが登録されているobjLis t登録している順をいじっていいか、どうか
@@ -99,6 +98,7 @@ bool GameScene::GameDraw(void)
 	DrawGraph(SCREEN_SIZE_X - 120, 0, lpImageMng.GetID("image/flame.png")[1], true);
 	DrawGraph(0, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[2], true);
 	DrawGraph(SCREEN_SIZE_X - 120, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[3], true);
+
 	ScreenFlip();
 	return true;
 }
@@ -111,6 +111,7 @@ int GameScene::Init(void)
 		objList = std::make_shared<sharedObjList>();
 	}
 	objList->clear();
+	lpImageMng.GetID("image/flame.png", VECTOR2(120, 120), VECTOR2(2, 2));		//プレイヤーのフレームを読み込み
 	lpSceneMng.SetDrawOffset( VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y) );
 	lpMapCtl.SetUp( VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y) , VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
 	lpMapCtl.MapLoad(objList, false);
