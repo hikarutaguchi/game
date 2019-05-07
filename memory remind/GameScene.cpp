@@ -5,6 +5,7 @@
 #include "MapCtl.h"
 #include "Bomb.h"
 #include "Game_ctr.h"
+#include "ImageMng.h"
 
 
 GameScene::GameScene()
@@ -41,6 +42,8 @@ unique_Base GameScene::Updata(unique_Base own, const Game_ctr & controller)
 bool GameScene::GameDraw(void)
 {
 	int signboard = LoadGraph("image/kannbann.png");
+
+	//lpImageMng.GetID("image/flame.png", VECTOR2(120, 120), VECTOR2(2, 2));		//ì‹Æ’†
 
 	//¿°Ã¨İ¸Ş@yÀ•W‚ğŠî€‚É¬‚³‚¢‡‚©‚ç•`‰æ‚·‚é
 	//µÌŞ¼Şª¸Ä‚ª“o˜^‚³‚ê‚Ä‚¢‚éobjLis t“o˜^‚µ‚Ä‚¢‚é‡‚ğ‚¢‚¶‚Á‚Ä‚¢‚¢‚©A‚Ç‚¤‚©
