@@ -40,6 +40,8 @@ unique_Base GameScene::Updata(unique_Base own, const Game_ctr & controller)
 
 bool GameScene::GameDraw(void)
 {
+	int signboard = LoadGraph("image/kannbann.png");
+
 	//ｿｰﾃｨﾝｸﾞ　y座標を基準に小さい順から描画する
 	//ｵﾌﾞｼﾞｪｸﾄが登録されているobjLis t登録している順をいじっていいか、どうか
 	//後に書くものは形が決まっている。ｿｰﾄに必ず必要なものは2つのｵﾌﾞｼﾞｪｸﾄがいる１つじゃ入れ替えられないので
@@ -49,6 +51,7 @@ bool GameScene::GameDraw(void)
 
 	ClsDrawScreen();
 	lpMapCtl.Draw(false);
+
 	//　ｲﾃﾚｰﾀｰを普通に書いた場合
 	/*for (std::list<Obj*>::iterator itr = objList.begin(); itr != objList.end(); itr++)*/
 	//型推論を用いて書いた場合　 autoを用いて型を予想
@@ -87,6 +90,9 @@ bool GameScene::GameDraw(void)
 		DrawLine(tmp1 + offset, tmp2 + offset, 0xffffff, true);
 	}
 	//std::for_each((objList)->begin(), (objList)->end(), [](std::shared_ptr<Obj> &itr) {itr->Draw(); });
+
+	DrawGraph(SCREEN_SIZE_X / 2 - 100, 0, signboard, true);
+
 	ScreenFlip();
 	return true;
 }
