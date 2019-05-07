@@ -47,5 +47,6 @@ int SelectScene::Init(void)
 void SelectScene::Draw()
 {
 	ClsDrawScreen();
+	DrawGraph(0, 0, lpImageMng.GetID("image/modeselect.png")[0], true);
 	ScreenFlip();
 }
