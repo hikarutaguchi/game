@@ -41,7 +41,7 @@ const KEY_ARRAY & Game_ctr::GetCtr(KEY_TYPE type) const
 	return data;
 }
 
-const int & Game_ctr::Get_CTL(void) const
+const int & Game_ctr::Get_CTL(KEY_TYPE) const
 {
 	for (int i = 0; i < GetJoypadNum(); i++)
 	{

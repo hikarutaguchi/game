@@ -27,9 +27,13 @@ unique_Base EditScene::Updata(unique_Base own, const Game_ctr & controller)
 	//	return std::make_unique<GameScene>();
 	//}
 
-	if ((controller.Get_CTL()) & PAD_INPUT_1)
+	for (int i = 0; i < GetJoypadNum(); i++)
 	{
-		return std::make_unique<GameScene>();
+		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
+		if ((Pad[i] & PAD_INPUT_1) && ((Pad[i] & PAD_INPUT_2)))
+		{
+			return std::make_unique<GameScene>();
+		}
 	}
 
 	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F5]) //Œ»İ‚Ì·°î•ñ‚ğæ“¾

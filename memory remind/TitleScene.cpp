@@ -17,9 +17,19 @@ TitleScene::~TitleScene()
 
 unique_Base TitleScene::Updata(unique_Base own, const Game_ctr & controller)
 {
-	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_3])
+	for (int i = 0; i < GetJoypadNum(); i++)
 	{
-		return std::make_unique<EditScene>();
+		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
+		for (int j = 0; j < 28; j++)
+		{
+			if ((Pad[i] & (1 << j)))
+			{
+				if (!padFlag)
+				{
+					return std::make_unique<EditScene>();
+				}
+			}
+		}
 	}
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
@@ -32,6 +42,7 @@ unique_Base TitleScene::Updata(unique_Base own, const Game_ctr & controller)
 
 int TitleScene::Init(void)
 {
+	padFlag = false;
 	if (!objList)
 	{
 		//µÌÞ¼Þª¸Ä‚Åtrue,false‚ª•Ô‚é
