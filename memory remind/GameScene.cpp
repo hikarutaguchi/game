@@ -41,8 +41,6 @@ unique_Base GameScene::Updata(unique_Base own, const Game_ctr & controller)
 
 bool GameScene::GameDraw(void)
 {
-	int signboard = LoadGraph("image/kannbann.png");
-
 	lpImageMng.GetID("image/flame.png", VECTOR2(120, 120), VECTOR2(2, 2));		//プレイヤーのフレームを読み込み
 
 	//ｿｰﾃｨﾝｸﾞ　y座標を基準に小さい順から描画する
@@ -94,7 +92,7 @@ bool GameScene::GameDraw(void)
 	}
 	//std::for_each((objList)->begin(), (objList)->end(), [](std::shared_ptr<Obj> &itr) {itr->Draw(); });
 
-	DrawGraph(SCREEN_SIZE_X / 2 - 100, 0, signboard, true);
+	DrawGraph(100, 700, lpImageMng.GetID("image/kannbann.png")[0], true);
 
 	//プレイヤーのフレームを表示
 	DrawGraph(0, 0, lpImageMng.GetID("image/flame.png")[0],true);
