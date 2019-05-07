@@ -92,7 +92,7 @@ bool GameScene::GameDraw(void)
 	}
 	//std::for_each((objList)->begin(), (objList)->end(), [](std::shared_ptr<Obj> &itr) {itr->Draw(); });
 
-	DrawGraph(100, 700, lpImageMng.GetID("image/kannbann.png")[0], true);
+	DrawGraph(SCREEN_SIZE_X / 2 - 100, 0, lpImageMng.GetID("image/kannbann.png")[0], true);
 
 	//プレイヤーのフレームを表示
 	DrawGraph(0, 0, lpImageMng.GetID("image/flame.png")[0],true);
