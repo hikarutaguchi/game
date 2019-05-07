@@ -50,5 +50,7 @@ void SelectScene::Draw()
 {
 	ClsDrawScreen();
 	DrawGraph(0, 0, lpImageMng.GetID("image/modeselect.png")[0], true);
+	DrawGraph(500, 50, lpImageMng.GetID("image/button_UI.png")[2], true);
+	DrawGraph(850, 50, lpImageMng.GetID("image/button_UI.png")[4], true);
 	ScreenFlip();
 }
