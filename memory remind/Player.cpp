@@ -15,7 +15,7 @@ Player::Player(VECTOR2 setupPos ,VECTOR2 drawOffset) :Obj(drawOffset)
 	fireLength = 2;
 
 					//@MAIN		
-	keyTableID = { KEY_INPUT_NUMPAD2,	// ‰º•ûŒü
+	keyTableID = { PAD_INPUT_DOWN,	// ‰º•ûŒü
 				   KEY_INPUT_NUMPAD4,	// ¶•ûŒü
 				   KEY_INPUT_NUMPAD6,	// ‰E•ûŒü
 				   KEY_INPUT_NUMPAD8	// ã•ûŒü

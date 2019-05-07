@@ -22,7 +22,12 @@ EditScene::~EditScene()
 unique_Base EditScene::Updata(unique_Base own, const Game_ctr & controller)
 {
 
-	if ( (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1]) & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]) )
+	//if ( (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1]) & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]) )
+	//{
+	//	return std::make_unique<GameScene>();
+	//}
+
+	if ((controller.Get_CTL()) & PAD_INPUT_1)
 	{
 		return std::make_unique<GameScene>();
 	}

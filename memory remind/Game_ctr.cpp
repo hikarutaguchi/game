@@ -19,6 +19,13 @@ bool Game_ctr::Updata(void)
 	//array‚ðŽg‚Á‚Ä‚¢‚é‚Ì‚Åµ°ÊÞ°Û°ÄÞ‚É‚È‚é
 	dataOld = data;
 	GetHitKeyStateAll(&data[0]);
+	for (int i = 0; i < GetJoypadNum(); i++)
+	{	
+		for (int j = 0; j < 28; j++)
+		{
+			Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
+		}
+	}
 	return true;
 }
 
@@ -32,4 +39,12 @@ const KEY_ARRAY & Game_ctr::GetCtr(KEY_TYPE type) const
 	}
 	//ŽQÆ‚È‚Ì‚Å‚»‚Ì‚Ü‚Ü•Ô‚·
 	return data;
+}
+
+const int & Game_ctr::Get_CTL(void) const
+{
+	for (int i = 0; i < GetJoypadNum(); i++)
+	{
+		return Pad[i];
+	}
 }

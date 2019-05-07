@@ -17,7 +17,9 @@ public:
 	~Game_ctr();
 	bool Updata(void);								// î•ñXV
 	const KEY_ARRAY &GetCtr(KEY_TYPE type) const;	// ·°æ“¾
+	const int &Get_CTL(void)const;
 private:
+	int Pad[4];
 	KEY_ARRAY data;									// ·°“ü—ÍÃŞ°À
 	KEY_ARRAY dataOld;								// ‘O·°“ü—ÍÃŞ°À
 };
