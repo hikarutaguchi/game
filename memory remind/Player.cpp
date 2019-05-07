@@ -14,11 +14,19 @@ Player::Player(VECTOR2 setupPos ,VECTOR2 drawOffset) :Obj(drawOffset)
 
 	fireLength = 2;
 
+	int Pad[4];
+	for (int i = 0; i < GetJoypadNum(); i++)
+	{
+		for (int j = 0; j < 28; j++)
+		{
+			Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
+		}
+	}
 					//　MAIN		
 	keyTableID = { PAD_INPUT_DOWN,	// 下方向
-				   KEY_INPUT_NUMPAD4,	// 左方向
-				   KEY_INPUT_NUMPAD6,	// 右方向
-				   KEY_INPUT_NUMPAD8	// 上方向
+				   PAD_INPUT_LEFT,	// 左方向
+				   PAD_INPUT_RIGHT,	// 右方向
+				   PAD_INPUT_UP	// 上方向
 	};	
 					// MAIN
 	posTbl = { &pos.y,	&pos.x,  // 下
@@ -64,6 +72,7 @@ Player::Player(VECTOR2 setupPos ,VECTOR2 drawOffset) :Obj(drawOffset)
 	reStartCnt = 0U;
 	fireGuardFlag = 0U;
 
+
 }
 
 Player::Player()
@@ -93,6 +102,7 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 	auto &keyTblOld = controller.GetCtr(KEY_TYPE_OLD);
 
 	auto &chipSize  = lpMapCtl.GetChipSize().x;
+
 
 	if (GetAnim() == "死亡")	//死亡アニメ再生中
 	{
@@ -168,6 +178,7 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 
 	auto move = [&,dir = Player::dir](DIR_TBL_ID id) {		//配列にｱｸｾｽする際の引数が違うのでidにする,ｺﾋﾟｰされた前のplayerのdir
 		if (keyTbl[keyTableID[dirTbl[dir][id]]])
+		//if (keyTableID[dirTbl[dir][id]])
 		{
 			//方向のｾｯﾄ
 			Player::dir = dirTbl[dir][id];
