@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "TitleScene.h"
+#include "SelectScene.h"
 #include "Game_ctr.h"
 #include "EditScene.h"
 #include "ImageMng.h"
@@ -26,7 +27,7 @@ unique_Base TitleScene::Updata(unique_Base own, const Game_ctr & controller)
 			{
 				if (!padFlag)
 				{
-					return std::make_unique<EditScene>();
+					return std::make_unique<SelectScene>();
 				}
 			}
 		}

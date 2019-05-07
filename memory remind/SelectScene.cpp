@@ -1,4 +1,6 @@
+#include <DxLib.h>
 #include "SelectScene.h"
+#include "TitleScene.h"
 #include "Game_ctr.h"
 #include "EditScene.h"
 #include "ImageMng.h"
@@ -17,28 +19,33 @@ SelectScene::~SelectScene()
 
 unique_Base SelectScene::Updata(unique_Base own, const Game_ctr & controller)
 {
-	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_3])
-	//{
-	//	return std::make_unique<EditScene>();
-	//}
-
-	//for (auto itr = objList->begin(); itr != objList->end(); itr++)
-	//{
-	//	(*itr)->UpData(objList, controller);
-	//}
-
-	//return std::move(own);
+	for (int i = 0; i < GetJoypadNum(); i++)
+	{
+		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
+		if ((Pad[i] & PAD_INPUT_4) && ((Pad[i] & PAD_INPUT_2)))
+		{
+			return std::make_unique<EditScene>();
+		}
+	}
+	return std::move(own);
 }
 
 int SelectScene::Init(void)
 {
-	//if (!objList)
-	//{
-	//	//µÌÞ¼Þª¸Ä‚Åtrue,false‚ª•Ô‚é
-	//	objList = std::make_shared<sharedObjList>();
-	//}
+	padFlag = false;
+	if (!objList)
+	{
+		//µÌÞ¼Þª¸Ä‚Åtrue,false‚ª•Ô‚é
+		objList = std::make_shared<sharedObjList>();
+	}
 
-	//objList->clear();
-	//Draw();
-	//return 0;
+	objList->clear();
+	Draw();
+	return 0;
+}
+
+void SelectScene::Draw()
+{
+	ClsDrawScreen();
+	ScreenFlip();
 }
