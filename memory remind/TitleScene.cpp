@@ -47,5 +47,6 @@ void TitleScene::Draw()
 {
 	ClsDrawScreen();
 	DrawGraph(0, 0, lpImageMng.GetID("image/title.png")[0], true);
+	DrawGraph(100, 700, lpImageMng.GetID("image/titlebutton.png")[0], true);
 	ScreenFlip();
 }
