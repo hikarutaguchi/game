@@ -10,6 +10,7 @@
 SelectScene::SelectScene()
 {
 	Init();
+
 }
 
 
@@ -32,6 +33,7 @@ unique_Base SelectScene::Updata(unique_Base own, const Game_ctr & controller)
 
 int SelectScene::Init(void)
 {
+	lpImageMng.GetID("image/button_UI.png", VECTOR2(300, 64), VECTOR2(2, 3));		//プレイヤーのフレームを読み込み
 	padFlag = false;
 	if (!objList)
 	{
