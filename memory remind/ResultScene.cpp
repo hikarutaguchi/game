@@ -45,6 +45,6 @@ int ResultScene::Init(void)
 void ResultScene::Draw()
 {
 	ClsDrawScreen();
-	DrawGraph(0, 0, lpImageMng.GetID("image/result.png")[0], true);
+	DrawGraph(0, 0, lpImageMng.GetID("image/akuma.png")[0], true);
 	ScreenFlip();
 }
