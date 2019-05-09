@@ -8,7 +8,6 @@
 #include "ImageMng.h"
 #include "ResultScene.h"
 
-
 GameScene::GameScene()
 {
 	Init();
@@ -22,6 +21,7 @@ GameScene::~GameScene()
 
 unique_Base GameScene::Updata(unique_Base own, const Game_ctr & controller)
 {
+
 	for (int i = 0; i < GetJoypadNum(); i++)
 	{
 		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
@@ -30,6 +30,12 @@ unique_Base GameScene::Updata(unique_Base own, const Game_ctr & controller)
 			return std::make_unique<ResultScene>();
 		}
 	}
+
+	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1] & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]))
+	//{
+	//	return std::make_unique<EditScene>();
+	//}
+
 	lpMapCtl.Updata();
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
