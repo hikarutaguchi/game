@@ -1,26 +1,22 @@
 #pragma once
 
 enum class MAP_ID {			// image.mapÇéQè∆
-	CUR,				// ∂∞øŸ
-	FLOOR1,
-	FLOOR2,
-	BOMB,
-	NON,
-	WALL1,
-	WALL2,
-	BLOCK,			// âÛÇπÇÈÇ‚Ç¬	
-	ITEM_BOMB,
-	ITEM_FIRE,
-	ITEM_SPEED,		
-	ITEM_WALL_PASS,
-	//ITEM_CTL,		// ãNîö∫›ƒ€∞Ÿ
-	//ITEM_BOMB_THROW,// îöíeìäÇ∞
-	//ITEM_FIRE_GUARD,// âä∂ﬁ∞ƒﬁ
-	//ITEM_RANDOM,	// ±≤√—◊›¿ﬁ—èoåª
+	YUKA,
+	IWA,
+	HOLE,
+	UNTI,
+	EKI,
+	NULLL,
+	WIND,
+	MAGIC,
+	MAGIC1,
+	BORN,
+	ESA,
+	TOOL,
 	MAX
 };
 MAP_ID operator+(MAP_ID m, int j);
 MAP_ID operator-(MAP_ID m, int j);
 
-#define ITEM_ID_START MAP_ID::ITEM_BOMB
+#define ITEM_ID_START MAP_ID::EKI
 #define ITEM_MAX (static_cast<int>(MAP_ID::MAX) - static_cast<int>(ITEM_ID_START))

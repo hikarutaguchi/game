@@ -46,7 +46,7 @@ void MapCtl::Draw(bool editModeFlag)
 			for (int x = 0; x < mapSize.x; x++)
 			{
 				{
-					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/.png")[0], true);
+					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[0], true);
 					AnimCnt++;
 				}
 			}
@@ -59,35 +59,23 @@ void MapCtl::Draw(bool editModeFlag)
 			MAP_ID id = mapData[y][x];
 			switch (id)
 			{
-			case (MAP_ID::NON):		//èÌÇ…ï\é¶ÇµÇ»Ç¢
+			case (MAP_ID::YUKA):
+			case (MAP_ID::IWA):
+			case (MAP_ID::HOLE):
+			case (MAP_ID::UNTI):
+			case (MAP_ID::EKI):
+			case (MAP_ID::NULLL):
+			case (MAP_ID::WIND):
+			case (MAP_ID::MAGIC):
+			case (MAP_ID::MAGIC1):
+			case (MAP_ID::BORN):
+			case (MAP_ID::ESA):
+			case (MAP_ID::TOOL):
+				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(id)], true);
 				break;
-			case (MAP_ID::BOMB):
-				//if (lpSceneMng.CheckEditMode())
-				//{
-				//	DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/map.png")[MAP_ID_CUR], true);
-				//}
-				//Å™Ç≈Ç‡ó«Ç¢Ç™Å´ÇÃÇŸÇ§Ç™ó«Ç´
-				if (!editModeFlag)
-				{
-					break;		//¥√ﬁ®Øƒ”∞ƒﬁéûÇÕï`âÊÇ∑ÇÈÇÃÇ≈ÅAÇªÇÃÇ‹Ç‹â∫Ç…èàóùÇó¨Ç∑
-				}
-
-			case  (MAP_ID::WALL1):
-			case  (MAP_ID::WALL2):
-			case  (MAP_ID::BLOCK):
-			case  (MAP_ID::ITEM_FIRE):
-			case  (MAP_ID::ITEM_BOMB):
-			//case  (MAP_ID::ITEM_CTL):
-			//case  (MAP_ID::ITEM_SPEED) :
-				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/map.png")[static_cast<int>(id)], true);
-				break;
-			case  (MAP_ID::CUR) :
-			case  (MAP_ID::FLOOR1):
-			case  (MAP_ID::FLOOR2):
-			default:
 				// ¥◊∞
 #ifdef _DEBUG
-				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/map.png")[static_cast<int>(MAP_ID::CUR)], true);
+				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::UNTI)], true);
 #endif
 				break;
 			}
@@ -97,7 +85,7 @@ void MapCtl::Draw(bool editModeFlag)
 
 bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipSize, const VECTOR2 drawOffset)
 {
-	lpImageMng.GetID("image/map.png", VECTOR2(20, 20), VECTOR2(4, 3));	//œØÃﬂÇÇÊÇÒÇ≈Ç¢ÇΩÇÁΩŸ∞
+	lpImageMng.GetID("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));	//œØÃﬂÇÇÊÇÒÇ≈Ç¢ÇΩÇÁΩŸ∞
 
 	//âÊñ âëúìxÇ∆¡ØÃﬂª≤ΩﬁÇéÛÇØéÊÇ¡ÇΩ
 	mapSize = VECTOR2(size.x / chipSize.x, size.y / chipSize.y);
@@ -119,7 +107,7 @@ bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipSize, const VECTOR2
 		}
 	};
 
-	createMap(mapDataBase,		mapData,	  MAP_ID::NON);
+	createMap(mapDataBase, mapData, MAP_ID::YUKA);
 
 	if (bgImage <= 0)	//	îwåiÇ™çÏÇÁÇÍÇƒÇ»Ç©Ç¡ÇΩÇÁì¸ÇÈ
 	{
@@ -145,9 +133,9 @@ bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipSize, const VECTOR2
 	return false;
 }
 
-struct CheckSize 
+struct CheckSize
 {
-	bool operator ()(const VECTOR2 &selPos,const VECTOR2 &mapSize) {
+	bool operator ()(const VECTOR2 &selPos, const VECTOR2 &mapSize) {
 		if ((selPos.x < 0) || (selPos.y < 0) || (mapSize.x <= selPos.x) || (mapSize.y <= selPos.y))		//îÕàÕ¡™Ø∏
 		{
 			return false;
@@ -168,19 +156,23 @@ bool MapCtl::SetData(mapType maps, const VECTOR2 & pos, idType id)		//inlineÇÕég
 	VECTOR2 selPos;
 	selPos.x = pos.x / chipSize.x;
 	selPos.y = pos.y / chipSize.y;
+
 	CheckSize checkSize;			//àÍâÒé¿ëÃÇçÏÇ¡ÇƒÇ‚Ç¡ÇƒÅAä÷êîÇåƒÇ—èoÇ∑Ç›ÇΩÇ¢Ç…Ç∑ÇÈÇ‚Ç¬
 	if ((!checkSize(selPos, mapSize)))
 	{
 		return false;
 	}
-	maps[selPos.y][selPos.x] = id;
+	if (maps[selPos.y][selPos.x] == MAP_ID::YUKA)
+	{
+		maps[selPos.y][selPos.x] = id;
+	}
 	_RPTN(_CRT_WARN, "write[%d,%d]%d\n", pos.x, pos.y, id);
 	return true;
 }
 
 MAP_ID MapCtl::GetMapData(const VECTOR2 & pos)
 {
-	return GetData(mapData, pos, MAP_ID::WALL2);
+	return GetData(mapData, pos, MAP_ID::UNTI);
 }
 
 template<typename mapType, typename idType>
@@ -240,13 +232,7 @@ bool MapCtl::MapLoad(sharedListObj objList, bool editModeFlag)//
 	fread(mapDataBase.data(), sizeof(MAP_ID), mapDataBase.size(), file);
 	fclose(file);
 	bool flag = true;
-	//int sum = 0;				//sumílÇÃåvéZ
-	//for (int j = 0; j < mapDataBase.size(); j++)
-	//{
-	//	sum += (int)mapDataBase[j];
-	//}
-	//ÕØ¿ﬁÇÃÃß≤ŸÇhÇcèÓïÒÇ∆ì‡ïîÇ≈éùÇ¡ÇƒÇ¢ÇÈÇhÇcÇ∆î‰Ç◊ÇÈ
-	//ÕØ¿ﬁÇÃ ﬁ∞ºﬁÆ›î‘çÜÇ∆ì‡ïîÇ≈éùÇ¡ÇƒÇ¢ÇÈÇhÇcÇî‰Ç◊ÇÈ
+
 	if ((std::string)exportData.fileID != BOMBERMAN_FILE_ID)
 	{
 		flag = false;
@@ -266,17 +252,17 @@ bool MapCtl::MapLoad(sharedListObj objList, bool editModeFlag)//
 		flag = false;
 	}
 	//√ﬁ∞¿ÇÃ∏ÿ±
-	if (flag == false)
-	{
-		for (unsigned int j = 0; j < mapDataBase.size(); j++)
-		{
-			mapDataBase[j] = (MAP_ID::NON);
-		}
-		//for (auto &data : mapDataBase)			//Å@éQè∆Ç…ÇµÇƒÇ†Ç∞ÇÈÇ±Ç∆Ç≈èëÇ´ä∑Ç¶Ç™Ç≈Ç´ÇÈÇÊÇ§Ç…Ç»ÇÈ
-		//{
-		//	data = MAP_ID_NON;
-		//}
-	}
+	//if (flag == false)
+	//{
+	//	for (unsigned int j = 0; j < mapDataBase.size(); j++)
+	//	{
+	//		mapDataBase[j] = (MAP_ID::NON);
+	//	}
+	//	//for (auto &data : mapDataBase)			//Å@éQè∆Ç…ÇµÇƒÇ†Ç∞ÇÈÇ±Ç∆Ç≈èëÇ´ä∑Ç¶Ç™Ç≈Ç´ÇÈÇÊÇ§Ç…Ç»ÇÈ
+	//	//{
+	//	//	data = MAP_ID_NON;
+	//	//}
+	//}
 	if (flag == true)
 	{
 		SetUpGameObj(objList, editModeFlag);
@@ -315,36 +301,33 @@ bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
 			ListObj_itr obj;
 			switch (id)
 			{
-			case (MAP_ID::BOMB):		//Ãﬂ⁄≤‘∞∑¨◊Ç≤›Ω¿›Ω
-				if (makeflag)
-				{
-					break;
-				}
-				{
-					//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y),drawOffset + VECTOR2(0, -20)));	//≤›Ω¿›Ω
-					makeflag = true;
-				}
-				break;
-			case (MAP_ID::NON) :		//èÌÇ…ï\é¶ÇµÇ»Ç¢
-			case (MAP_ID::WALL1) :
-			case (MAP_ID::WALL2) :
-			case (MAP_ID::BLOCK) :
-			case (MAP_ID::ITEM_FIRE) :
-			case (MAP_ID::ITEM_BOMB) :
-			//case (MAP_ID::ITEM_CTL) :
-			//case (MAP_ID::ITEM_SPEED) :
-				break;				//âΩÇ‡ÇµÇ»Ç¢
-			case (MAP_ID::CUR) :
-			case (MAP_ID::FLOOR1) :
-			case (MAP_ID::FLOOR2) :
-			default:
-				// ¥◊∞
+				case (MAP_ID::YUKA):		
+					if (makeflag)
+					{
+						break;
+					}
+					else
+					{
+						//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y),drawOffset + VECTOR2(0, -20)));	//≤›Ω¿›Ω
+						makeflag = true;
+					}
+				case (MAP_ID::IWA):
+				case (MAP_ID::HOLE):
+				case (MAP_ID::UNTI):
+				case (MAP_ID::EKI):
+				case (MAP_ID::NULLL):
+				case (MAP_ID::WIND):
+				case (MAP_ID::MAGIC):
+				case (MAP_ID::MAGIC1):
+				case (MAP_ID::BORN):
+				case (MAP_ID::ESA):
+				case (MAP_ID::TOOL):
 				break;
 			}
 			//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y), drawOffset + VECTOR2(0, -20)));	//≤›Ω¿›Ω
 		}
 		ListObj_itr obj;
-		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(200,200), drawOffset + VECTOR2(0, -20)));	//≤›Ω¿›Ω
+		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(200, 200), drawOffset + VECTOR2(0, -20)));	//≤›Ω¿›Ω
 	}
 
 	return true;

@@ -12,7 +12,7 @@ EditCursor::EditCursor(VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
-	id = static_cast<MAP_ID>(MAP_ID::WALL1);
+	id = static_cast<MAP_ID>(MAP_ID::IWA);
 	//ﾌﾟﾛﾃｸﾃｯﾄﾞの場合
 	//Obj::drawOffset = drawOffset;
 }
@@ -21,7 +21,7 @@ EditCursor::EditCursor()
 {
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
-	id = static_cast<MAP_ID>(MAP_ID::WALL1);
+	id = static_cast<MAP_ID>(MAP_ID::IWA);
 }
 
 
@@ -35,14 +35,17 @@ void EditCursor::Draw(void)
 	//ｱﾙﾌｧﾌﾞﾚﾝﾃﾞｨﾝｸﾞ
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//他の所でBLENDをして元に戻すのを忘れていた時のためのｶﾞｰﾄﾞ処理
 	Obj::Draw((int)id);
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs( (int)(animCnt % 512) - 256));
-	Obj::Draw((static_cast<int>(MAP_ID::CUR)));
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((int)(animCnt % 512) - 256));
+	Obj::Draw((static_cast<int>(MAP_ID::YUKA)));
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	animCnt += 10;
 }
 
-void EditCursor::SetMove(weekListObj objList,const Game_ctr &controller)
+void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 {
+	auto cnt = controller.GetCtr(KEY_TYPE_NOW);
+	auto cntOld = controller.GetCtr(KEY_TYPE_OLD);
+
 	int Pad[4];
 	for (int i = 0; i < GetJoypadNum(); i++)
 	{
@@ -106,24 +109,20 @@ void EditCursor::SetMove(weekListObj objList,const Game_ctr &controller)
 			}
 		}
 	}
-		//int Pad1;
-		//Pad1 = GetJoypadInputState(DX_INPUT_PAD1);        //入力状態をPadに格納
-		//for (int i = 0; i < 28; i++)
-		//{      //ボタン28個分ループ
-		//	if (Pad1 & (1 << i)) 
-		//	{             //ボタンiの入力フラグが立っていたら
-		//		DrawFormatString(0, i * 15, GetColor(200, 255, 255), "%dのキーが押されています", i);
-		//	}
-		//}
-		//int Pad2;
-		//Pad2 = GetJoypadInputState(DX_INPUT_PAD2);        //入力状態をPadに格納
-		//for (int i = 0; i < 28; i++)
-		//{      //ボタン28個分ループ
-		//	if (Pad2 & (1 << i))
-		//	{             //ボタンiの入力フラグが立っていたら
-		//		DrawFormatString(0, i * 15, GetColor(200, 255, 255), "%dのキーが押されています", i);
-		//	}
-		//}
+	if ((cnt[KEY_INPUT_X]) && (!cntOld[KEY_INPUT_X]))
+	{
+		// id = (MAP_ID) (id + 1 >= MAP_ID_MAX ? MAP_ID_NON:id + 1) 三項演算子で書いた場合
+		id = (MAP_ID)(id + 1);
+		if (id > MAP_ID::TOOL)
+		{
+			id = MAP_ID::YUKA + 1;
+		}
+	}
+
+	if (cnt[KEY_INPUT_SPACE] & (~cntOld[KEY_INPUT_SPACE]))
+	{
+		lpMapCtl.SetMapData(pos, id);
+	}
 }
 
 bool EditCursor::CheckObjType(OBJ_TYPE type)

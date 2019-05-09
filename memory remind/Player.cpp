@@ -131,10 +131,10 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 		visible = false;
 	}
 
-	if ((keyTbl[KEY_INPUT_SPACE]) & (~keyTblOld[KEY_INPUT_SPACE]))
-	{
-		AddObjList()(objList, std::make_unique<Bomb>( ((pos / chipSize) * chipSize), fireLength , lpSceneMng.GetDrawOffset() + VECTOR2( 0,-5 )) );	//fire‚Å’·‚³‚ğó‚¯æ‚é
-	}
+	//if ((keyTbl[KEY_INPUT_SPACE]) & (~keyTblOld[KEY_INPUT_SPACE]))
+	//{
+	//	AddObjList()(objList, std::make_unique<Bomb>( ((pos / chipSize) * chipSize), fireLength , lpSceneMng.GetDrawOffset() + VECTOR2( 0,-5 )) );	//fire‚Å’·‚³‚ğó‚¯æ‚é
+	//}
 
 
 	//’†g‚ğ•ª‚©‚è‚â‚·‚­‚·‚é‚½‚ß‚Éswitch‚ğg‚¤
@@ -182,7 +182,7 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 		{
 			//•ûŒü‚Ì¾¯Ä
 			Player::dir = dirTbl[dir][id];
-			//“®‚¢‚Ä‚¢‚¢‚©ˆ—
+   			//“®‚¢‚Ä‚¢‚¢‚©ˆ—
 			if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir,pos,speedTbl[Player::dir],IN_SIDE))) ])	//IN_SIDE‚Å‚P‚ğ“n‚µ‚½‚¢
 			{
 				//ˆÚ“®•s‰Â‚ÌµÌŞ¼Şª¸Ä‚ª—×‚É‚ ‚Á‚½ê‡‚Íˆ—‚µ‚È‚¢
