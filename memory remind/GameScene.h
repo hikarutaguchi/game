@@ -16,5 +16,7 @@ private:
 	sharedListObj objList;														// ｲﾝｽﾀﾝｽした情報を登録
 	int Init(void);																// 呼び出し
 	bool GameDraw();															// ｴﾃﾞｨｯﾄ表示
+	int Pad[4];						// パッド情報
+	bool padFlag;
 };
 

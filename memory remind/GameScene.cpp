@@ -6,6 +6,7 @@
 #include "Bomb.h"
 #include "Game_ctr.h"
 #include "ImageMng.h"
+#include "ResultScene.h"
 
 
 GameScene::GameScene()
@@ -21,11 +22,14 @@ GameScene::~GameScene()
 
 unique_Base GameScene::Updata(unique_Base own, const Game_ctr & controller)
 {
-	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1] & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]))
+	for (int i = 0; i < GetJoypadNum(); i++)
 	{
-		return std::make_unique<EditScene>();
+		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
+		if ((Pad[i] & PAD_INPUT_3) && ((Pad[i] & PAD_INPUT_4)))
+		{
+			return std::make_unique<ResultScene>();
+		}
 	}
-
 	lpMapCtl.Updata();
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
@@ -105,6 +109,7 @@ bool GameScene::GameDraw(void)
 
 int GameScene::Init(void)
 {
+	padFlag = false;
 	if (!objList)
 	{
 		//µÌÞ¼Þª¸Ä‚Åtrue,false‚ª•Ô‚é
