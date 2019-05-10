@@ -77,7 +77,7 @@ Player::Player(VECTOR2 setupPos ,VECTOR2 drawOffset) :Obj(drawOffset)
 
 Player::Player()
 {
-
+	life = PLAYER_LIFE;
 }
 
 
@@ -88,8 +88,6 @@ Player::~Player()
 
 int Player::Life()
 {
-	life = PLAYER_LIFE;
-
 	if (count > 120)
 	{
 		life -= 1;
