@@ -86,6 +86,18 @@ Player::~Player()
 
 }
 
+int Player::Life()
+{
+	life = PLAYER_LIFE;
+
+	if (count > 120)
+	{
+		life -= 1;
+	}
+	count++;
+	return life;
+}
+
 bool Player::InitAnim(void)
 {
 	AddAnim("í‚é~", 0, 0, 4, 15 ,true);

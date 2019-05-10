@@ -25,6 +25,8 @@ enum SIDE_CHECK {
 };
 
 #define PLAYER_DEF_SPEED 2
+#define PLAYER_LIFE 6
+#define lpPlayer Player::GetInstance()
 
 using DIR_TBL_ARRAY		= std::array<int, DIR_MAX>;
 using DIR_TBL_PTR_ARRAY = std::array<int*[TBL_MAX], DIR_MAX>;
@@ -35,9 +37,15 @@ class Player :
 	public Obj
 {
 public:
+	static Player &GetInstance(void)
+	{
+		static Player s_instance;
+		return s_instance;
+	}
 	Player(VECTOR2 setupPos,VECTOR2 drawOffset);						// ˆø”•t‚«(Pos,•`‰æ‚ÌÛ‚Ìoffset)ºİ½Ä×¸À
 	Player();
 	~Player();
+	int Life();
 	bool InitAnim(void);												// ‰æ‘œŒÄ‚Ño‚µ
 private:
 
@@ -48,6 +56,8 @@ private:
 	void GetItem(void);													//	itemæ“¾‚Ìˆ—
 	int fireLength;
 
+	int life;
+	int count;
 	int speed;
 	DIR_TBL_ARRAY keyTableID;	// “ü—Í·°Ã°ÌŞÙ
 	DIR_TBL_ARRAY speedTbl;		// ½Ëß°ÄŞÃ°ÌŞÙ

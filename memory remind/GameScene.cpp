@@ -3,7 +3,7 @@
 #include "GameScene.h"
 #include "EditScene.h"
 #include "MapCtl.h"
-#include "Bomb.h"
+#include "Player.h"
 #include "Game_ctr.h"
 #include "ImageMng.h"
 #include "ResultScene.h"
@@ -116,6 +116,26 @@ bool GameScene::GameDraw(void)
 	DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[timeCnt / 600 % 10], true);
 	DrawGraph(SCREEN_SIZE_X / 2 - 75 + 100, 45, lpImageMng.GetID("image/number.png")[timeCnt / 60 % 10], true);
 
+	auto as = lpPlayer.Life();
+
+	switch (as)
+	{
+	case 6:
+		DrawGraph(150, 0, lpImageMng.GetID("image/hp.png")[0], true);
+		break;
+	case 5:
+		DrawGraph(180, 0, lpImageMng.GetID("image/hp.png")[1], true);
+		break;
+	case 4:
+		break;
+	case 3:
+		break;
+	case 2:
+		break;
+	case 1:
+		break;
+	}
+
 	ScreenFlip();
 	return true;
 }
@@ -130,8 +150,9 @@ int GameScene::Init(void)
 		objList = std::make_shared<sharedObjList>();
 	}
 	objList->clear();
-	lpImageMng.GetID("image/flame.png", VECTOR2(120, 120), VECTOR2(2, 2));		//プレイヤーのフレームを読み込み
-	lpImageMng.GetID("image/number.png", VECTOR2(50, 50), VECTOR2(10, 1));		//ナンバー
+	lpImageMng.GetID("image/flame.png", VECTOR2(120, 120), VECTOR2(2, 2));		// プレイヤーのフレームを読み込み
+	lpImageMng.GetID("image/number.png", VECTOR2(50, 50), VECTOR2(10, 1));		// ナンバー
+	lpImageMng.GetID("image/hp.png", VECTOR2(64, 64), VECTOR2(3, 1));			// HP
 
 	lpSceneMng.SetDrawOffset( VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y) );
 	lpMapCtl.SetUp( VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y) , VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
