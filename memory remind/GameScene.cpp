@@ -110,11 +110,37 @@ bool GameScene::GameDraw(void)
 	DrawGraph(SCREEN_SIZE_X - 120, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[3], true);
 
 	//ŽžŠÔ•\Ž¦
+
 	timeCnt--;
 
-	DrawGraph(SCREEN_SIZE_X / 2 - 75, 45, lpImageMng.GetID("image/number.png")[timeCnt / 6000 % 10], true);
-	DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[timeCnt / 600 % 10], true);
-	DrawGraph(SCREEN_SIZE_X / 2 - 75 + 100, 45, lpImageMng.GetID("image/number.png")[timeCnt / 60 % 10], true);
+	if (timeCnt <= 0)
+	{
+		startCnt--;
+	}
+	else
+	{
+		DrawGraph(SCREEN_SIZE_X / 2 - 75, 45, lpImageMng.GetID("image/number.png")[timeCnt / 6000 % 10], true);
+		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[timeCnt / 600 % 10], true);
+		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 100, 45, lpImageMng.GetID("image/number.png")[timeCnt / 60 % 10], true);
+	}
+
+	if (startCnt < 0)
+	{
+		timeCnt = 10800;
+		startCnt = 61;
+	}
+	else if (startCnt > 61)
+	{
+		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[startCnt / 60 % 10], true);
+	}
+	else if (startCnt < 60)
+	{
+		DrawGraph(0, 0, lpImageMng.GetID("image/start.png")[0], true);
+	}
+
+
+
+
 
 	auto as = lpPlayer.Life();
 
@@ -153,14 +179,14 @@ bool GameScene::GameDraw(void)
 			break;
 		}
 	}
-	DrawGraph(0, 0, lpImageMng.GetID("image/strat.png")[0], true);
 	ScreenFlip();
 	return true;
 }
 
 int GameScene::Init(void)
 {
-	timeCnt = 10800;
+	timeCnt = 0;
+	startCnt = 240;
 	padFlag = false;
 	if (!objList)
 	{
