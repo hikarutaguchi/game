@@ -118,22 +118,40 @@ bool GameScene::GameDraw(void)
 
 	auto as = lpPlayer.Life();
 
-	switch (as)
+	for (int i = 0; i < 3; i++)
 	{
-	case 6:
-		DrawGraph(150, 0, lpImageMng.GetID("image/hp.png")[0], true);
-		break;
-	case 5:
-		DrawGraph(180, 0, lpImageMng.GetID("image/hp.png")[1], true);
-		break;
-	case 4:
-		break;
-	case 3:
-		break;
-	case 2:
-		break;
-	case 1:
-		break;
+		switch (as)
+		{
+		case 6:
+			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
+			break;
+		case 5:
+			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
+			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[1], true);
+			break;
+		case 4:
+			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
+			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[2], true);
+			break;
+		case 3:
+			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
+			DrawGraph(120 + 64 * 1, 0, lpImageMng.GetID("image/hp.png")[1], true);
+			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[2], true);
+			break;
+		case 2:
+			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
+			DrawGraph(120 + 64 * 1, 0, lpImageMng.GetID("image/hp.png")[2], true);
+			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[2], true);
+			break;
+		case 1:
+			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[1], true);
+			DrawGraph(120 + 64 * 1, 0, lpImageMng.GetID("image/hp.png")[2], true);
+			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[2], true);
+			break;
+		default:
+			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[2], true);
+			break;
+		}
 	}
 
 	ScreenFlip();
