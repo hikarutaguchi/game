@@ -91,6 +91,7 @@ int Player::Life()
 	if (count > 120)
 	{
 		life -= 1;
+		count = 0;
 	}
 	count++;
 	return life;
