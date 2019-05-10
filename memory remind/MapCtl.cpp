@@ -52,32 +52,35 @@ void MapCtl::Draw(bool editModeFlag)
 			}
 		}
 	}
-	for (int y = 0; y < mapSize.y; y++)
+	else
 	{
-		for (int x = 0; x < mapSize.x; x++)
+		for (int y = 0; y < mapSize.y; y++)
 		{
-			MAP_ID id = mapData[y][x];
-			switch (id)
+			for (int x = 0; x < mapSize.x; x++)
 			{
-			case (MAP_ID::YUKA):
-			case (MAP_ID::IWA):
-			case (MAP_ID::HOLE):
-			case (MAP_ID::UNTI):
-			case (MAP_ID::EKI):
-			case (MAP_ID::NULLL):
-			case (MAP_ID::WIND):
-			case (MAP_ID::MAGIC):
-			case (MAP_ID::MAGIC1):
-			case (MAP_ID::BORN):
-			case (MAP_ID::ESA):
-			case (MAP_ID::TOOL):
-				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(id)], true);
-				break;
-				// ´×°
+				MAP_ID id = mapData[y][x];
+				switch (id)
+				{
+				case (MAP_ID::YUKA):
+				case (MAP_ID::IWA):
+				case (MAP_ID::HOLE):
+				case (MAP_ID::UNTI):
+				case (MAP_ID::EKI):
+				case (MAP_ID::NULLL):
+				case (MAP_ID::WIND):
+				case (MAP_ID::MAGIC):
+				case (MAP_ID::MAGIC1):
+				case (MAP_ID::BORN):
+				case (MAP_ID::ESA):
+				case (MAP_ID::TOOL):
+					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(id)], true);
+					break;
+					// ´×°
 #ifdef _DEBUG
-				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::UNTI)], true);
+					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::UNTI)], true);
 #endif
-				break;
+					break;
+				}
 			}
 		}
 	}
