@@ -153,7 +153,7 @@ bool GameScene::GameDraw(void)
 			break;
 		}
 	}
-
+	DrawGraph(0, 0, lpImageMng.GetID("image/strat.png")[0], true);
 	ScreenFlip();
 	return true;
 }
