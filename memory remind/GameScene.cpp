@@ -109,12 +109,20 @@ bool GameScene::GameDraw(void)
 	DrawGraph(0, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[2], true);
 	DrawGraph(SCREEN_SIZE_X - 120, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[3], true);
 
+	//時間表示
+	timeCnt--;
+
+	DrawGraph(SCREEN_SIZE_X / 2 - 75, 45, lpImageMng.GetID("image/number.png")[timeCnt / 6000 % 10], true);
+	DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[timeCnt / 600 % 10], true);
+	DrawGraph(SCREEN_SIZE_X / 2 - 75 + 100, 45, lpImageMng.GetID("image/number.png")[timeCnt / 60 % 10], true);
+
 	ScreenFlip();
 	return true;
 }
 
 int GameScene::Init(void)
 {
+	timeCnt = 10800;
 	padFlag = false;
 	if (!objList)
 	{
@@ -123,6 +131,8 @@ int GameScene::Init(void)
 	}
 	objList->clear();
 	lpImageMng.GetID("image/flame.png", VECTOR2(120, 120), VECTOR2(2, 2));		//プレイヤーのフレームを読み込み
+	lpImageMng.GetID("image/number.png", VECTOR2(50, 50), VECTOR2(10, 1));		//ナンバー
+
 	lpSceneMng.SetDrawOffset( VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y) );
 	lpMapCtl.SetUp( VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y) , VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
 	lpMapCtl.MapLoad(objList, false);
