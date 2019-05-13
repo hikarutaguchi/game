@@ -52,6 +52,15 @@
     <ClCompile Include="ResultScene.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Slime.cpp">
+      <Filter>ソースファイル\Character.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Skelton.cpp">
+      <Filter>ソースファイル\Character.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Carbuncle.cpp">
+      <Filter>ソースファイル\Character.cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bomb.h">
@@ -105,6 +114,15 @@
     <ClInclude Include="ResultScene.h">
       <Filter>ヘッダーファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Slime.h">
+      <Filter>ヘッダーファイル\Character.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Skelton.h">
+      <Filter>ヘッダーファイル\Character.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Carbuncle.h">
+      <Filter>ヘッダーファイル\Character.h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ヘッダーファイル">
@@ -118,6 +136,12 @@
     </Filter>
     <Filter Include="ヘッダーファイル\Scene">
       <UniqueIdentifier>{86d22e41-037f-475e-bba8-6cbb7efc7677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\Character.cpp">
+      <UniqueIdentifier>{bbb6fae7-f37d-44ae-b5c7-a07b83228e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Character.h">
+      <UniqueIdentifier>{570c9ab3-4d3f-4ebf-a452-ed71383b4183}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
