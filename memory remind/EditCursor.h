@@ -18,5 +18,6 @@ private:
 	int keyGetRng;														// ó•tÌÚ°Ñ”
 	int inputFram;														// “ü—ÍÌÚ°Ñ”
 
+	int count;
 	MAP_ID id;
 };

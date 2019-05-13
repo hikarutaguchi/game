@@ -15,11 +15,23 @@ struct DataHeader {
 	int sizeY;							// マップのﾏｽ目数Y
 	char reserve2[3];					// 3ﾊﾞｲﾄのﾀﾞﾐｰ,予約領域
 	char sum;							// sum値
-
 };
 
-#define BOMBERMAN_FILE_ID "BBM_MAP_DATA"
-#define BOMBERMAN_VER_ID 0x01			// ﾌｧｲﾙﾊﾞｰｼﾞｮﾝ番号
+struct DataHeaderBase {
+	char fileID[14];					// ファイルのID情報
+	char verID;							// バージョン番号
+	char reserve1[2];					// 2ﾊﾞｲﾄのﾀﾞﾐｰ,予約領域
+	int sizeX;							// マップのﾏｽ目数X
+	int sizeY;							// マップのﾏｽ目数Y
+	char reserve2[3];					// 3ﾊﾞｲﾄのﾀﾞﾐｰ,予約領域
+	char sum;							// sum値
+};
+
+#define MAP_FILE_ID "BBM_MAP_DATA"
+#define MAP_FILE_BASE_ID  "MAP_DATA_BASE"
+#define MAP_FILE_VER_ID 0x01			// ﾌｧｲﾙﾊﾞｰｼﾞｮﾝ番号
+#define MAP_FILE_BASE_VER_ID 0x01
+
 #define lpSceneMng SceneMng::GetInstance()
 
 // 炎のｱﾆﾒｰｼｮﾝ
@@ -197,8 +209,8 @@ idType MapCtl::GetData(mapType maps, const VECTOR2 & pos, idType defid)
 bool MapCtl::MapSave(void)
 {
 	DataHeader exportData = {
-		BOMBERMAN_FILE_ID,
-		BOMBERMAN_VER_ID,
+		MAP_FILE_ID,
+		MAP_FILE_VER_ID,
 		{ 0,0 },			// 配列を明示的にする
 		mapSize.x,
 		mapSize.y,
@@ -225,7 +237,6 @@ bool MapCtl::MapSave(void)
 
 bool MapCtl::MapLoad(sharedListObj objList, bool editModeFlag)//
 {
-
 	FILE *file;													// ファイルポインタ
 	DataHeader exportData;
 	fopen_s(&file, "data/mapdata.map", "rb");					// ファイルを開く
@@ -236,11 +247,11 @@ bool MapCtl::MapLoad(sharedListObj objList, bool editModeFlag)//
 	fclose(file);
 	bool flag = true;
 
-	if ((std::string)exportData.fileID != BOMBERMAN_FILE_ID)
+	if ((std::string)exportData.fileID != MAP_FILE_ID)
 	{
 		flag = false;
 	}
-	if (exportData.verID != BOMBERMAN_VER_ID)
+	if (exportData.verID != MAP_FILE_VER_ID)
 	{
 		flag = false;
 	}
@@ -255,17 +266,95 @@ bool MapCtl::MapLoad(sharedListObj objList, bool editModeFlag)//
 		flag = false;
 	}
 	//ﾃﾞｰﾀのｸﾘｱ
-	//if (flag == false)
-	//{
-	//	for (unsigned int j = 0; j < mapDataBase.size(); j++)
-	//	{
-	//		mapDataBase[j] = (MAP_ID::NON);
-	//	}
-	//	//for (auto &data : mapDataBase)			//　参照にしてあげることで書き換えができるようになる
-	//	//{
-	//	//	data = MAP_ID_NON;
-	//	//}
-	//}
+	if (flag == false)
+	{
+		for (unsigned int j = 0; j < mapDataBase.size(); j++)
+		{
+			mapDataBase[j] = (MAP_ID::YUKA);
+		}
+		for (auto &data : mapDataBase)			//　参照にしてあげることで書き換えができるようになる
+		{
+			data = MAP_ID::YUKA;
+		}
+	}
+	if (flag == true)
+	{
+		SetUpGameObj(objList, editModeFlag);
+	}
+	return flag;
+}
+
+bool MapCtl::MapSaveBase(void)
+{
+	DataHeaderBase exportData = {
+		MAP_FILE_BASE_ID,
+		MAP_FILE_BASE_VER_ID,
+		{ 0,0 },			// 配列を明示的にする
+		mapSize.x,
+		mapSize.y,
+		{ 0,0,0 },			// 配列を明示的にする
+		(char)0xff
+	};
+
+	int sum = 0;				// sum値の計算
+	for (unsigned int j = 0; j < mapDataBase.size(); j++)
+	{
+		sum += (int)mapDataBase[j];
+	}
+
+	exportData.sum = (char)sum;
+
+	FILE *file;																// ファイルポインタ
+	fopen_s(&file, "data/mapdatabase.map", "wb");								// ファイルを開く
+	fwrite(&exportData, sizeof(exportData), 1, file);						// 書き込む
+	fwrite(mapDataBase.data(), sizeof(MAP_ID), mapDataBase.size(), file);
+	fclose(file);															// ファイルを閉じる
+
+	return true;
+}
+
+bool MapCtl::MapLoadBase(sharedListObj objList, bool editModeFlag)
+{
+	FILE *file;													// ファイルポインタ
+	DataHeaderBase exportData;
+	fopen_s(&file, "data/mapdatabase.map", "rb");					// ファイルを開く
+	fread(&exportData, sizeof(exportData), 1, file);			// 読み出し先のｱﾄﾞﾚｽ,何個読むか
+																// ﾍｯﾀﾞのｻｲｽﾞ情報をもとにmapDataBaseをresizeする。
+	mapDataBase.resize(exportData.sizeX * exportData.sizeY);
+	fread(mapDataBase.data(), sizeof(MAP_ID), mapDataBase.size(), file);
+	fclose(file);
+	bool flag = true;
+
+	if ((std::string)exportData.fileID != MAP_FILE_BASE_ID)
+	{
+		flag = false;
+	}
+	if (exportData.verID != MAP_FILE_BASE_VER_ID)
+	{
+		flag = false;
+	}
+	//sum値を計算して、ﾍｯﾀﾞｰのsum値と違っていたら、ﾃﾞｰﾀをｸﾘｱ
+	int sum = 0;				//sum値の計算
+	for (unsigned int j = 0; j < mapDataBase.size(); j++)
+	{
+		sum += (int)mapDataBase[j];			//今はint
+	}
+	if (exportData.sum != (char)sum)		//charで明示的にｷｬｽﾄしないと4byteから1byteは大きいものは切り捨てられる
+	{
+		flag = false;
+	}
+	//ﾃﾞｰﾀのｸﾘｱ
+	if (flag == false)
+	{
+		for (unsigned int j = 0; j < mapDataBase.size(); j++)
+		{
+			mapDataBase[j] = (MAP_ID::YUKA);
+		}
+		for (auto &data : mapDataBase)			//　参照にしてあげることで書き換えができるようになる
+		{
+			data = MAP_ID::YUKA;
+		}
+	}
 	if (flag == true)
 	{
 		SetUpGameObj(objList, editModeFlag);

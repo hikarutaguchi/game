@@ -38,11 +38,7 @@ unique_Base EditScene::Updata(unique_Base own, const Game_ctr & controller)
 
 	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F5]) //現在のｷｰ情報を取得
 	{
-		//ﾛｰﾄﾞ
-		if (MessageBox(NULL, "エディット内容をロードしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)	//返り値で帰ってきてる
-		{
-			MapCtl::GetInstance().MapLoad(objList, true);
-		}
+		MapCtl::GetInstance().MapLoad(objList, true);
 	}
 	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F6])
 	{
@@ -63,7 +59,7 @@ unique_Base EditScene::Updata(unique_Base own, const Game_ctr & controller)
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
-		(*itr)->UpData(objList,controller);
+		(*itr)->UpData(objList, controller);
 	}
 	EditDraw();
 	return std::move(own);
@@ -132,6 +128,7 @@ int EditScene::Init(void)
 	lpMapCtl.SetUp(VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y), VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
 	auto obj = AddObjList()(objList, std::make_unique<EditCursor>(SceneMng::GetInstance().GetDrawOffset()));
 	(*obj)->Init("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));
+	MapCtl::GetInstance().MapLoadBase(objList, true);
 
 	return 0;
 }

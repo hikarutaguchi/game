@@ -27,7 +27,9 @@ public:
 	MAP_ID GetMapData(const VECTOR2& pos);													// “Ç‚İ‚İ—pŠÖ”
 
 	bool MapSave(void);																		// Ï¯Ìß¾°ÌŞ
-	bool MapLoad(sharedListObj objList, bool editModeFlag);									// Ï¯ÌßÛ°ÄŞ	
+	bool MapLoad(sharedListObj objList, bool editModeFlag);									// Ï¯ÌßÛ°ÄŞ
+	bool MapSaveBase(void);
+	bool MapLoadBase(sharedListObj objList, bool editModeFlag);								// Ï¯ÌßÛ°ÄŞ	
 	bool SetUpGameObj(sharedListObj objList, bool editModeFlag);							// µÌŞ¼Şª¸Ä‚Ì¾¯Ä
 	const VECTOR2& GetChipSize(void);														// Á¯Ìß»²½Ş‚ğó‚¯æ‚é
 	const VECTOR2& GetMapSize(void);														// Ï¯Ìß»²½Ş‚ğó‚¯æ‚é
