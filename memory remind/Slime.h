@@ -6,5 +6,8 @@ class Slime :
 public:
 	Slime();
 	~Slime();
+
+	void SetMove(weekListObj objList, const Game_ctr &controller);
+	bool InitAnim(void);
 };
 
