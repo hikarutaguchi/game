@@ -16,6 +16,7 @@ private:
 	int goalPoint[PLAYER_MAX];
 	int totalPoint[PLAYER_MAX];
 	int ranking[PLAYER_MAX];
+	int holdbox;
 
 	int Init(void);
 	bool nextScene;
