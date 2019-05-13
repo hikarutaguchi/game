@@ -4,6 +4,7 @@
 #include "Game_ctr.h"
 #include "ImageMng.h"
 #include "Obj.h"
+#include "Player.h"
 
 ResultScene::ResultScene()
 {
@@ -16,6 +17,13 @@ ResultScene::~ResultScene()
 
 unique_Base ResultScene::Updata(unique_Base own, const Game_ctr & controller)
 {
+	for (int i = 0; i < PLAYER_MAX; i++)
+	{
+		killPoint[i] = 1;
+		goalPoint[i] = 1;
+		totalPoint[i] = killPoint[i] + goalPoint[i];
+	}
+
 	for (int i = 0; i < GetJoypadNum(); i++)
 	{
 		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
@@ -30,6 +38,13 @@ unique_Base ResultScene::Updata(unique_Base own, const Game_ctr & controller)
 
 int ResultScene::Init(void)
 {
+	for (int i = 0; i < PLAYER_MAX; i++)
+	{
+		killPoint[i] = 0;
+		goalPoint[i] = 0;
+		totalPoint[i] = 0;
+		ranking[i] = 0;
+	}
 	padFlag = false;
 	if (!objList)
 	{
