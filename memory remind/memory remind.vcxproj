@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="BaseScene.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="Carbuncle.cpp" />
     <ClCompile Include="EditCursor.cpp" />
     <ClCompile Include="EditScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -142,12 +143,15 @@
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SceneMng.cpp" />
     <ClCompile Include="SelectScene.cpp" />
+    <ClCompile Include="Skelton.cpp" />
+    <ClCompile Include="Slime.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="VECTOR2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="Carbuncle.h" />
     <ClInclude Include="classObj.h" />
     <ClInclude Include="EditCursor.h" />
     <ClInclude Include="EditScene.h" />
@@ -161,6 +165,8 @@
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="SceneMng.h" />
     <ClInclude Include="SelectScene.h" />
+    <ClInclude Include="Skelton.h" />
+    <ClInclude Include="Slime.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="VECTOR2.h" />
   </ItemGroup>
