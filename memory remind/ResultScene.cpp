@@ -24,6 +24,9 @@ unique_Base ResultScene::Updata(unique_Base own, const Game_ctr & controller)
 		totalPoint[i] = killPoint[i] + goalPoint[i];
 	}
 
+	//‡ˆÊˆ—
+	
+
 	for (int i = 0; i < GetJoypadNum(); i++)
 	{
 		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
@@ -38,6 +41,7 @@ unique_Base ResultScene::Updata(unique_Base own, const Game_ctr & controller)
 
 int ResultScene::Init(void)
 {
+	holdbox = 0;
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
 		killPoint[i] = 0;
