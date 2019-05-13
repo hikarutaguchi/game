@@ -16,20 +16,13 @@ TitleScene::~TitleScene()
 {
 }
 
-unique_Base TitleScene::Updata(unique_Base own, const Game_ctr & controller)
+unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 {
-	for (int i = 0; i < GetJoypadNum(); i++)
+	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
-		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		for (int j = 0; j < 28; j++)
+		if (controller.GetCtr(i) == PAD_PUSH)
 		{
-			if ((Pad[i] & (1 << j)))
-			{
-				if (!padFlag)
-				{
-					return std::make_unique<SelectScene>();
-				}
-			}
+			return std::make_unique<SelectScene>();
 		}
 	}
 

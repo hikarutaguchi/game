@@ -19,7 +19,7 @@ EditScene::~EditScene()
 
 }
 
-unique_Base EditScene::Updata(unique_Base own, const Game_ctr & controller)
+unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 {
 
 	//if ( (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1]) & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]) )
@@ -36,26 +36,26 @@ unique_Base EditScene::Updata(unique_Base own, const Game_ctr & controller)
 		}
 	}
 
-	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F5]) //現在のｷｰ情報を取得
-	{
-		MapCtl::GetInstance().MapLoad(objList, true);
-	}
-	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F6])
-	{
-		//ｾｰﾌﾞ
-		if (MessageBox(NULL, "エディット内容をセーブしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)
-		{
-			MapCtl::GetInstance().MapSave();
-		}
-	}
-	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F2]) //現在のｷｰ情報を取得
-	{
-		//ﾛｰﾄﾞ
-		if (MessageBox(NULL, "エディット内容をリセットしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)	//返り値で帰ってきてる
-		{
-			Init();
-		}
-	}
+	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F5]) //現在のｷｰ情報を取得
+	//{
+	//	MapCtl::GetInstance().MapLoad(objList, true);
+	//}
+	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F6])
+	//{
+	//	//ｾｰﾌﾞ
+	//	if (MessageBox(NULL, "エディット内容をセーブしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)
+	//	{
+	//		MapCtl::GetInstance().MapSave();
+	//	}
+	//}
+	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F2]) //現在のｷｰ情報を取得
+	//{
+	//	//ﾛｰﾄﾞ
+	//	if (MessageBox(NULL, "エディット内容をリセットしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)	//返り値で帰ってきてる
+	//	{
+	//		Init();
+	//	}
+	//}
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{

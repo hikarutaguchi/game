@@ -109,8 +109,8 @@ bool Player::InitAnim(void)
 
 void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 {
-	auto &keyTbl	= controller.GetCtr(KEY_TYPE_NOW);			//autoの場合実体を作るので書き換えが可能
-	auto &keyTblOld = controller.GetCtr(KEY_TYPE_OLD);
+	//auto &keyTbl	= controller.GetCtr(KEY_TYPE_NOW);			//autoの場合実体を作るので書き換えが可能
+	//auto &keyTblOld = controller.GetCtr(KEY_TYPE_OLD);
 
 	auto &chipSize  = lpMapCtl.GetChipSize().x;
 
@@ -188,7 +188,7 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 	};
 
 	auto move = [&,dir = Player::dir](DIR_TBL_ID id) {		//配列にｱｸｾｽする際の引数が違うのでidにする,ｺﾋﾟｰされた前のplayerのdir
-		if (keyTbl[keyTableID[dirTbl[dir][id]]])
+		//if (keyTbl[keyTableID[dirTbl[dir][id]]])
 		//if (keyTableID[dirTbl[dir][id]])
 		{
 			//方向のｾｯﾄ
@@ -233,8 +233,8 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 	else
 	{
 		//subｷｰの入力があったらflagが立つ
-		afterkeyFlag  = keyTbl[ keyTableID [ dirTbl[dir][DIR_TBL_SUB1]] ];
-		afterkeyFlag |= static_cast<bool>(keyTbl[ keyTableID [ dirTbl[dir][DIR_TBL_SUB2]] ]);
+		//afterkeyFlag  = keyTbl[ keyTableID [ dirTbl[dir][DIR_TBL_SUB1]] ];
+		//afterkeyFlag |= static_cast<bool>(keyTbl[ keyTableID [ dirTbl[dir][DIR_TBL_SUB2]] ]);
 		afterkeyFlag ^= (int)(GetAnim() == "停止"); 
 	}
 	SetAnim("移動");
