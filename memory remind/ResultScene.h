@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "classObj.h"
+#include "Player.h"
 
 class ResultScene :
 	public BaseScene
@@ -11,6 +12,11 @@ public:
 	virtual unique_Base Updata(unique_Base own, const Game_ctr &controller);	// èÉêàâºëzä÷êîUpDate
 
 private:
+	int killPoint[PLAYER_MAX];
+	int goalPoint[PLAYER_MAX];
+	int totalPoint[PLAYER_MAX];
+	int ranking[PLAYER_MAX];
+
 	int Init(void);
 	bool nextScene;
 	void Draw();
