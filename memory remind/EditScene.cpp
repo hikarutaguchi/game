@@ -27,14 +27,15 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 	//	return std::make_unique<GameScene>();
 	//}
 
-	for (int i = 0; i < GetJoypadNum(); i++)
+	if (bGetCtr == PAD_FREE)
 	{
-		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		if ((Pad[i] & PAD_INPUT_1) && ((Pad[i] & PAD_INPUT_2)))
+		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A) == PAD_PUSH)
 		{
 			return std::make_unique<GameScene>();
 		}
 	}
+
+	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A);
 
 	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F5]) //Œ»İ‚Ì·°î•ñ‚ğæ“¾
 	//{
@@ -114,6 +115,7 @@ void EditScene::Text()
 
 int EditScene::Init(void)
 {
+	bGetCtr = PAD_MAX;
 	//¼°İ‚ªˆÚ‚Á‚½‚çØ¾¯Ä
 	if (!objList)
 	{

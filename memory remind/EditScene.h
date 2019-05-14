@@ -19,6 +19,6 @@ private:
 	void Text();					// •¶š•\¦ŠÖ”
 	bool EditDraw();				// ´ÃŞ¨¯Ä•\¦
 	VECTOR2 Drawpos;
-	int Pad[4];
+	int bGetCtr;
 	bool padFlag;
 };

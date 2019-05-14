@@ -14,14 +14,6 @@ Player::Player(VECTOR2 setupPos ,VECTOR2 drawOffset) :Obj(drawOffset)
 
 	fireLength = 2;
 
-	int Pad[4];
-	for (int i = 0; i < GetJoypadNum(); i++)
-	{
-		for (int j = 0; j < 28; j++)
-		{
-			Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		}
-	}
 					//@MAIN		
 	keyTableID = { PAD_INPUT_DOWN,	// ‰º•ûŒü
 				   PAD_INPUT_LEFT,	// ¶•ûŒü
