@@ -23,6 +23,7 @@ EditCursor::EditCursor()
 	inputFram = EDIT_KEY_GET_DEF_RNG;
 	itemButton = PAD_MAX;
 	setButton = PAD_MAX;
+	count = 0;
 	id = static_cast<MAP_ID>(MAP_ID::IWA);
 }
 
@@ -132,7 +133,11 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_B) == PAD_PUSH)
 		{
-			lpMapCtl.SetMapData(pos, id);
+			if (count < 2)
+			{
+				lpMapCtl.SetMapData(pos, id);
+				count += 1;
+			}
 		}
 	}
 
