@@ -22,7 +22,7 @@ class BaseScene
 {
 public:
 	virtual ~BaseScene();
-	virtual unique_Base Updata(unique_Base own, const Game_ctr &controller) = 0;	// ƒˆ‰¼‘zŠÖ”UpDate
+	virtual unique_Base Updata(unique_Base own, Game_ctr &controller) = 0;	// ƒˆ‰¼‘zŠÖ”UpDate
 private:
 	virtual int Init(void) = 0;														// ƒˆ‰¼‘zŠÖ”Init
 };

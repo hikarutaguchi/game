@@ -43,8 +43,8 @@ void EditCursor::Draw(void)
 
 void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 {
-	auto cnt = controller.GetCtr(KEY_TYPE_NOW);
-	auto cntOld = controller.GetCtr(KEY_TYPE_OLD);
+	//auto cnt = controller.GetCtr(KEY_TYPE_NOW);
+	//auto cntOld = controller.GetCtr(KEY_TYPE_OLD);
 
 	int Pad[4];
 	for (int i = 0; i < GetJoypadNum(); i++)
@@ -123,15 +123,15 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 			count = 0;
 		}
 	}
-	if ((cnt[KEY_INPUT_X]) && (!cntOld[KEY_INPUT_X]))
-	{
-		// id = (MAP_ID) (id + 1 >= MAP_ID_MAX ? MAP_ID_NON:id + 1) ŽO€‰‰ŽZŽq‚Å‘‚¢‚½ê‡
-		id = (MAP_ID)(id + 1);
-		if (id > MAP_ID::TOOL)
-		{
-			id = MAP_ID::YUKA + 1;
-		}
-	}
+	//if ((cnt[KEY_INPUT_X]) && (!cntOld[KEY_INPUT_X]))
+	//{
+	//	// id = (MAP_ID) (id + 1 >= MAP_ID_MAX ? MAP_ID_NON:id + 1) ŽO€‰‰ŽZŽq‚Å‘‚¢‚½ê‡
+	//	id = (MAP_ID)(id + 1);
+	//	if (id > MAP_ID::TOOL)
+	//	{
+	//		id = MAP_ID::YUKA + 1;
+	//	}
+	//}
 	count++;
 	//if (cnt[KEY_INPUT_SPACE] & (~cntOld[KEY_INPUT_SPACE]))
 	//{

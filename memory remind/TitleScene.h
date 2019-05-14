@@ -8,7 +8,7 @@ public:
 	TitleScene();
 	~TitleScene();
 
-	virtual unique_Base Updata(unique_Base own, const Game_ctr &controller);
+	virtual unique_Base Updata(unique_Base own, Game_ctr &controller);
 
 private:
 	int Init(void);

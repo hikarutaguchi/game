@@ -19,7 +19,7 @@ GameScene::~GameScene()
 
 }
 
-unique_Base GameScene::Updata(unique_Base own, const Game_ctr & controller)
+unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 {
 
 	for (int i = 0; i < GetJoypadNum(); i++)

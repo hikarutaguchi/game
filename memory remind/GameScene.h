@@ -10,7 +10,7 @@ class GameScene :
 public:
 	GameScene();
 	~GameScene();
-	unique_Base Updata(unique_Base own, const Game_ctr &controller);			// ƒˆ‰¼‘zÀ‘Ì‘¤Updata
+	unique_Base Updata(unique_Base own, Game_ctr &controller);			// ƒˆ‰¼‘zÀ‘Ì‘¤Updata
 
 private:
 	sharedListObj objList;														// ²İ½Àİ½‚µ‚½î•ñ‚ğ“o˜^

@@ -11,7 +11,7 @@ class EditScene :
 public:
 	EditScene();
 	~EditScene();
-	virtual unique_Base Updata(unique_Base own, const Game_ctr &controller);
+	virtual unique_Base Updata(unique_Base own, Game_ctr &controller);
 
 private:
 	sharedListObj objList;			// ²İ½Àİ½‚µ‚½î•ñ‚ğ“o˜^
@@ -19,6 +19,6 @@ private:
 	void Text();					// •¶š•\¦ŠÖ”
 	bool EditDraw();				// ´ÃŞ¨¯Ä•\¦
 	VECTOR2 Drawpos;
-	int Pad[4];
+	int bGetCtr;
 	bool padFlag;
 };

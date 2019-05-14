@@ -10,7 +10,6 @@
 SelectScene::SelectScene()
 {
 	Init();
-
 }
 
 
@@ -18,21 +17,24 @@ SelectScene::~SelectScene()
 {
 }
 
-unique_Base SelectScene::Updata(unique_Base own, const Game_ctr & controller)
+unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 {
-	for (int i = 0; i < GetJoypadNum(); i++)
+	if (bGetCtr == PAD_FREE)
 	{
-		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		if ((Pad[i] & PAD_INPUT_4) && ((Pad[i] & PAD_INPUT_2)))
+		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A) == PAD_PUSH)
 		{
 			return std::make_unique<EditScene>();
 		}
 	}
+
+	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A);
+
 	return std::move(own);
 }
 
 int SelectScene::Init(void)
 {
+	bGetCtr = PAD_MAX;
 	lpImageMng.GetID("image/button_UI.png", VECTOR2(300, 64), VECTOR2(2, 3));		//プレイヤーのフレームを読み込み
 	padFlag = false;
 	if (!objList)

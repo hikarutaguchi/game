@@ -19,7 +19,7 @@ EditScene::~EditScene()
 
 }
 
-unique_Base EditScene::Updata(unique_Base own, const Game_ctr & controller)
+unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 {
 
 	//if ( (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1]) & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]) )
@@ -27,35 +27,36 @@ unique_Base EditScene::Updata(unique_Base own, const Game_ctr & controller)
 	//	return std::make_unique<GameScene>();
 	//}
 
-	for (int i = 0; i < GetJoypadNum(); i++)
+	if (bGetCtr == PAD_FREE)
 	{
-		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		if ((Pad[i] & PAD_INPUT_1) && ((Pad[i] & PAD_INPUT_2)))
+		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A) == PAD_PUSH)
 		{
 			return std::make_unique<GameScene>();
 		}
 	}
 
-	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F5]) //現在のｷｰ情報を取得
-	{
-		MapCtl::GetInstance().MapLoad(objList, true);
-	}
-	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F6])
-	{
-		//ｾｰﾌﾞ
-		if (MessageBox(NULL, "エディット内容をセーブしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)
-		{
-			MapCtl::GetInstance().MapSave();
-		}
-	}
-	if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F2]) //現在のｷｰ情報を取得
-	{
-		//ﾛｰﾄﾞ
-		if (MessageBox(NULL, "エディット内容をリセットしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)	//返り値で帰ってきてる
-		{
-			Init();
-		}
-	}
+	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A);
+
+	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F5]) //現在のｷｰ情報を取得
+	//{
+	//	MapCtl::GetInstance().MapLoad(objList, true);
+	//}
+	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F6])
+	//{
+	//	//ｾｰﾌﾞ
+	//	if (MessageBox(NULL, "エディット内容をセーブしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)
+	//	{
+	//		MapCtl::GetInstance().MapSave();
+	//	}
+	//}
+	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F2]) //現在のｷｰ情報を取得
+	//{
+	//	//ﾛｰﾄﾞ
+	//	if (MessageBox(NULL, "エディット内容をリセットしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)	//返り値で帰ってきてる
+	//	{
+	//		Init();
+	//	}
+	//}
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
@@ -114,6 +115,7 @@ void EditScene::Text()
 
 int EditScene::Init(void)
 {
+	bGetCtr = PAD_MAX;
 	//ｼｰﾝが移ったらﾘｾｯﾄ
 	if (!objList)
 	{

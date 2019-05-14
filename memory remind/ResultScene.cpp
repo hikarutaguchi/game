@@ -15,7 +15,7 @@ ResultScene::~ResultScene()
 {
 }
 
-unique_Base ResultScene::Updata(unique_Base own, const Game_ctr & controller)
+unique_Base ResultScene::Updata(unique_Base own, Game_ctr & controller)
 {
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{

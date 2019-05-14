@@ -9,7 +9,7 @@ class ResultScene :
 public:
 	ResultScene();
 	~ResultScene();
-	virtual unique_Base Updata(unique_Base own, const Game_ctr &controller);	// ƒˆ‰¼‘zŠÖ”UpDate
+	virtual unique_Base Updata(unique_Base own, Game_ctr &controller);	// ƒˆ‰¼‘zŠÖ”UpDate
 
 private:
 	int killPoint[PLAYER_MAX];
