@@ -21,6 +21,8 @@ EditCursor::EditCursor()
 {
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
+	itemButton = PAD_MAX;
+	setButton = PAD_MAX;
 	id = static_cast<MAP_ID>(MAP_ID::IWA);
 }
 
@@ -86,16 +88,6 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 					}
 				}
 
-				if ((PAD_INPUT_B & Pad[i]) && (count > 15))
-				{
-					id = (MAP_ID)(id + 1);
-					if (id > MAP_ID::TOOL)
-					{
-						id = MAP_ID::YUKA + 1;
-					}
-					count = 0;
-				}
-
 				if (tmpPos != pos)	//ˆá‚Á‚½‚ç·°“ü—Í‚ª‚ ‚é
 				{
 					inputFram++;
@@ -123,20 +115,31 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 			count = 0;
 		}
 	}
-	//if ((cnt[KEY_INPUT_X]) && (!cntOld[KEY_INPUT_X]))
-	//{
-	//	// id = (MAP_ID) (id + 1 >= MAP_ID_MAX ? MAP_ID_NON:id + 1) ŽO€‰‰ŽZŽq‚Å‘‚¢‚½ê‡
-	//	id = (MAP_ID)(id + 1);
-	//	if (id > MAP_ID::TOOL)
-	//	{
-	//		id = MAP_ID::YUKA + 1;
-	//	}
-	//}
-	count++;
-	//if (cnt[KEY_INPUT_SPACE] & (~cntOld[KEY_INPUT_SPACE]))
-	//{
-	//	lpMapCtl.SetMapData(pos, id);
-	//}
+
+	if (itemButton == PAD_FREE)
+	{
+		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_Y) == PAD_PUSH)
+		{
+			id = (MAP_ID)(id + 1);
+			if (id > MAP_ID::TOOL)
+			{
+				id = MAP_ID::YUKA + 1;
+			}
+		}
+	}
+
+	if (setButton == PAD_FREE)
+	{
+		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_B) == PAD_PUSH)
+		{
+			lpMapCtl.SetMapData(pos, id);
+		}
+	}
+
+
+	itemButton = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_Y);
+	setButton  = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_B);
+
 }
 
 bool EditCursor::CheckObjType(OBJ_TYPE type)

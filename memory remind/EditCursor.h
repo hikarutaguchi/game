@@ -19,5 +19,7 @@ private:
 	int inputFram;														// “ü—ÍÌÚ°Ñ”
 
 	int count;
+	int itemButton;
+	int setButton;
 	MAP_ID id;
 };

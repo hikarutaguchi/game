@@ -29,6 +29,11 @@ unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 
 	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A);
 
+	for (auto itr = objList->begin(); itr != objList->end(); itr++)
+	{
+		(*itr)->UpData(objList, controller);
+	}
+
 	return std::move(own);
 }
 
@@ -44,6 +49,7 @@ int SelectScene::Init(void)
 	}
 
 	objList->clear();
+
 	Draw();
 	return 0;
 }
