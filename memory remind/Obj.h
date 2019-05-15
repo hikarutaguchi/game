@@ -15,10 +15,10 @@ enum ANIM_TBL {			// AddAnim‚ð·°‚Å±¸¾½
 };
 
 enum DIR {
+	DIR_UP,
 	DIR_DOWN,
 	DIR_LEFT,
 	DIR_RIGHT,
-	DIR_UP,
 	DIR_MAX
 };
 
