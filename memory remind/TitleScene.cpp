@@ -30,7 +30,8 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		(*itr)->UpData(objList, controller);
 	}
-
+	animCnt += 10;
+	Draw();
 	return std::move(own);
 }
 
@@ -44,7 +45,6 @@ int TitleScene::Init(void)
 	}
 
 	objList->clear();
-	Draw();
 	return 0;
 }
 
@@ -52,6 +52,9 @@ void TitleScene::Draw()
 {
 	ClsDrawScreen();
 	DrawGraph(0, 0, lpImageMng.GetID("image/title.png")[0], true);
-	DrawGraph(100, 700, lpImageMng.GetID("image/titlebutton.png")[0], true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((int)(animCnt % 640) - 256));
+	DrawGraph(150, 700, lpImageMng.GetID("image/titlebutton.png")[0], true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	ScreenFlip();
 }
