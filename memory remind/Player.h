@@ -29,10 +29,11 @@ enum SIDE_CHECK {
 #define PLAYER_LIFE 6
 #define lpPlayer Player::GetInstance()
 
-using DIR_TBL_ARRAY		= std::array<int, DIR_MAX>;
+
+using DIR_TBL_ARRAY = std::array<int, DIR_MAX>;
 using DIR_TBL_PTR_ARRAY = std::array<int*[TBL_MAX], DIR_MAX>;
-using DIR_TBL_DIR		= std::array<DIR[DIR_TBL_MAX], DIR_MAX>;
-using MAP_MOVE_TBL		= std::array<bool, static_cast<int>(MAP_ID::MAX)>;
+using DIR_TBL_DIR = std::array<DIR[DIR_TBL_MAX], DIR_MAX>;
+using MAP_MOVE_TBL = std::array<bool, static_cast<int>(MAP_ID::MAX)>;
 
 class Player :
 	public Obj
@@ -43,14 +44,14 @@ public:
 		static Player s_instance;
 		return s_instance;
 	}
-	Player(VECTOR2 setupPos,VECTOR2 drawOffset);						// 引数付き(Pos,描画の際のoffset)ｺﾝｽﾄﾗｸﾀ
+	Player(VECTOR2 setupPos, VECTOR2 drawOffset);						// 引数付き(Pos,描画の際のoffset)ｺﾝｽﾄﾗｸﾀ
 	Player();
 	~Player();
 	int Life();
 	bool InitAnim(void);												// 画像呼び出し
 private:
 
-	void SetMove(weekListObj objList,const Game_ctr &controller);		//　ﾌﾟﾚｲﾔｰ移動,当たり判定
+	void SetMove(weekListObj objList, const Game_ctr &controller);		//　ﾌﾟﾚｲﾔｰ移動,当たり判定
 	bool CheckObjType(OBJ_TYPE type);									//　ｵﾌﾞｼﾞｪｸﾄﾀｲﾌﾟﾁｪｯｸ
 	bool afterkeyFlag;													//　ｻﾌﾞｷｰ入力ﾌﾗｸﾞ
 	bool DethProcess();													//	死ぬ時処理
@@ -60,7 +61,7 @@ private:
 	int life;
 	int count;
 	int speed;
-	DIR_TBL_ARRAY keyTableID;	// 入力ｷｰﾃｰﾌﾞﾙ
+
 	DIR_TBL_ARRAY speedTbl;		// ｽﾋﾟｰﾄﾞﾃｰﾌﾞﾙ
 	DIR_TBL_PTR_ARRAY posTbl;	// 座標ﾃｰﾌﾞﾙ
 	DIR_TBL_DIR dirTbl;			// 方向ﾃｰﾌﾞﾙ
@@ -70,4 +71,5 @@ private:
 
 	unsigned int fireGuardFlag;
 };
+
 

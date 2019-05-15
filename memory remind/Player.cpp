@@ -8,32 +8,25 @@
 #define lpScene SceneMng::GetInstance()
 #define RE_START_TIME (120U) //Uをつけるとunsiged int型になる
 
-Player::Player(VECTOR2 setupPos ,VECTOR2 drawOffset) :Obj(drawOffset)
+Player::Player(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	speed = 2;
 
 	fireLength = 2;
-
-					//　MAIN		
-	keyTableID = { PAD_INPUT_DOWN,	// 下方向
-				   PAD_INPUT_LEFT,	// 左方向
-				   PAD_INPUT_RIGHT,	// 右方向
-				   PAD_INPUT_UP	// 上方向
-	};	
-					// MAIN
+	// MAIN
 	posTbl = { &pos.y,	&pos.x,  // 下
 			   &pos.x,	&pos.y,  // 左
 			   &pos.x,	&pos.y,  // 右
 			   &pos.y,  &pos.x	 // 上 
 	};
-				 //MAIN			
+	//MAIN			
 	speedTbl = { PLAYER_DEF_SPEED,			// 下
 				-PLAYER_DEF_SPEED,			// 左
-			   	 PLAYER_DEF_SPEED,			// 右
+				 PLAYER_DEF_SPEED,			// 右
 				-PLAYER_DEF_SPEED			// 上
 	};
-				//MAIN	   OPP			SUB1		SUB2
-	dirTbl = {  DIR_DOWN,  DIR_UP,		 DIR_LEFT,	DIR_RIGHT,		// 下(左,右)
+	//MAIN	   OPP			SUB1		SUB2
+	dirTbl = { DIR_DOWN,  DIR_UP,		 DIR_LEFT,	DIR_RIGHT,		// 下(左,右)
 				DIR_LEFT,  DIR_RIGHT,	 DIR_DOWN,	DIR_UP,		    // 左(下,上)
 				DIR_RIGHT, DIR_LEFT,	 DIR_DOWN,	DIR_UP,			// 右(下,上)
 				DIR_UP,    DIR_DOWN,	 DIR_LEFT,	DIR_RIGHT,		// 上(左,右)
@@ -52,10 +45,6 @@ Player::Player(VECTOR2 setupPos ,VECTOR2 drawOffset) :Obj(drawOffset)
 		true,	// ITEM_FIRE,
 		true,	// ITEM_SPEED,
 		true,	// ITEM_WALL_PASS,
-		//true,	// ITEM_CTL,		// 起爆ｺﾝﾄﾛｰﾙ
-		//true,	// ITEM_BOMB_THROW,	// 爆弾投げ
-		//true,	// ITEM_FIRE_GUARD,	// 炎ｶﾞｰﾄﾞ
-		//true,	// ITEM_RANDOM,		// ｱｲﾃﾑﾗﾝﾀﾞﾑ出現
 	};
 
 	Init("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
@@ -91,8 +80,8 @@ int Player::Life()
 
 bool Player::InitAnim(void)
 {
-	AddAnim("停止", 0, 0, 4, 15 ,true);
-	AddAnim("移動", 0, 0, 4, 20 ,true);
+	AddAnim("停止", 0, 0, 4, 15, true);
+	AddAnim("移動", 0, 0, 4, 20, true);
 	AddAnim("死亡", 4, 0, 4, 8, false);
 	return true;
 }
@@ -101,10 +90,7 @@ bool Player::InitAnim(void)
 
 void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 {
-	//auto &keyTbl	= controller.GetCtr(KEY_TYPE_NOW);			//autoの場合実体を作るので書き換えが可能
-	//auto &keyTblOld = controller.GetCtr(KEY_TYPE_OLD);
-
-	auto &chipSize  = lpMapCtl.GetChipSize().x;
+	auto &chipSize = lpMapCtl.GetChipSize().x;
 
 
 	if (GetAnim() == "死亡")	//死亡アニメ再生中
@@ -116,17 +102,6 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 			reStartCnt = RE_START_TIME;
 		}
 	}
-	////炎とプレイヤーの判定
-	//if (!fireGuardFlag)
-	//{
-	//	if (lpMapCtl.GetFireMapData(pos))	//炎があったら死亡
-	//	{
-	//		if (DethProcess())	//死亡処理したら返す
-	//		{
-	//			return;
-	//		}
-	//	}
-	//}
 	reStartCnt -= (reStartCnt > 0);		// reStartCnt > 0は真偽真の場合１引かれる
 	visible = true;
 	if ((reStartCnt / 5) % 2)	//3ﾌﾚｰﾑに一回false
@@ -134,26 +109,20 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 		visible = false;
 	}
 
-	//if ((keyTbl[KEY_INPUT_SPACE]) & (~keyTblOld[KEY_INPUT_SPACE]))
-	//{
-	//	AddObjList()(objList, std::make_unique<Bomb>( ((pos / chipSize) * chipSize), fireLength , lpSceneMng.GetDrawOffset() + VECTOR2( 0,-5 )) );	//fireで長さを受け取る
-	//}
-
-
 	//中身を分かりやすくするためにswitchを使う
-	auto sidePos = [&](DIR dir,VECTOR2 pos,int speed, SIDE_CHECK sideFlg) {
+	auto sidePos = [&](DIR dir, VECTOR2 pos, int speed, SIDE_CHECK sideFlg) {
 		VECTOR2 side;	//配列にして初期化ﾘｽﾄにする
 		switch (dir)
 		{
 		case DIR_LEFT:
-			side = { (- (sideFlg^1) + speed), 0 };
+			side = { (-(sideFlg ^ 1) + speed), 0 };
 			break;
 		case DIR_RIGHT:
 			//ﾁｯﾌﾟｻｲｽﾞの1つ内側なので-1してあげる,-2だと2つ後ろ側なので意味がない
 			side = { (chipSize - sideFlg) + 2, 0 };
 			break;
 		case DIR_UP:
-			side = { 0, -(sideFlg^1) + speed };
+			side = { 0, -(sideFlg ^ 1) + speed };
 			break;
 		case DIR_DOWN:
 			side = { 0, ((chipSize - sideFlg) + speed) };
@@ -163,71 +132,136 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 		}
 		return pos + side;
 	};
-	//移動ﾁｪｯｸﾗﾑﾀﾞ
-	auto CheckMove_Bomb = [&]() {
-		bool rtnFlag = false;
-		//①
-		sharedObjList tmpList = (*objList.lock());	//中身だけ欲しいならｱｽﾀﾘｽｸ、外側が欲しいならそのまま	これでlistをｺﾋﾟｰ
-		//今回は条件で消したいのでremove_if
-		tmpList.remove_if([](sharedObj &obj_bomb) {return (!obj_bomb->CheckObjType(OBJ_BOMB)); });
-		//当たり判定
-		for (auto &bomb : tmpList)	//bombを取り出す
-		{
-			//比較結果返り値をrtnFlagに保存、保存する際にor代入
-			rtnFlag |= (sidePos(dir, pos, 0,IN_SIDE) == sidePos(dirTbl[dir][DIR_TBL_OPP], bomb->GetPos(), 0,OUT_SIDE));
-		}
-		return !rtnFlag;
-	};
 
-	auto move = [&,dir = Player::dir](DIR_TBL_ID id) {		//配列にｱｸｾｽする際の引数が違うのでidにする,ｺﾋﾟｰされた前のplayerのdir
-		//if (keyTbl[keyTableID[dirTbl[dir][id]]])
-		//if (keyTableID[dirTbl[dir][id]])
-		{
-			//方向のｾｯﾄ
-			Player::dir = dirTbl[dir][id];
-   			//動いていいか処理
-			if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir,pos,speedTbl[Player::dir],IN_SIDE))) ])	//IN_SIDEで１を渡したい
-			{
-				//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
-				return false;
-			}
-			//方向のｾｯﾄの上に書くと向きを引数として渡す必要があるので、方向のｾｯﾄの後にする
-			//移動の向きをｾｯﾄはしていてほしいので、方向のｾｯﾄの後に書く
-			//爆弾との当たり判定
-			if ( !CheckMove_Bomb() )		//上とifの中身が同じなのでor条件で括ることもできる。
-			{
-				//爆弾が隣接していた場合
-				return false;
-			}
-			//補正処理
-			if ( (*posTbl[Player::dir][TBL_SUB]) % chipSize)
-			{
-				( *posTbl[Player::dir][TBL_SUB] ) = ( ((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
-			}
-			//移動処理
-			( *posTbl[Player::dir][TBL_MAIN] ) += speedTbl[Player::dir];
-			_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
-			return true;
-		}
-		return false;
-	};
-
-	if (!(move( (DIR_TBL_ID)(DIR_TBL_SUB1 - (afterkeyFlag<< 1)) ) || move( (DIR_TBL_ID)(DIR_TBL_SUB2 - (afterkeyFlag<< 1))) ))	//subを優先ﾁｪｯｸ
+	switch (controller.GetCtr(CONTROLLER_1P_INPUT_UP))
 	{
-		afterkeyFlag = false;
-		//移動していない場合
-		if (!(move( (DIR_TBL_ID)(DIR_TBL_MAIN + (afterkeyFlag << 1)) ) || move( (DIR_TBL_ID)(DIR_TBL_OPP + (afterkeyFlag << 1))) ))	//こちでも移動しなかったら停止
+	case PAD_HOLD:	case PAD_PUSH:
+		Player::dir = dirTbl[DIR_UP][TBL_MAIN];		//方向のｾｯﾄ
+
+				//動いていいか処理
+		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[DIR_UP], IN_SIDE)))])	//IN_SIDEで１を渡したい
+		{
+			//移動処理
+			(*posTbl[Player::dir][TBL_MAIN]) = *posTbl[Player::dir][TBL_SUB];
+			_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+			//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
+		}
+		//補正処理
+		if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
+		{
+			(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
+		}
+		//移動処理
+		(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+		break;
+	case PAD_FREE:	case PAD_PULL:
+		if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
 		{
 			SetAnim("停止");
-			return;
 		}
+		break;
+	default:
+		break;
 	}
-	else
+	//---------------------------------------------------------------------------------
+	switch (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN))
 	{
-		//subｷｰの入力があったらflagが立つ
-		//afterkeyFlag  = keyTbl[ keyTableID [ dirTbl[dir][DIR_TBL_SUB1]] ];
-		//afterkeyFlag |= static_cast<bool>(keyTbl[ keyTableID [ dirTbl[dir][DIR_TBL_SUB2]] ]);
-		afterkeyFlag ^= (int)(GetAnim() == "停止"); 
+	case PAD_HOLD:	case PAD_PUSH:
+		Player::dir = dirTbl[DIR_DOWN][0];		//方向のｾｯﾄ
+
+				//動いていいか処理
+		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[DIR_DOWN], IN_SIDE)))])	//IN_SIDEで１を渡したい
+		{
+			//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
+		}
+		//補正処理
+		if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
+		{
+			(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
+		}
+		//移動処理
+		(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+		break;
+	case PAD_FREE:	case PAD_PULL:
+		if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
+		{
+			SetAnim("停止");
+		}
+		break;
+	default:
+		break;
+	}
+	//---------------------------------------------------------------------------------
+	switch (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT))
+	{
+	case PAD_HOLD:	case PAD_PUSH:
+		Player::dir = dirTbl[DIR_LEFT][0];		//方向のｾｯﾄ
+
+				//動いていいか処理
+		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[DIR_DOWN], IN_SIDE)))])	//IN_SIDEで１を渡したい
+		{
+			//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
+		}
+		//補正処理
+		if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
+		{
+			(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
+		}
+		//移動処理
+		(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+		break;
+	case PAD_FREE:	case PAD_PULL:
+		if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
+		{
+			SetAnim("停止");
+		}
+		break;
+	default:
+		break;
+	}
+	//---------------------------------------------------------------------------------
+	switch (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT))
+	{
+	case PAD_HOLD:	case PAD_PUSH:
+		Player::dir = dirTbl[DIR_RIGHT][0];		//方向のｾｯﾄ
+
+				//動いていいか処理
+		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[DIR_DOWN], IN_SIDE)))])	//IN_SIDEで１を渡したい
+		{
+			//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
+		}
+		//補正処理
+		if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
+		{
+			(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
+		}
+		//移動処理
+		(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+		break;
+	case PAD_FREE:	case PAD_PULL:
+		if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE)
+			&& (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
+		{
+			SetAnim("停止");
+		}
+		break;
+	default:
+		break;
 	}
 	SetAnim("移動");
 }
