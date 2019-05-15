@@ -14,22 +14,25 @@ Player::Player(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 
 	fireLength = 2;
 	// MAIN
-	posTbl = { &pos.y,	&pos.x,  // 下
+	posTbl = { &pos.y,  &pos.x,	 // 上
+			   &pos.y,	&pos.x,  // 下
 			   &pos.x,	&pos.y,  // 左
-			   &pos.x,	&pos.y,  // 右
-			   &pos.y,  &pos.x	 // 上 
+			   &pos.x,	&pos.y  // 右
+
 	};
 	//MAIN			
-	speedTbl = { PLAYER_DEF_SPEED,			// 下
+	speedTbl = { -PLAYER_DEF_SPEED,			// 上
+				 PLAYER_DEF_SPEED,			// 下
 				-PLAYER_DEF_SPEED,			// 左
-				 PLAYER_DEF_SPEED,			// 右
-				-PLAYER_DEF_SPEED			// 上
+				 PLAYER_DEF_SPEED			// 右
+
 	};
 	//MAIN	   OPP			SUB1		SUB2
-	dirTbl = { DIR_DOWN,  DIR_UP,		 DIR_LEFT,	DIR_RIGHT,		// 下(左,右)
-				DIR_LEFT,  DIR_RIGHT,	 DIR_DOWN,	DIR_UP,		    // 左(下,上)
-				DIR_RIGHT, DIR_LEFT,	 DIR_DOWN,	DIR_UP,			// 右(下,上)
-				DIR_UP,    DIR_DOWN,	 DIR_LEFT,	DIR_RIGHT,		// 上(左,右)
+	dirTbl = { DIR_UP,    DIR_DOWN,	   DIR_RIGHT,   DIR_LEFT,		// 上(左,右)
+			   DIR_DOWN,  DIR_UP,	   DIR_RIGHT,	DIR_LEFT,		// 下(左,右)
+			   DIR_LEFT,  DIR_RIGHT,   DIR_UP,		DIR_DOWN,		    // 左(下,上)
+			   DIR_RIGHT, DIR_LEFT,	   DIR_UP,		DIR_DOWN,			// 右(下,上)
+
 	};
 
 	mapMove = {
@@ -133,136 +136,43 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 		return pos + side;
 	};
 
-	switch (controller.GetCtr(CONTROLLER_1P_INPUT_UP))
+	for (int i = 0; i < DIR_MAX; i++)
 	{
-	case PAD_HOLD:	case PAD_PUSH:
-		Player::dir = dirTbl[DIR_UP][TBL_MAIN];		//方向のｾｯﾄ
-
-				//動いていいか処理
-		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[DIR_UP], IN_SIDE)))])	//IN_SIDEで１を渡したい
+		if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
 		{
+			Player::dir = dirTbl[i][TBL_MAIN];
+		}
+		else if ((controller.GetCtr(i) == PAD_FREE) || (controller.GetCtr(i) == PAD_PULL))
+		{
+			if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
+				&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
+			{
+				SetAnim("停止");
+			}
+		}
+
+		if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
+		{
+			//補正処理
+			if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
+			{
+				(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
+			}
 			//移動処理
-			(*posTbl[Player::dir][TBL_MAIN]) = *posTbl[Player::dir][TBL_SUB];
+			(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
 			_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
-			//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
 		}
-		//補正処理
-		if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
-		{
-			(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
-		}
-		//移動処理
-		(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
-		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
-		break;
-	case PAD_FREE:	case PAD_PULL:
-		if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
-		{
-			SetAnim("停止");
-		}
-		break;
-	default:
-		break;
 	}
-	//---------------------------------------------------------------------------------
-	switch (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN))
-	{
-	case PAD_HOLD:	case PAD_PUSH:
-		Player::dir = dirTbl[DIR_DOWN][0];		//方向のｾｯﾄ
 
-				//動いていいか処理
-		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[DIR_DOWN], IN_SIDE)))])	//IN_SIDEで１を渡したい
-		{
-			//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
-		}
-		//補正処理
-		if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
-		{
-			(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
-		}
-		//移動処理
-		(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
-		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
-		break;
-	case PAD_FREE:	case PAD_PULL:
-		if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
-		{
-			SetAnim("停止");
-		}
-		break;
-	default:
-		break;
-	}
-	//---------------------------------------------------------------------------------
-	switch (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT))
+	if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[Player::dir], IN_SIDE)))])	//IN_SIDEで１を渡したい
 	{
-	case PAD_HOLD:	case PAD_PUSH:
-		Player::dir = dirTbl[DIR_LEFT][0];		//方向のｾｯﾄ
-
-				//動いていいか処理
-		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[DIR_DOWN], IN_SIDE)))])	//IN_SIDEで１を渡したい
-		{
-			//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
-		}
-		//補正処理
-		if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
-		{
-			(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
-		}
 		//移動処理
-		(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+		(*posTbl[Player::dir][TBL_MAIN]) = *posTbl[Player::dir][TBL_SUB];
 		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
-		break;
-	case PAD_FREE:	case PAD_PULL:
-		if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
-		{
-			SetAnim("停止");
-		}
-		break;
-	default:
-		break;
+		//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
 	}
-	//---------------------------------------------------------------------------------
-	switch (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT))
-	{
-	case PAD_HOLD:	case PAD_PUSH:
-		Player::dir = dirTbl[DIR_RIGHT][0];		//方向のｾｯﾄ
 
-				//動いていいか処理
-		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[DIR_DOWN], IN_SIDE)))])	//IN_SIDEで１を渡したい
-		{
-			//移動不可のｵﾌﾞｼﾞｪｸﾄが隣にあった場合は処理しない
-		}
-		//補正処理
-		if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
-		{
-			(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
-		}
-		//移動処理
-		(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
-		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
-		break;
-	case PAD_FREE:	case PAD_PULL:
-		if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE)
-			&& (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
-		{
-			SetAnim("停止");
-		}
-		break;
-	default:
-		break;
-	}
+
 	SetAnim("移動");
 }
 
