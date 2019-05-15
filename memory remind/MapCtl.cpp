@@ -48,51 +48,32 @@ void MapCtl::Updata(void)
 
 void MapCtl::Draw(bool editModeFlag)
 {
-	if (!editModeFlag)
+	for (int y = 0; y < mapSize.y; y++)
 	{
-		DrawGraph(0, 0, bgImage, false);
-		int AnimCnt = 0;
-		for (int y = 0; y < mapSize.y; y++)
+		for (int x = 0; x < mapSize.x; x++)
 		{
-			AnimCnt = y % 2;
-			for (int x = 0; x < mapSize.x; x++)
+			MAP_ID id = mapData[y][x];
+			switch (id)
 			{
-				{
-					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[0], true);
-					AnimCnt++;
-				}
-			}
-		}
-	}
-	else
-	{
-		for (int y = 0; y < mapSize.y; y++)
-		{
-			for (int x = 0; x < mapSize.x; x++)
-			{
-				MAP_ID id = mapData[y][x];
-				switch (id)
-				{
-				case (MAP_ID::YUKA):
-				case (MAP_ID::IWA):
-				case (MAP_ID::HOLE):
-				case (MAP_ID::UNTI):
-				case (MAP_ID::EKI):
-				case (MAP_ID::NULLL):
-				case (MAP_ID::WIND):
-				case (MAP_ID::MAGIC):
-				case (MAP_ID::MAGIC1):
-				case (MAP_ID::BORN):
-				case (MAP_ID::ESA):
-				case (MAP_ID::TOOL):
-					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(id)], true);
-					break;
-					// ´×°
+			case (MAP_ID::YUKA):
+			case (MAP_ID::IWA):
+			case (MAP_ID::HOLE):
+			case (MAP_ID::UNTI):
+			case (MAP_ID::EKI):
+			case (MAP_ID::NULLL):
+			case (MAP_ID::WIND):
+			case (MAP_ID::MAGIC):
+			case (MAP_ID::MAGIC1):
+			case (MAP_ID::BORN):
+			case (MAP_ID::ESA):
+			case (MAP_ID::TOOL):
+				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(id)], true);
+				break;
+				// ´×°
 #ifdef _DEBUG
-					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::UNTI)], true);
+				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::UNTI)], true);
 #endif
-					break;
-				}
+				break;
 			}
 		}
 	}
@@ -419,7 +400,7 @@ bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
 			//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y), drawOffset + VECTOR2(0, -20)));	//²Ý½ÀÝ½
 		}
 		ListObj_itr obj;
-		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(200, 200), drawOffset + VECTOR2(0, -20)));	//²Ý½ÀÝ½
+		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(0, 0), drawOffset + VECTOR2(0, -30)));	//²Ý½ÀÝ½
 	}
 
 	return true;
