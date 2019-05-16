@@ -158,10 +158,13 @@ bool MapCtl::SetData(mapType maps, const VECTOR2 & pos, idType id)		//inline‚ÍŽg
 	{
 		return false;
 	}
-	if (maps[selPos.y][selPos.x] == MAP_ID::YUKA)
+	if ((maps[selPos.y][selPos.x]) == MAP_ID::IWA)
 	{
-		maps[selPos.y][selPos.x] = id;
+		return false;
 	}
+
+	maps[selPos.y][selPos.x] = id;
+
 	_RPTN(_CRT_WARN, "write[%d,%d]%d\n", pos.x, pos.y, id);
 	return true;
 }

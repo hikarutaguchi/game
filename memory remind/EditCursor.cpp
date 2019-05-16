@@ -12,7 +12,7 @@ EditCursor::EditCursor(VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
-	id = static_cast<MAP_ID>(MAP_ID::IWA);
+	id = static_cast<MAP_ID>(MAP_ID::HOLE);
 	//Ãﬂ€√∏√ØƒﬁÇÃèÍçá
 	//Obj::drawOffset = drawOffset;
 }
@@ -24,7 +24,7 @@ EditCursor::EditCursor()
 	itemButton = PAD_MAX;
 	setButton = PAD_MAX;
 	count = 0;
-	id = static_cast<MAP_ID>(MAP_ID::IWA);
+	id = static_cast<MAP_ID>(MAP_ID::HOLE);
 }
 
 
@@ -110,11 +110,6 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 			}
 		}
-		if (PAD_INPUT_4 & Pad[i] && count > 30)
-		{
-			lpMapCtl.SetMapData(pos, id);
-			count = 0;
-		}
 	}
 
 	if (itemButton == PAD_FREE)
@@ -124,7 +119,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 			id = (MAP_ID)(id + 1);
 			if (id > MAP_ID::TOOL)
 			{
-				id = MAP_ID::YUKA + 1;
+				id = MAP_ID::IWA + 1;
 			}
 		}
 	}
@@ -135,15 +130,58 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 		{
 			if (count < 2)
 			{
-				lpMapCtl.SetMapData(pos, id);
-				count += 1;
+				switch (count)
+				{
+				case 0:
+					lpMapCtl.SetMapData(pos, id);
+					befo2pos = pos;
+					befo2ID = id;
+					if (lpMapCtl.SetMapData(pos, id) != false)
+					{
+						count += 1;
+					}
+					break;
+				case 1:
+					lpMapCtl.SetMapData(pos, id);
+					beforepos = pos;
+					beforeID = id;
+					if (lpMapCtl.SetMapData(pos, id) != false)
+					{
+						count += 1;
+					}
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
 
+	if (resetButton == PAD_FREE)
+	{
+		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_X) == PAD_PUSH)
+		{
+			switch (count)
+			{
+			case 1:
+				pos = befo2pos;
+				lpMapCtl.SetMapData(befo2pos, MAP_ID::YUKA);
+				count -= 1;
+				break;
+			case 2:
+				pos = beforepos;
+				lpMapCtl.SetMapData(beforepos, MAP_ID::YUKA);
+				count -= 1;
+				break;
+			default:
+				break;
+			}
+		}
+	}
 
 	itemButton = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_Y);
-	setButton  = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_B);
+	setButton = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_B);
+	resetButton = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_X);
 
 }
 
