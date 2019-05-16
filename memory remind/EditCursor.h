@@ -21,5 +21,10 @@ private:
 	int count;
 	int itemButton;
 	int setButton;
+	int resetButton;
+	VECTOR2 befo2pos;
+	VECTOR2 beforepos;
+	MAP_ID befo2ID;
+	MAP_ID beforeID;
 	MAP_ID id;
 };
