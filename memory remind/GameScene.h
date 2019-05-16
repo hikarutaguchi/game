@@ -14,6 +14,8 @@ public:
 
 private:
 	sharedListObj objList;														// ²İ½Àİ½‚µ‚½î•ñ‚ğ“o˜^
+
+	int SceneCnt;
 	int timeCnt;
 	int startCnt;
 	int Init(void);																// ŒÄ‚Ño‚µ

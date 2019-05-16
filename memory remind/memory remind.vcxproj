@@ -130,6 +130,7 @@
     <ClCompile Include="BaseScene.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Carbuncle.cpp" />
+    <ClCompile Include="CntMng.cpp" />
     <ClCompile Include="EditCursor.cpp" />
     <ClCompile Include="EditScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Carbuncle.h" />
     <ClInclude Include="classObj.h" />
+    <ClInclude Include="CntMng.h" />
     <ClInclude Include="EditCursor.h" />
     <ClInclude Include="EditScene.h" />
     <ClInclude Include="GameScene.h" />

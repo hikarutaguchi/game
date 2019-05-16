@@ -55,6 +55,7 @@ Player::Player(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 	afterkeyFlag = false;
 	reStartCnt = 0U;
 	fireGuardFlag = 0U;
+	cnt = 240;
 
 
 }
@@ -95,6 +96,7 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 {
 	auto &chipSize = lpMapCtl.GetChipSize().x;
 
+	cnt -= 1;
 
 	if (GetAnim() == "€–S")	//€–SƒAƒjƒÄ¶’†
 	{
@@ -135,43 +137,44 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 		}
 		return pos + side;
 	};
-
-	for (int i = 0; i < DIR_MAX; i++)
+	if (cnt <= 0)
 	{
-		if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
+		for (int i = 0; i < DIR_MAX; i++)
 		{
-			Player::dir = dirTbl[i][TBL_MAIN];
-		}
-		else if ((controller.GetCtr(i) == PAD_FREE) || (controller.GetCtr(i) == PAD_PULL))
-		{
-			if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
-				&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
+			if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
 			{
-				SetAnim("’â~");
+				Player::dir = dirTbl[i][TBL_MAIN];
+			}
+			else if ((controller.GetCtr(i) == PAD_FREE) || (controller.GetCtr(i) == PAD_PULL))
+			{
+				if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
+					&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
+				{
+					SetAnim("’â~");
+				}
+			}
+
+			if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
+			{
+				//•â³ˆ—
+				if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
+				{
+					(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
+				}
+				//ˆÚ“®ˆ—
+				(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+				_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
 			}
 		}
 
-		if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
+		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[Player::dir], IN_SIDE)))])	//IN_SIDE‚Å‚P‚ğ“n‚µ‚½‚¢
 		{
-			//•â³ˆ—
-			if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
-			{
-				(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
-			}
 			//ˆÚ“®ˆ—
-			(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+			(*posTbl[Player::dir][TBL_MAIN]) = *posTbl[Player::dir][TBL_SUB];
 			_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+			//ˆÚ“®•s‰Â‚ÌµÌŞ¼Şª¸Ä‚ª—×‚É‚ ‚Á‚½ê‡‚Íˆ—‚µ‚È‚¢
 		}
 	}
-
-	if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[Player::dir], IN_SIDE)))])	//IN_SIDE‚Å‚P‚ğ“n‚µ‚½‚¢
-	{
-		//ˆÚ“®ˆ—
-		(*posTbl[Player::dir][TBL_MAIN]) = *posTbl[Player::dir][TBL_SUB];
-		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
-		//ˆÚ“®•s‰Â‚ÌµÌŞ¼Şª¸Ä‚ª—×‚É‚ ‚Á‚½ê‡‚Íˆ—‚µ‚È‚¢
-	}
-
 
 	SetAnim("ˆÚ“®");
 }

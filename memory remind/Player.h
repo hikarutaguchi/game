@@ -58,6 +58,7 @@ private:
 	void GetItem(void);													//	itemæ“¾‚Ìˆ—
 	int fireLength;
 
+	int cnt;
 	int life;
 	int count;
 	int speed;

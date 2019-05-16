@@ -61,15 +61,15 @@
     <ClCompile Include="ImageMng.cpp">
       <Filter>ソースファイル\Tool.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="CntMng.cpp">
+      <Filter>ソースファイル\Tool.cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bomb.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="EditCursor.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Game_ctr.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="MapCtl.h">
@@ -121,6 +121,12 @@
       <Filter>ヘッダーファイル\Tool.h</Filter>
     </ClInclude>
     <ClInclude Include="VECTOR2.h">
+      <Filter>ヘッダーファイル\Tool.h</Filter>
+    </ClInclude>
+    <ClInclude Include="CntMng.h">
+      <Filter>ヘッダーファイル\Tool.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_ctr.h">
       <Filter>ヘッダーファイル\Tool.h</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include "Game_ctr.h"
 #include "ImageMng.h"
 #include "ResultScene.h"
+#include "CntMng.h"
 
 GameScene::GameScene()
 {
@@ -25,9 +26,11 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 	for (int i = 0; i < GetJoypadNum(); i++)
 	{
 		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		if ((Pad[i] & PAD_INPUT_3) && ((Pad[i] & PAD_INPUT_4)))
+		if (/*(Pad[i] & PAD_INPUT_3) && */((Pad[i] & PAD_INPUT_4)))
 		{
-			return std::make_unique<ResultScene>();
+			SceneCnt += 1;
+			lpCntMng.SetCnt(SceneCnt);
+			return std::make_unique<EditScene>();
 		}
 	}
 

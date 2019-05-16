@@ -6,6 +6,8 @@
 #include "EditCursor.h"
 #include "Game_ctr.h"
 #include "GameScene.h"
+#include "CntMng.h"
+#include "ResultScene.h"
 
 
 EditScene::EditScene()
@@ -22,33 +24,25 @@ EditScene::~EditScene()
 unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 {
 
-	//if ( (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1]) & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]) )
-	//{
-	//	return std::make_unique<GameScene>();
-	//}
-
 	if (bGetCtr == PAD_FREE)
 	{
 		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A) == PAD_PUSH)
 		{
+			MapCtl::GetInstance().MapSave();
 			return std::make_unique<GameScene>();
 		}
 	}
 
+	int a = lpCntMng.GetCnt();
+
+	if (a > 3)
+	{
+		lpCntMng.SetCnt(-4);
+		return std::make_unique<ResultScene>();
+	}
+
 	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A);
 
-	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F5]) //現在のｷｰ情報を取得
-	//{
-	//	MapCtl::GetInstance().MapLoad(objList, true);
-	//}
-	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F6])
-	//{
-	//	//ｾｰﾌﾞ
-	//	if (MessageBox(NULL, "エディット内容をセーブしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)
-	//	{
-	//		MapCtl::GetInstance().MapSave();
-	//	}
-	//}
 	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F2]) //現在のｷｰ情報を取得
 	//{
 	//	//ﾛｰﾄﾞ
@@ -122,7 +116,6 @@ int EditScene::Init(void)
 		//ｵﾌﾞｼﾞｪｸﾄでtrue,falseが返る
 		objList = std::make_shared<sharedObjList>();
 	}
-
 	objList->clear();
 
 	SceneMng::GetInstance().SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
@@ -130,7 +123,15 @@ int EditScene::Init(void)
 	lpMapCtl.SetUp(VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y), VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
 	auto obj = AddObjList()(objList, std::make_unique<EditCursor>(SceneMng::GetInstance().GetDrawOffset()));
 	(*obj)->Init("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));
-	MapCtl::GetInstance().MapLoadBase(objList, true);
+
+	if (lpCntMng.GetCnt() == 0)
+	{
+		MapCtl::GetInstance().MapLoadBase(objList, true);
+	}
+	else
+	{
+		MapCtl::GetInstance().MapLoad(objList, true);
+	}
 
 	return 0;
 }
