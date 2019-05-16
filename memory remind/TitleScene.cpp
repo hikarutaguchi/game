@@ -18,10 +18,13 @@ TitleScene::~TitleScene()
 
 unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 {
+
 	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
 		if (controller.GetCtr(i) == PAD_PUSH)
 		{
+			StopSoundMem(titleBgm);
+			PlaySoundMem(seNextButton, DX_PLAYTYPE_BACK);
 			return std::make_unique<SelectScene>();
 		}
 	}
@@ -37,6 +40,13 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 
 int TitleScene::Init(void)
 {
+	titleBgm = LoadSoundMem("sound/titleScene/bgm_title.mp3");
+
+	PlaySoundMem(titleBgm, DX_PLAYTYPE_LOOP);
+
+	seNextButton = LoadSoundMem("sound/titleScene/se_next.mp3");
+
+	seCount = 0;
 	padFlag = false;
 	if (!objList)
 	{
