@@ -64,6 +64,9 @@
     <ClCompile Include="CntMng.cpp">
       <Filter>ソースファイル\Tool.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Fader.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bomb.h">
@@ -127,6 +130,9 @@
       <Filter>ヘッダーファイル\Tool.h</Filter>
     </ClInclude>
     <ClInclude Include="Game_ctr.h">
+      <Filter>ヘッダーファイル\Tool.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Fader.h">
       <Filter>ヘッダーファイル\Tool.h</Filter>
     </ClInclude>
   </ItemGroup>
