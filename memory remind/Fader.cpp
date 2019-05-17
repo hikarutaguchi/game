@@ -14,7 +14,7 @@ void Fader::Updata()
 {
 	switch (fadeState)
 	{
-	case FADE_IN_STARE:
+	case FADE_IN_START:
 		if (fadeInFlag == true)
 		{
 			brightness += fadeSpeed;
@@ -34,7 +34,7 @@ void Fader::Updata()
 	case FADE_IN_END:
 		fadeInFlag = false;
 		break;
-	case FADE_OUT_STARE:
+	case FADE_OUT_START:
 		if (fadeOutFlag == true)
 		{
 			brightness += fadeSpeed;
@@ -65,14 +65,14 @@ void Fader::SetFadeIn(int fadeSpeed)
 {
 	this->fadeSpeed = fadeSpeed;
 	fadeInFlag = true;
-	fadeState = FADE_IN_STARE;
+	fadeState = FADE_IN_START;
 }
 
 void Fader::SetFadeOut(int fadeSpeed)
 {
 	this->fadeSpeed = fadeSpeed;
 	fadeOutFlag = true;
-	fadeState = FADE_OUT_STARE;
+	fadeState = FADE_OUT_START;
 }
 
 int Fader::Init()

@@ -4,9 +4,9 @@
 
 enum FADE_STATE
 {
-	FADE_IN_STARE,		//フェードイン開始
+	FADE_IN_START,		//フェードイン開始
 	FADE_IN_END,		//フェードイン終了
-	FADE_OUT_STARE,		//フェードアウト開始
+	FADE_OUT_START,		//フェードアウト開始
 	FADE_OUT_END,		//フェードアウト終了
 	FADE_WAIT			//待機(用途なし)
 };
