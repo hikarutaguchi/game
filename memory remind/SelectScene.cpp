@@ -21,13 +21,13 @@ unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 {
 	if (bGetCtr == PAD_FREE)
 	{
-		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A) == PAD_PUSH)
+		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A,P_1) == PAD_PUSH)
 		{
 			return std::make_unique<EditScene>();
 		}
 	}
 
-	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A);
+	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A,P_1);
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{

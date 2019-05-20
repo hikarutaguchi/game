@@ -204,8 +204,8 @@ template<typename mapType, typename idType>
 idType MapCtl::GetDataID(mapType maps, const VECTOR2 pos, idType ID)
 {
 	VECTOR2 selPos;
-	selPos.x = pos.x / chipSize.x;
-	selPos.y = pos.y / chipSize.y;
+	selPos.x = (pos.x + 32) / chipSize.x;
+	selPos.y = (pos.y + 32) / chipSize.y;
 
 	//CheckSize checkSize;			// ˆê‰ñÀ‘Ì‚ğì‚Á‚Ä‚â‚Á‚ÄAŠÖ”‚ğŒÄ‚Ño‚·‚İ‚½‚¢‚É‚·‚é‚â‚Â
 	//if ((!checkSize(selPos, mapSize)))
