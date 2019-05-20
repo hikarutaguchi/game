@@ -36,18 +36,18 @@ Player::Player(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 	};
 
 	mapMove = {
-		true,	// MAP_ID_CUR	
-		true,	// MAP_ID_FLOOR1
-		true,	// MAP_ID_FLOOR2
-		true,	// MAP_ID_BOMB
-		true,	// MAP_ID_NON
-		false,	// MAP_ID_WALL1
-		false,	// MAP_ID_WALL2
-		false,	// MAP_ID_BLOCK		
-		true,	// ITEM_BOMB,
-		true,	// ITEM_FIRE,
-		true,	// ITEM_SPEED,
-		true,	// ITEM_WALL_PASS,
+		true,	// YUKA	
+		false,	// IWA
+		true,	// HOLE
+		true,	// UNTI
+		true,	// 1
+		true,	// 2
+		true,	// 3
+		true,	// 4		
+		true,	// 5
+		true,	// 6
+		true,	// 7
+		true,	// 8
 	};
 
 	Init("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
@@ -156,27 +156,22 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 
 			if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
 			{
-				//•â³ˆ—
-				if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
+				if (PassF() == true)
 				{
-					(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
+					//•â³ˆ—
+					if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
+					{
+						(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
+					}
+					//ˆÚ“®ˆ—
+					(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+					_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
 				}
-				//ˆÚ“®ˆ—
-				(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
-				_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
 			}
-		}
-
-		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[Player::dir], IN_SIDE)))])	//IN_SIDE‚Å‚P‚ğ“n‚µ‚½‚¢
-		{
-			//ˆÚ“®ˆ—
-			(*posTbl[Player::dir][TBL_MAIN]) = *posTbl[Player::dir][TBL_SUB];
-			_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
-			//ˆÚ“®•s‰Â‚ÌµÌŞ¼Şª¸Ä‚ª—×‚É‚ ‚Á‚½ê‡‚Íˆ—‚µ‚È‚¢
 		}
 	}
 
-	SetAnim("ˆÚ“®");
+	SetAnim("’â~");
 }
 
 bool Player::CheckObjType(OBJ_TYPE type)
@@ -194,6 +189,42 @@ bool Player::DethProcess()
 	dir = DIR_DOWN;
 	SetAnim("€–S");
 	fireGuardFlag = 0U;
+	return true;
+}
+
+bool Player::PassF()
+{
+	auto &chipSize = lpMapCtl.GetChipSize().x;
+
+	auto sidePos = [&](DIR dir, VECTOR2 pos, int speed, SIDE_CHECK sideFlg) {
+		VECTOR2 side;	//”z—ñ‚É‚µ‚Ä‰Šú‰»Ø½Ä‚É‚·‚é
+		switch (dir)
+		{
+		case DIR_LEFT:
+			side = { (-(sideFlg ^ 1) + speed), 0 };
+			break;
+		case DIR_RIGHT:
+			//Á¯Ìß»²½Ş‚Ì1‚Â“à‘¤‚È‚Ì‚Å-1‚µ‚Ä‚ ‚°‚é,-2‚¾‚Æ2‚ÂŒã‚ë‘¤‚È‚Ì‚ÅˆÓ–¡‚ª‚È‚¢
+			side = { (chipSize - sideFlg) + 2, 0 };
+			break;
+		case DIR_UP:
+			side = { 0, -(sideFlg ^ 1) + speed };
+			break;
+		case DIR_DOWN:
+			side = { 0, ((chipSize - sideFlg) + speed) };
+			break;
+		default:
+			break;
+		}
+		return pos + side;
+	};
+
+	if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[Player::dir], IN_SIDE)))])	//IN_SIDE‚Å‚P‚ğ“n‚µ‚½‚¢
+	{
+		return false;
+		_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+		//ˆÚ“®•s‰Â‚ÌµÌŞ¼Şª¸Ä‚ª—×‚É‚ ‚Á‚½ê‡‚Íˆ—‚µ‚È‚¢
+	}
 	return true;
 }
 
