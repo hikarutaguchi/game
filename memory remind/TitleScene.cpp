@@ -21,7 +21,7 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 
 	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
-		if (controller.GetCtr(i, P_1) == PAD_PUSH)
+		if (controller.GetCtr(i) == PAD_PUSH)
 		{
 			StopSoundMem(titleBgm);
 			PlaySoundMem(seNextButton, DX_PLAYTYPE_BACK);	//ƒ{ƒ^ƒ“‚Ì‰¹
