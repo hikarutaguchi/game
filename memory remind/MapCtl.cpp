@@ -55,9 +55,14 @@ void MapCtl::Draw(bool editModeFlag)
 			MAP_ID id = mapData[y][x];
 			switch (id)
 			{
+			case (MAP_ID::HOLE):
+				if (editModeFlag == false)
+				{
+					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::YUKA)], true);
+					break;
+				}
 			case (MAP_ID::YUKA):
 			case (MAP_ID::IWA):
-			case (MAP_ID::HOLE):
 			case (MAP_ID::UNTI):
 			case (MAP_ID::EKI):
 			case (MAP_ID::NULLL):
@@ -174,6 +179,11 @@ MAP_ID MapCtl::GetMapData(const VECTOR2 & pos)
 	return GetData(mapData, pos, MAP_ID::UNTI);
 }
 
+MAP_ID MapCtl::GetMapID(const VECTOR2 & pos, MAP_ID id)
+{
+	return GetDataID(mapData, pos, id);
+}
+
 template<typename mapType, typename idType>
 idType MapCtl::GetData(mapType maps, const VECTOR2 & pos, idType defid)
 {
@@ -188,6 +198,24 @@ idType MapCtl::GetData(mapType maps, const VECTOR2 & pos, idType defid)
 		return defid;
 	}
 	return maps[selPos.y][selPos.x];
+}
+
+template<typename mapType, typename idType>
+idType MapCtl::GetDataID(mapType maps, const VECTOR2 pos, idType ID)
+{
+	VECTOR2 selPos;
+	selPos.x = pos.x / chipSize.x;
+	selPos.y = pos.y / chipSize.y;
+
+	//CheckSize checkSize;			// àÍâÒé¿ëÃÇçÏÇ¡ÇƒÇ‚Ç¡ÇƒÅAä÷êîÇåƒÇ—èoÇ∑Ç›ÇΩÇ¢Ç…Ç∑ÇÈÇ‚Ç¬
+	//if ((!checkSize(selPos, mapSize)))
+	//{
+	//	return defid;
+	//}
+	ID = maps[selPos.y][selPos.x];
+
+	_RPTN(_CRT_WARN, "wroad[%d]\n", ID);
+	return ID;
 }
 
 bool MapCtl::MapSave(void)
@@ -403,7 +431,7 @@ bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
 			//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y), drawOffset + VECTOR2(0, -20)));	//≤›Ω¿›Ω
 		}
 		ListObj_itr obj;
-		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(0, 0), drawOffset + VECTOR2(0, -30)));	//≤›Ω¿›Ω
+		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//≤›Ω¿›Ω
 	}
 
 	return true;
