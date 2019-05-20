@@ -133,6 +133,7 @@
     <ClCompile Include="CntMng.cpp" />
     <ClCompile Include="EditCursor.cpp" />
     <ClCompile Include="EditScene.cpp" />
+    <ClCompile Include="Fader.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Game_ctr.cpp" />
     <ClCompile Include="ImageMng.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="CntMng.h" />
     <ClInclude Include="EditCursor.h" />
     <ClInclude Include="EditScene.h" />
+    <ClInclude Include="Fader.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Game_ctr.h" />
     <ClInclude Include="ImageMng.h" />
