@@ -24,6 +24,7 @@ public:
 	void SetFadeOut(int fadeSpeed);	//フェードアウトセット
 	int Init();
 	FADE_STATE GetFadeState();
+	void Draw();
 	Fader();
 	~Fader();
 

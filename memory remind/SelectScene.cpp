@@ -6,6 +6,7 @@
 #include "ImageMng.h"
 #include "Obj.h"
 #include "SelectCur.h"
+#include "Fader.h"
 
 
 SelectScene::SelectScene()
@@ -20,10 +21,15 @@ SelectScene::~SelectScene()
 
 unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 {
+	if (lpFader.GetFadeState() == FADE_OUT_END)
+	{
+		lpFader.SetFadeIn(8);
+	}
 	if (bGetCtr == PAD_FREE)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
 		{
+			//lpFader.SetFadeOut(4);
 			return std::make_unique<EditScene>();
 		}
 	}
@@ -35,6 +41,7 @@ unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 		(*itr)->UpData(objList, controller);
 	}
 
+	lpFader.Updata();
 	lpSelCur.MoveCur(controller);
 	return std::move(own);
 }

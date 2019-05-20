@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "SelectCur.h"
 #include "ImageMng.h"
+#include "Fader.h"
 
 
 
@@ -90,6 +91,7 @@ void SelectCur::Draw(void)
 	DrawFormatString(0, 215, 0xff0000, "CharFlag2 = %d", static_cast<int>(CharFlag[P2]));
 	DrawFormatString(0, 300, 0xff0000, "GetCharID1 = %d", static_cast<int>(GetCharData(P1)));
 	DrawFormatString(0, 315, 0xff0000, "GetCharID2 = %d", static_cast<int>(GetCharData(P2)));
+	lpFader.Draw();
 #endif
 	ScreenFlip();
 }
