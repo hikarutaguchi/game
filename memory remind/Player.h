@@ -55,7 +55,6 @@ private:
 	bool CheckObjType(OBJ_TYPE type);									//@µÌŞ¼Şª¸ÄÀ²ÌßÁª¯¸
 	bool afterkeyFlag;													//@»ÌŞ·°“ü—ÍÌ×¸Ş
 	bool DethProcess();													//	€‚Êˆ—
-	bool PassF();
 	void GetItem(void);													//	itemæ“¾‚Ìˆ—
 	int fireLength;
 
@@ -69,9 +68,9 @@ private:
 	DIR_TBL_DIR dirTbl;			// •ûŒüÃ°ÌŞÙ
 	MAP_MOVE_TBL mapMove;		// µÌŞ¼Şª¸ÄˆÚ“®”»’èÃ°ÌŞÙ
 
-	MAP_ID id;
-
 	unsigned int reStartCnt;	// ‚±‚¢‚Â‚ªŠÔ’l‚ğ‚ÂŠÔ‚Í–³“G
 
 	unsigned int fireGuardFlag;
 };
+
+

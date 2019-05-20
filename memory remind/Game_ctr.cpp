@@ -14,31 +14,31 @@ Game_ctr::~Game_ctr()
 
 }
 
-const PAD_TYPE & Game_ctr::GetCtr(int eAttachHandle, P_TYPE pType) const
+const PAD_TYPE & Game_ctr::GetCtr(int eAttachHandle) const
 {
 	//前フレームボタンが離されていて、現フレームは押されているか
-	if (AttachGamepad_input[pType][eAttachHandle] == PAD_INPUT_ON
-		&& AttachGamepad_input_Old[pType][eAttachHandle] == PAD_INPUT_OFF) {
+	if (AttachGamepad_input[eAttachHandle] == PAD_INPUT_ON
+		&& AttachGamepad_input_Old[eAttachHandle] == PAD_INPUT_OFF) {
 		//このフレームで離された
 		return PAD_PUSH;
 	}
 
 	//ボタンが押されていないか
-	else if (AttachGamepad_input[pType][eAttachHandle] == PAD_INPUT_OFF) {
+	else if (AttachGamepad_input[eAttachHandle] == PAD_INPUT_OFF) {
 		//押されていない
 		return PAD_FREE;
 	}
 
 
 	//ボタンが押されているか
-	else if (AttachGamepad_input[pType][eAttachHandle] == PAD_INPUT_OFF
-		&& AttachGamepad_input_Old[pType][eAttachHandle] == PAD_INPUT_ON) {
+	else if (AttachGamepad_input[eAttachHandle] == PAD_INPUT_OFF
+		&& AttachGamepad_input_Old[eAttachHandle] == PAD_INPUT_ON) {
 		//押されている
 		return PAD_PULL;
 	}
 
 	//ボタンが押されているか
-	else if (AttachGamepad_input[pType][eAttachHandle] == PAD_INPUT_ON) {
+	else if (AttachGamepad_input[eAttachHandle] == PAD_INPUT_ON) {
 		//押されている
 		return PAD_HOLD;
 	}
@@ -46,36 +46,29 @@ const PAD_TYPE & Game_ctr::GetCtr(int eAttachHandle, P_TYPE pType) const
 
 bool Game_ctr::Updata()
 {
-	for (int p = 0; p < GetJoypadNum(); p++)
+
+	//入力情報の初期化
+	memset(AttachGamepad_input, 0, sizeof(AttachGamepad_input));
+
+	//過去情報を格納
+	memcpy(AttachGamepad_input_Old, &AttachGamepad_input, sizeof(AttachGamepad_input));
+
+	//使用するボタンのみを検索
+	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
-		for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
+		int Pad = GetJoypadInputState(AttachGamepad_pad[i].intPadNo);		//設定されているジョイパッドの入力情報を取得
+
+		if (Pad & (AttachGamepad_pad[i].intButtonHandle)) 		//入力フラグ
 		{
-
-			AttachGamepad_input_Old[p][i] = AttachGamepad_input[p][i];
-
-			AttachGamepad_input[p][i] = PAD_INPUT_OFF;
+			AttachGamepad_input[i] = PAD_INPUT_ON;
 		}
 	}
-	for (int p = 0; p < GetJoypadNum(); p++)
-	{
-		pad[p] = GetJoypadInputState(DX_INPUT_PAD1 + p);
-
-		//使用するボタンのみを検索
-		for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
-		{
-			if (pad[p] & (AttachGamepad_pad[i].intButtonHandle)) 		//入力フラグ
-			{
-				AttachGamepad_input[p][i] = PAD_INPUT_ON;
-			}
-		}
-	}
-
-	//Draw();
 	return true;
 }
 
 int Game_ctr::Init(void)
 {
+
 	//一台目
 	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_UP, CONTROLLER_1P_INPUT_UP);
 	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_DOWN, CONTROLLER_1P_INPUT_DOWN);
@@ -96,32 +89,24 @@ int Game_ctr::Init(void)
 	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_3, CONTROLLER_2P_INPUT_BUTTON_X);
 	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_4, CONTROLLER_2P_INPUT_BUTTON_Y);
 
+	Draw();
+
 	return 0;
 }
 
 void Game_ctr::Draw()
 {
-	ClsDrawScreen();
-	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
-	{
-		if (AttachGamepad_input[P_1][i] == PAD_INPUT_ON)
-		{
-			DrawFormatString(0, 20, 0xff0000, "PLAYER_1のボタンが押されました");
-		}
-		if (AttachGamepad_input[P_2][i] == PAD_INPUT_ON)
-		{
-			DrawFormatString(0, 40, 0xff0000, "PLAYER_2のボタンが押されました");
-		}
-		if (AttachGamepad_input[P_3][i] == PAD_INPUT_ON)
-		{
-			DrawFormatString(0, 60, 0xff0000, "PLAYER_3のボタンが押されました");
-		}
-		if (AttachGamepad_input[P_4][i] == PAD_INPUT_ON)
-		{
-			DrawFormatString(0, 80, 0xff0000, "PLAYER_4のボタンが押されました");
+
+	//使用するボタンのみを検索
+	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++) {
+		//ボタンは押されているか
+		if (AttachGamepad_input[i] == PAD_INPUT_ON) {
+			//ログ出力
+			AppLogAdd("[%d]が押されました\n", i);
 		}
 	}
 	ScreenFlip();
+
 }
 
 // 入力関連 　ボタンのバインド

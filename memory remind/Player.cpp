@@ -36,18 +36,18 @@ Player::Player(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 	};
 
 	mapMove = {
-		true,	// YUKA	
-		false,	// IWA
-		true,	// HOLE
-		true,	// UNTI
-		true,	// 1
-		true,	// 2
-		true,	// 3
-		true,	// 4		
-		true,	// 5
-		true,	// 6
-		true,	// 7
-		true,	// 8
+		true,	// MAP_ID_CUR	
+		true,	// MAP_ID_FLOOR1
+		true,	// MAP_ID_FLOOR2
+		true,	// MAP_ID_BOMB
+		true,	// MAP_ID_NON
+		false,	// MAP_ID_WALL1
+		false,	// MAP_ID_WALL2
+		false,	// MAP_ID_BLOCK		
+		true,	// ITEM_BOMB,
+		true,	// ITEM_FIRE,
+		true,	// ITEM_SPEED,
+		true,	// ITEM_WALL_PASS,
 	};
 
 	Init("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
@@ -156,21 +156,26 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 
 			if ((controller.GetCtr(i, P_1) == PAD_HOLD) || (controller.GetCtr(i, P_1) == PAD_PUSH))
 			{
-				if (PassF() == true)
+				//•â³ˆ—
+				if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
 				{
-					//•â³ˆ—
-					if ((*posTbl[Player::dir][TBL_SUB]) % chipSize)
-					{
-						(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
-					}
-					//ˆÚ“®ˆ—
-					(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
-					_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+					(*posTbl[Player::dir][TBL_SUB]) = (((*posTbl[Player::dir][TBL_SUB] + chipSize / 2) / chipSize) * chipSize);
 				}
+				//ˆÚ“®ˆ—
+				(*posTbl[Player::dir][TBL_MAIN]) += speedTbl[Player::dir];
+				_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
 			}
 		}
+
+		if (!mapMove[static_cast<int>(lpMapCtl.GetMapData(sidePos(Player::dir, pos, speedTbl[Player::dir], IN_SIDE)))])	//IN_SIDE‚Å‚P‚ğ“n‚µ‚½‚¢
+		{
+			//ˆÚ“®ˆ—
+			(*posTbl[Player::dir][TBL_MAIN]) = *posTbl[Player::dir][TBL_SUB];
+			_RPTN(_CRT_WARN, "player.pos:%d,%d\n", pos.x, pos.y);
+			//ˆÚ“®•s‰Â‚ÌµÌŞ¼Şª¸Ä‚ª—×‚É‚ ‚Á‚½ê‡‚Íˆ—‚µ‚È‚¢
+		}
 	}
-	SetAnim("’â~");
+	SetAnim("ˆÚ“®");
 }
 
 bool Player::CheckObjType(OBJ_TYPE type)
@@ -226,9 +231,7 @@ bool Player::PassF()
 	}
 	lpMapCtl.GetMapID(pos, id);
 	return true;
-}
-
-void Player::GetItem(void)
+}void Player::GetItem(void)
 {
 	//if ((pos % lpMapCtl.GetChipSize()) != VECTOR2(0, 0))		//¡–ÚËß¯ÀØ‚Ì‚¾‚¯ˆ—‚µ‚½‚¢‚Ì‚Å‚±‚ê‚ÅÁª¯¸
 	//{

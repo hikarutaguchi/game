@@ -36,15 +36,6 @@ enum PAD_TYPE {
 	PAD_MAX
 };
 
-enum P_TYPE
-{
-	P_1,
-	P_2,
-	P_3,
-	P_4,
-	P_MAX
-};
-
 //ジョイパッド格納用構造体
 struct tyAttachment {
 	int intPadNo;	//パッド番号
@@ -67,12 +58,12 @@ public:
 
 	bool Updata(void);								// 情報更新
 
-	const PAD_TYPE & GetCtr(int eAttachHandle, P_TYPE pType) const;
+	const PAD_TYPE & GetCtr(int eAttachHandle) const;
 
 private:
 	int Init(void);
-	int pad[P_MAX];
 	void Draw();
-	int AttachGamepad_input[P_MAX][CONTROLLER_INPUT_MAX];	//パッドの入力情報(押されたかどうか)
-	int AttachGamepad_input_Old[P_MAX][CONTROLLER_INPUT_MAX];	//パッドの入力情報(押されたかどうか)
+	int AttachGamepad_input[CONTROLLER_INPUT_MAX];	//パッドの入力情報(押されたかどうか)
+	int AttachGamepad_input_Old[CONTROLLER_INPUT_MAX];	//パッドの入力情報(押されたかどうか)
 };
+

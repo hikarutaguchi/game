@@ -25,7 +25,6 @@ public:
 	bool SetUp(const VECTOR2& size, const VECTOR2 & chipSize, const VECTOR2 drawOffset);	// Ï¯Ìß‚Ì¾¯Ä±¯Ìß
 	bool SetMapData(const VECTOR2& pos, MAP_ID id);											// Ï¯ÌßÃŞ°À‚Ì‘‚«‚İ
 	MAP_ID GetMapData(const VECTOR2& pos);													// “Ç‚İ‚İ—pŠÖ”
-	MAP_ID GetMapID(const VECTOR2& pos, MAP_ID id);
 
 	bool MapSave(void);																		// Ï¯Ìß¾°ÌŞ
 	bool MapLoad(sharedListObj objList, bool editModeFlag);									// Ï¯ÌßÛ°ÄŞ
@@ -55,7 +54,5 @@ private:
 	template<typename mapType,typename idType>
 	idType GetData(mapType maps, const VECTOR2& pos, idType defid);							// Ï¯ÌßÃŞ°À“Ç‚İ‚İ
 
-	template<typename mapType, typename idType>
-	idType GetDataID(mapType maps, const VECTOR2 pos, idType ID);
 };
 

@@ -55,14 +55,9 @@ void MapCtl::Draw(bool editModeFlag)
 			MAP_ID id = mapData[y][x];
 			switch (id)
 			{
-			case (MAP_ID::HOLE):
-				if (editModeFlag == false)
-				{
-					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::YUKA)], true);
-					break;
-				}
 			case (MAP_ID::YUKA):
 			case (MAP_ID::IWA):
+			case (MAP_ID::HOLE):
 			case (MAP_ID::UNTI):
 			case (MAP_ID::EKI):
 			case (MAP_ID::NULLL):
@@ -177,11 +172,6 @@ bool MapCtl::SetData(mapType maps, const VECTOR2 & pos, idType id)		//inline‚ÍŽg
 MAP_ID MapCtl::GetMapData(const VECTOR2 & pos)
 {
 	return GetData(mapData, pos, MAP_ID::UNTI);
-}
-
-MAP_ID MapCtl::GetMapID(const VECTOR2 & pos, MAP_ID id)
-{
-	return GetDataID(mapData, pos, id);
 }
 
 template<typename mapType, typename idType>
@@ -431,7 +421,7 @@ bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
 			//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y), drawOffset + VECTOR2(0, -20)));	//²Ý½ÀÝ½
 		}
 		ListObj_itr obj;
-		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//²Ý½ÀÝ½
+		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(0, 0), drawOffset + VECTOR2(0, -30)));	//²Ý½ÀÝ½
 	}
 
 	return true;
