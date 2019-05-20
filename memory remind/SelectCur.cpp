@@ -29,7 +29,7 @@ SelectCur::SelectCur()
 
 	for (int p = 0; p < TYPE_MAX; p++)
 	{
-		for (int i = 0; i < P_MAX; i++)
+		for (int i = 0; i < CONTROLLER_MAX; i++)
 		{
 			GetCtr[i][p] = PAD_MAX;
 		}
@@ -55,7 +55,7 @@ void SelectCur::Draw(void)
 {
 	ClsDrawScreen();
 
-	for (int i = 0; i < P_MAX; i++)
+	for (int i = 0; i < CONTROLLER_MAX; i++)
 	{
 		//DrawBox(posTBL[P1].x, posTBL[P1].y + 50, posTBL[P1].x + 80, posTBL[P1].y + 120, 0xff00ff, false);
 
@@ -90,15 +90,15 @@ void SelectCur::MoveCur(Game_ctr & controller)
 	VECTOR2 tmpPos1(posTBL[P1]);		//‰¼ˆÚ“®•Ï”	
 	VECTOR2 tmpPos2(posTBL[P2]);
 
-	switch (ctrType[P_1])
+	switch (ctrType[CONTROLLER_P1])
 	{
 	case SELECT:
 		/*CharFlag[P1] = true;*/
-		ctrType[P_1] = TYPE_MAX;
+		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
 	case CANSELL:
 		CharFlag[P1] = false;
-		ctrType[P_1] = TYPE_MAX;
+		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
 	case LEFT:
 		tmpPos1.x -= 360;
@@ -108,7 +108,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		{
 			CharID[P1] = (Character)(CharID[P1] - 1);
 		}
-		ctrType[P_1] = TYPE_MAX;
+		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
 	case RIGHT:
 		tmpPos1.x += 360;
@@ -118,7 +118,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		{
 			CharID[P1] = (Character)(CharID[P1] + 1);
 		}
-		ctrType[P_1] = TYPE_MAX;
+		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
 	case TYPE_MAX:
 		break;
@@ -129,25 +129,25 @@ void SelectCur::MoveCur(Game_ctr & controller)
 
 	if (!CharFlag[P1])
 	{
-		if (GetCtr[P_1][SELECT] == PAD_FREE)
+		if (GetCtr[CONTROLLER_P1][SELECT] == PAD_FREE)
 		{
-			if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_B, P_1) == PAD_PUSH)
+			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1) == PAD_PUSH)
 			{
-				ctrType[P_1] = SELECT;
+				ctrType[CONTROLLER_P1] = SELECT;
 			}
 		}
 		if (GetCtr[P1][RIGHT] == PAD_FREE)
 		{
-			if (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT, P_1) == PAD_PUSH)
+			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P1) == PAD_PUSH)
 			{
-				ctrType[P_1] = RIGHT;
+				ctrType[CONTROLLER_P1] = RIGHT;
 			}
 		}
 		if (GetCtr[P1][LEFT] == PAD_FREE)
 		{
-			if (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT, P_1) == PAD_PUSH)
+			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P1) == PAD_PUSH)
 			{
-				ctrType[P_1] = LEFT;
+				ctrType[CONTROLLER_P1] = LEFT;
 			}
 		}
 	}
@@ -155,27 +155,27 @@ void SelectCur::MoveCur(Game_ctr & controller)
 	{
 		if (GetCtr[P1][CANSELL] == PAD_FREE)
 		{
-			if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_Y, P_1) == PAD_PUSH)
+			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
 			{
-				ctrType[P_1] = CANSELL;
+				ctrType[CONTROLLER_P1] = CANSELL;
 			}
 		}
 	}
 
-	GetCtr[P_1][SELECT] = controller.GetCtr(CONTROLLER_2P_INPUT_BUTTON_B, P_1);
-	GetCtr[P_1][RIGHT] = controller.GetCtr(CONTROLLER_2P_INPUT_RIGHT, P_1);
-	GetCtr[P_1][LEFT] = controller.GetCtr(CONTROLLER_2P_INPUT_LEFT, P_1);
-	GetCtr[P_1][CANSELL] = controller.GetCtr(CONTROLLER_2P_INPUT_BUTTON_Y, P_1);
+	GetCtr[CONTROLLER_P1][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1);
+	GetCtr[CONTROLLER_P1][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P1);
+	GetCtr[CONTROLLER_P1][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P1);
+	GetCtr[CONTROLLER_P1][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1);
 
-		switch (ctrType[P_2])
+		switch (ctrType[CONTROLLER_P2])
 		{
 		case SELECT:
 			/*CharFlag[P2] = true;*/
-			ctrType[P_2] = TYPE_MAX;
+			ctrType[CONTROLLER_P2] = TYPE_MAX;
 			break;
 		case CANSELL:
 			CharFlag[P2] = false;
-			ctrType[P_2] = TYPE_MAX;
+			ctrType[CONTROLLER_P2] = TYPE_MAX;
 			break;
 		case LEFT:
 			tmpPos2.x -= 360;
@@ -185,7 +185,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 			{
 				CharID[P2] = (Character)(CharID[P2] - 1);
 			}
-			ctrType[P_2] = TYPE_MAX;
+			ctrType[CONTROLLER_P2] = TYPE_MAX;
 			break;
 		case RIGHT:
 			tmpPos2.x += 360;
@@ -195,7 +195,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 			{
 				CharID[P2] = (Character)(CharID[P2] + 1);
 			}
-			ctrType[P_2] = TYPE_MAX;
+			ctrType[CONTROLLER_P2] = TYPE_MAX;
 			break;
 		case TYPE_MAX:
 			break;
@@ -206,43 +206,43 @@ void SelectCur::MoveCur(Game_ctr & controller)
 
 	if (!CharFlag[P2])
 	{
-		if (GetCtr[P_2][SELECT] == PAD_FREE)
+		if (GetCtr[CONTROLLER_P2][SELECT] == PAD_FREE)
 		{
-			if (controller.GetCtr(CONTROLLER_2P_INPUT_BUTTON_B, P_2) == PAD_PUSH)
+			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
 			{
-				ctrType[P_2] = SELECT;
+				ctrType[CONTROLLER_P2] = SELECT;
 			}
 		}
-		if (GetCtr[P_2][RIGHT] == PAD_FREE)
+		if (GetCtr[CONTROLLER_P2][RIGHT] == PAD_FREE)
 		{
-			if (controller.GetCtr(CONTROLLER_2P_INPUT_RIGHT, P_2) == PAD_PUSH)
+			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2) == PAD_PUSH)
 			{
-				ctrType[P_2] = RIGHT;
+				ctrType[CONTROLLER_P2] = RIGHT;
 			}
 		}
-		if (GetCtr[P_2][LEFT] == PAD_FREE)
+		if (GetCtr[CONTROLLER_P2][LEFT] == PAD_FREE)
 		{
-			if (controller.GetCtr(CONTROLLER_2P_INPUT_LEFT, P_2) == PAD_PUSH)
+			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P2) == PAD_PUSH)
 			{
-				ctrType[P_2] = LEFT;
+				ctrType[CONTROLLER_P2] = LEFT;
 			}
 		}
 	}
 	else
 	{
-		if (GetCtr[P_2][CANSELL] == PAD_FREE)
+		if (GetCtr[CONTROLLER_P2][CANSELL] == PAD_FREE)
 		{
-			if (controller.GetCtr(CONTROLLER_2P_INPUT_BUTTON_Y,P_2) == PAD_PUSH)
+			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
 			{
-				ctrType[P_2] = CANSELL;
+				ctrType[CONTROLLER_P2] = CANSELL;
 			}
 		}
 	}
 
-	GetCtr[P_2][SELECT] = controller.GetCtr(CONTROLLER_2P_INPUT_BUTTON_B, P_2);
-	GetCtr[P_2][RIGHT] = controller.GetCtr(CONTROLLER_2P_INPUT_RIGHT, P_2);
-	GetCtr[P_2][LEFT] = controller.GetCtr(CONTROLLER_2P_INPUT_LEFT, P_2);
-	GetCtr[P_2][CANSELL] = controller.GetCtr(CONTROLLER_2P_INPUT_BUTTON_Y, P_2);
+	GetCtr[CONTROLLER_P2][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2);
+	GetCtr[CONTROLLER_P2][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2);
+	GetCtr[CONTROLLER_P2][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P2);
+	GetCtr[CONTROLLER_P2][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2);
 
 
 
