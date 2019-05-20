@@ -26,7 +26,7 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 
 	if (bGetCtr == PAD_FREE)
 	{
-		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A) == PAD_PUSH)
+		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A,P_1) == PAD_PUSH)
 		{
 			MapCtl::GetInstance().MapSave();
 			return std::make_unique<GameScene>();
@@ -41,7 +41,7 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 		return std::make_unique<ResultScene>();
 	}
 
-	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A);
+	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A, P_1);
 
 	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F2]) //åªç›ÇÃ∑∞èÓïÒÇéÊìæ
 	//{

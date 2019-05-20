@@ -5,6 +5,7 @@
 #include "EditScene.h"
 #include "ImageMng.h"
 #include "Obj.h"
+#include "SelectCur.h"
 
 
 SelectScene::SelectScene()
@@ -34,6 +35,7 @@ unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 		(*itr)->UpData(objList, controller);
 	}
 
+	lpSelCur.MoveCur(controller);
 	return std::move(own);
 }
 
@@ -56,9 +58,9 @@ int SelectScene::Init(void)
 
 void SelectScene::Draw()
 {
-	ClsDrawScreen();
-	DrawGraph(0, 0, lpImageMng.GetID("image/modeselect.png")[0], true);
-	DrawGraph(500, 50, lpImageMng.GetID("image/button_UI.png")[2], true);
-	DrawGraph(850, 50, lpImageMng.GetID("image/button_UI.png")[4], true);
-	ScreenFlip();
+	//ClsDrawScreen();
+	//DrawGraph(0, 0, lpImageMng.GetID("image/modeselect.png")[0], true);
+	//DrawGraph(500, 50, lpImageMng.GetID("image/button_UI.png")[2], true);
+	//DrawGraph(850, 50, lpImageMng.GetID("image/button_UI.png")[4], true);
+	//ScreenFlip();
 }

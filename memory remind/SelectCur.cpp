@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "SelectCur.h"
-#include"ImageMng.h"
+#include "ImageMng.h"
+
 
 
 SelectCur::SelectCur()
@@ -269,3 +270,4 @@ bool SelectCur::GetCharFlag2(void)
 {
 	return CharFlag[P2];
 }
+

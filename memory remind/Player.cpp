@@ -141,20 +141,20 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 	{
 		for (int i = 0; i < DIR_MAX; i++)
 		{
-			if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
+			if ((controller.GetCtr(i, P_1) == PAD_HOLD) || (controller.GetCtr(i, P_1) == PAD_PUSH))
 			{
 				Player::dir = dirTbl[i][TBL_MAIN];
 			}
-			else if ((controller.GetCtr(i) == PAD_FREE) || (controller.GetCtr(i) == PAD_PULL))
+			else if ((controller.GetCtr(i, P_1) == PAD_FREE) || (controller.GetCtr(i, P_1) == PAD_PULL))
 			{
-				if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN) == PAD_FREE)
-					&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT) == PAD_FREE))
+				if ((controller.GetCtr(CONTROLLER_1P_INPUT_UP, P_1) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_DOWN, P_1) == PAD_FREE)
+					&& (controller.GetCtr(CONTROLLER_1P_INPUT_LEFT, P_1) == PAD_FREE) && (controller.GetCtr(CONTROLLER_1P_INPUT_RIGHT, P_1) == PAD_FREE))
 				{
 					SetAnim("’âŽ~");
 				}
 			}
 
-			if ((controller.GetCtr(i) == PAD_HOLD) || (controller.GetCtr(i) == PAD_PUSH))
+			if ((controller.GetCtr(i, P_1) == PAD_HOLD) || (controller.GetCtr(i, P_1) == PAD_PUSH))
 			{
 				if (PassF() == true)
 				{

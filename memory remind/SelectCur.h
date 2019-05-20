@@ -63,4 +63,3 @@ private:
 
 	VECTOR2 pos;					// 選択カーソルのPos
 };
-
