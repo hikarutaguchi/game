@@ -22,7 +22,7 @@ SelectCur::SelectCur()
 
 	posTBL = {
 		pos = {170,360},		// P1
-		pos = {270,360},		// P2
+		pos = {170,360},		// P2
 		pos = {170,360},		// P3
 		pos = {170,360}			// P4
 	};
@@ -57,16 +57,25 @@ void SelectCur::Draw(void)
 
 	for (int i = 0; i < CONTROLLER_MAX; i++)
 	{
-		//DrawBox(posTBL[P1].x, posTBL[P1].y + 50, posTBL[P1].x + 80, posTBL[P1].y + 120, 0xff00ff, false);
-
 		if (!CharFlag[i])
 		{
-			DrawBox(posTBL[i].x, posTBL[i].y, posTBL[i].x + 80, posTBL[i].y + 120, 0x0000ff, false);
+			DrawBox(posTBL[P1].x, posTBL[P1].y, posTBL[P1].x + 80, posTBL[P1].y + 120, 0xff0000, false);
+			DrawBox(posTBL[P2].x, posTBL[P2].y, posTBL[P2].x + 80, posTBL[P2].y + 120, 0x0000ff, false);
+			DrawBox(posTBL[P3].x, posTBL[P3].y, posTBL[P3].x + 80, posTBL[P3].y + 120, 0x00ff00, false);
+			DrawBox(posTBL[P4].x, posTBL[P4].y, posTBL[P4].x + 80, posTBL[P4].y + 120, 0xffff00, false);
+
+			DrawFormatString(posTBL[i].x + 5, posTBL[i].y - 20, 0xffffff, "PLAYER_%d",i);
+		}
+		else
+		{
+			DrawBox(posTBL[i].x + 10, posTBL[i].y + 10, posTBL[i].x + 70, posTBL[i].y + 110, 0xffffff, true);
 		}
 	}
 
-	DrawGraph(500, 50, lpImageMng.GetID("image/button_UI.png")[2], true);
-	DrawGraph(850, 50, lpImageMng.GetID("image/button_UI.png")[4], true);
+	DrawGraph(500, 800, lpImageMng.GetID("image/button_UI.png")[2], true);
+	DrawGraph(850, 800, lpImageMng.GetID("image/button_UI.png")[4], true);
+
+	DrawGraph(0, 0, lpImageMng.GetID("image/erandene.png")[0], true);
 
 	DrawGraph(180, 370, lpImageMng.GetID("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 	DrawGraph(540, 370, lpImageMng.GetID("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4))[0], true);
@@ -93,7 +102,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 	switch (ctrType[CONTROLLER_P1])
 	{
 	case SELECT:
-		/*CharFlag[P1] = true;*/
+		CharFlag[P1] = true;
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
 	case CANSELL:
@@ -170,7 +179,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		switch (ctrType[CONTROLLER_P2])
 		{
 		case SELECT:
-			/*CharFlag[P2] = true;*/
+			CharFlag[P2] = true;
 			ctrType[CONTROLLER_P2] = TYPE_MAX;
 			break;
 		case CANSELL:
