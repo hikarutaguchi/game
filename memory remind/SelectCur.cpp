@@ -66,7 +66,7 @@ void SelectCur::Draw(void)
 		if (!CharFlag[i])
 		{
 			DrawBox(posTBL[i].x, posTBL[i].y, posTBL[i].x + 80, posTBL[i].y + 120,GetColor(255,128,64), false);
-			DrawFormatString(posTBL[i].x + 5, posTBL[i].y - 20, 0xffffff, "PLAYER_%d",i);
+			DrawFormatString(posTBL[i].x + 5, posTBL[i].y - 20, 0xffffff, "PLAYER_%d",i + 1);
 		}
 		else
 		{
@@ -102,44 +102,6 @@ void SelectCur::MoveCur(Game_ctr & controller)
 	VECTOR2 tmpPos3(posTBL[CONTROLLER_P3]);		//‰¼ˆÚ“®•Ï”	
 	VECTOR2 tmpPos4(posTBL[CONTROLLER_P4]);		//‰¼ˆÚ“®•Ï”	
 
-	switch (ctrType[CONTROLLER_P1])
-	{
-	case SELECT:
-		ctrType[CONTROLLER_P1] = TYPE_MAX;
-		break;
-	case CANSELL:
-		PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
-		CharFlag[CONTROLLER_P1] = false;
-		ctrType[CONTROLLER_P1] = TYPE_MAX;
-		break;
-	case LEFT:
-		tmpPos1.x -= 360;
-
-		// CharID‚ðŽæ“¾
-		if (tmpPos1.x > 0)
-		{
-			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-			CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
-		}
-		ctrType[CONTROLLER_P1] = TYPE_MAX;
-		break;
-	case RIGHT:
-		tmpPos1.x += 360;
-
-		// CharID‚ðŽæ“¾
-		if (tmpPos1.x < 1200)
-		{
-			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-			CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
-		}
-		ctrType[CONTROLLER_P1] = TYPE_MAX;
-		break;
-	case TYPE_MAX:
-		break;
-	default:
-		break;
-	}
-
 	if (!CharFlag[CONTROLLER_P1])
 	{
 		if (GetCtr[CONTROLLER_P1][SELECT] == PAD_FREE)
@@ -148,21 +110,34 @@ void SelectCur::MoveCur(Game_ctr & controller)
 			{
 				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
 				CharFlag[CONTROLLER_P1] = true;
-				ctrType[CONTROLLER_P1] = SELECT;
 			}
 		}
 		if (GetCtr[CONTROLLER_P1][RIGHT] == PAD_FREE)
 		{
 			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P1) == PAD_PUSH)
 			{
-				ctrType[CONTROLLER_P1] = RIGHT;
+				tmpPos1.x += 360;
+
+				// CharID‚ðŽæ“¾
+				if (tmpPos1.x < 1200)
+				{
+					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+					CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
+				}
 			}
 		}
 		if (GetCtr[CONTROLLER_P1][LEFT] == PAD_FREE)
 		{
 			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P1) == PAD_PUSH)
 			{
-				ctrType[CONTROLLER_P1] = LEFT;
+				tmpPos1.x -= 360;
+
+				// CharID‚ðŽæ“¾
+				if (tmpPos1.x > 0)
+				{
+					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+					CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
+				}
 			}
 		}
 	}
@@ -172,7 +147,161 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		{
 			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
 			{
-				ctrType[CONTROLLER_P1] = CANSELL;
+				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+				CharFlag[CONTROLLER_P1] = false;
+			}
+		}
+	}
+
+	if (!CharFlag[CONTROLLER_P2])
+	{
+		if (GetCtr[CONTROLLER_P2][SELECT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
+			{
+				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+				CharFlag[CONTROLLER_P2] = true;
+			}
+		}
+		if (GetCtr[CONTROLLER_P2][RIGHT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2) == PAD_PUSH)
+			{
+				tmpPos2.x += 360;
+
+				// CharID‚ðŽæ“¾
+				if (tmpPos2.x < 1200)
+				{
+					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+					CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] + 1);
+				}
+			}
+		}
+		if (GetCtr[CONTROLLER_P2][LEFT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P2) == PAD_PUSH)
+			{
+				tmpPos2.x -= 360;
+
+				// CharID‚ðŽæ“¾
+				if (tmpPos2.x > 0)
+				{
+					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+					CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] - 1);
+				}
+			}
+		}
+	}
+	else
+	{
+		if (GetCtr[CONTROLLER_P2][CANSELL] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
+			{
+				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+				CharFlag[CONTROLLER_P2] = false;
+			}
+		}
+	}
+
+	if (!CharFlag[CONTROLLER_P3])
+	{
+		if (GetCtr[CONTROLLER_P3][SELECT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P3) == PAD_PUSH)
+			{
+				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+				CharFlag[CONTROLLER_P3] = true;
+			}
+		}
+		if (GetCtr[CONTROLLER_P3][RIGHT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P3) == PAD_PUSH)
+			{
+				tmpPos3.x += 360;
+
+				// CharID‚ðŽæ“¾
+				if (tmpPos3.x < 1200)
+				{
+					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+					CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] + 1);
+				}
+			}
+		}
+		if (GetCtr[CONTROLLER_P3][LEFT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P3) == PAD_PUSH)
+			{
+				tmpPos3.x -= 360;
+
+				// CharID‚ðŽæ“¾
+				if (tmpPos3.x > 0)
+				{
+					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+					CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] - 1);
+				}
+			}
+		}
+	}
+	else
+	{
+		if (GetCtr[CONTROLLER_P3][CANSELL] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P3) == PAD_PUSH)
+			{
+				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+				CharFlag[CONTROLLER_P3] = false;
+			}
+		}
+	}
+
+	if (!CharFlag[CONTROLLER_P4])
+	{
+		if (GetCtr[CONTROLLER_P4][SELECT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P4) == PAD_PUSH)
+			{
+				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+				CharFlag[CONTROLLER_P4] = true;
+			}
+		}
+		if (GetCtr[CONTROLLER_P4][RIGHT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P4) == PAD_PUSH)
+			{
+				tmpPos4.x += 360;
+
+				// CharID‚ðŽæ“¾
+				if (tmpPos4.x < 1200)
+				{
+					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+					CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] + 1);
+				}
+			}
+		}
+		if (GetCtr[CONTROLLER_P4][LEFT] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P4) == PAD_PUSH)
+			{
+				tmpPos4.x -= 360;
+
+				// CharID‚ðŽæ“¾
+				if (tmpPos4.x > 0)
+				{
+					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+					CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] - 1);
+				}
+			}
+		}
+	}
+	else
+	{
+		if (GetCtr[CONTROLLER_P4][CANSELL] == PAD_FREE)
+		{
+			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P4) == PAD_PUSH)
+			{
+				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+				CharFlag[CONTROLLER_P4] = false;
 			}
 		}
 	}
@@ -182,83 +311,20 @@ void SelectCur::MoveCur(Game_ctr & controller)
 	GetCtr[CONTROLLER_P1][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P1);
 	GetCtr[CONTROLLER_P1][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1);
 
-	switch (ctrType[CONTROLLER_P2])
-	{
-	case SELECT:		
-		ctrType[CONTROLLER_P2] = TYPE_MAX;
-		break;
-	case CANSELL:
-		CharFlag[CONTROLLER_P2] = false;
-		ctrType[CONTROLLER_P2] = TYPE_MAX;
-		break;
-	case LEFT:
-		tmpPos2.x -= 360;
+	GetCtr[CONTROLLER_P2][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2);
+	GetCtr[CONTROLLER_P2][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2);
+	GetCtr[CONTROLLER_P2][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P2);
+	GetCtr[CONTROLLER_P2][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2);
 
-		// CharID‚ðŽæ“¾
-		if (tmpPos2.x > 0)
-		{
-			CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] - 1);
-		}
-		ctrType[CONTROLLER_P2] = TYPE_MAX;
-		break;
-	case RIGHT:
-		tmpPos2.x += 360;
+	GetCtr[CONTROLLER_P3][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P3);
+	GetCtr[CONTROLLER_P3][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P3);
+	GetCtr[CONTROLLER_P3][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P3);
+	GetCtr[CONTROLLER_P3][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P3);
 
-		// CharID‚ðŽæ“¾
-		if (tmpPos2.x < 1200)
-		{
-			CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] + 1);
-		}
-		ctrType[CONTROLLER_P2] = TYPE_MAX;
-		break;
-	case TYPE_MAX:
-		break;
-	default:
-		break;
-
-	}
-
-if (!CharFlag[CONTROLLER_P2])
-{
-	if (GetCtr[CONTROLLER_P2][SELECT] == PAD_FREE)
-	{
-		if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
-		{
-			CharFlag[CONTROLLER_P2] = true;
-			ctrType[CONTROLLER_P2] = SELECT;
-		}
-	}
-	if (GetCtr[CONTROLLER_P2][RIGHT] == PAD_FREE)
-	{
-		if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2) == PAD_PUSH)
-		{
-			ctrType[CONTROLLER_P2] = RIGHT;
-		}
-	}
-	if (GetCtr[CONTROLLER_P2][LEFT] == PAD_FREE)
-	{
-		if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P2) == PAD_PUSH)
-		{
-			ctrType[CONTROLLER_P2] = LEFT;
-		}
-	}
-}
-else
-{
-	if (GetCtr[CONTROLLER_P2][CANSELL] == PAD_FREE)
-	{
-		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
-		{
-			ctrType[CONTROLLER_P2] = CANSELL;
-		}
-	}
-}
-
-GetCtr[CONTROLLER_P2][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2);
-GetCtr[CONTROLLER_P2][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2);
-GetCtr[CONTROLLER_P2][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P2);
-GetCtr[CONTROLLER_P2][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2);
-
+	GetCtr[CONTROLLER_P4][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P4);
+	GetCtr[CONTROLLER_P4][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P4);
+	GetCtr[CONTROLLER_P4][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P4);
+	GetCtr[CONTROLLER_P4][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P4);
 
 
 	// ‰¼ˆÚ“®‚©‚çŽÀˆÚ“®
@@ -271,6 +337,18 @@ GetCtr[CONTROLLER_P2][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2
 	if (0 < tmpPos2.x && tmpPos2.x < 1200)
 	{
 		posTBL[CONTROLLER_P2] = tmpPos2;
+	}
+
+	// ‰¼ˆÚ“®‚©‚çŽÀˆÚ“®
+	if (0 < tmpPos3.x && tmpPos3.x < 1200)
+	{
+		posTBL[CONTROLLER_P3] = tmpPos3;
+	}
+
+	// ‰¼ˆÚ“®‚©‚çŽÀˆÚ“®
+	if (0 < tmpPos4.x && tmpPos4.x < 1200)
+	{
+		posTBL[CONTROLLER_P4] = tmpPos4;
 	}
 
 	Draw();
