@@ -170,7 +170,7 @@ void Player::SetMove(weekListObj objList, const Game_ctr & controller)
 			}
 		}
 	}
-
+	lpMapCtl.GetMapID(pos, id);
 	SetAnim("í‚é~");
 }
 
