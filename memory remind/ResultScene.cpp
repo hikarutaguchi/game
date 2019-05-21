@@ -5,6 +5,7 @@
 #include "ImageMng.h"
 #include "Obj.h"
 #include "Player.h"
+#include "Fader.h"
 
 ResultScene::ResultScene()
 {
@@ -17,38 +18,41 @@ ResultScene::~ResultScene()
 
 unique_Base ResultScene::Updata(unique_Base own, Game_ctr & controller)
 {
-	for (int i = 0; i < PLAYER_MAX; i++)
+	if (!fadeFinish)
 	{
-		killPoint[i] = 1;
-		goalPoint[i] = 1;
-		totalPoint[i] = killPoint[i] + goalPoint[i];
+		if (lpFader.GetFadeState() == FADE_OUT_END)
+		{
+			lpFader.SetFadeIn(8);
+			fadeFinish = true;
+		}
 	}
 
-	//‡ˆÊˆ—
-	
-
-	for (int i = 0; i < GetJoypadNum(); i++)
+	if (bGetCtr == PAD_FREE)
 	{
-		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		if ((Pad[i] & PAD_INPUT_1) && ((Pad[i] & PAD_INPUT_3)))
+		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
+		{
+			lpFader.SetFadeOut(8);
+		}
+	}
+	if (fadeFinish)
+	{
+		if (lpFader.GetFadeState() == FADE_OUT_END)
 		{
 			return std::make_unique<TitleScene>();
 		}
 	}
+
+	bGetCtr = controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1);
+
+	lpFader.Updata();
+	Draw();
 	return std::move(own);
 }
 
 
 int ResultScene::Init(void)
 {
-	holdbox = 0;
-	for (int i = 0; i < PLAYER_MAX; i++)
-	{
-		killPoint[i] = 0;
-		goalPoint[i] = 0;
-		totalPoint[i] = 0;
-		ranking[i] = 0;
-	}
+	fadeFinish = false;
 	padFlag = false;
 	if (!objList)
 	{
@@ -57,7 +61,6 @@ int ResultScene::Init(void)
 	}
 
 	objList->clear();
-	Draw();
 	return 0;
 }
 
@@ -65,5 +68,6 @@ void ResultScene::Draw()
 {
 	ClsDrawScreen();
 	DrawGraph(0, 0, lpImageMng.GetID("image/akuma.png")[0], true);
+	lpFader.Draw();
 	ScreenFlip();
 }
