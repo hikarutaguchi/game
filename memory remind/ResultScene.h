@@ -12,12 +12,8 @@ public:
 	virtual unique_Base Updata(unique_Base own, Game_ctr &controller);	// ƒˆ‰¼‘zŠÖ”UpDate
 
 private:
-	int killPoint[PLAYER_MAX];
-	int goalPoint[PLAYER_MAX];
-	int totalPoint[PLAYER_MAX];
-	int ranking[PLAYER_MAX];
-	int holdbox;
-
+	int bGetCtr;
+	bool fadeFinish;
 	int Init(void);
 	bool nextScene;
 	void Draw();

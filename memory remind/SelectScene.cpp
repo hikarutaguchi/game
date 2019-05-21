@@ -21,15 +21,27 @@ SelectScene::~SelectScene()
 
 unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 {
-	if (lpFader.GetFadeState() == FADE_OUT_END)
+	if (!fadeFinish)
 	{
-		lpFader.SetFadeIn(8);
+		if (lpFader.GetFadeState() == FADE_OUT_END)
+		{
+			lpFader.SetFadeIn(8);
+			fadeFinish = true;
+		}
 	}
+
 	if (bGetCtr == PAD_FREE)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
 		{
-			//lpFader.SetFadeOut(4);
+			lpFader.SetFadeOut(4);
+		}
+	}
+	if (fadeFinish)
+	{
+		if (lpFader.GetFadeState() == FADE_OUT_END)
+		{
+			StopSoundMem(bgm);
 			return std::make_unique<EditScene>();
 		}
 	}
@@ -40,7 +52,6 @@ unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		(*itr)->UpData(objList, controller);
 	}
-
 	lpFader.Updata();
 	lpSelCur.MoveCur(controller);
 	return std::move(own);
@@ -48,6 +59,7 @@ unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 
 int SelectScene::Init(void)
 {
+	fadeFinish = false;
 	bGetCtr = PAD_MAX;
 	lpImageMng.GetID("image/button_UI.png", VECTOR2(300, 64), VECTOR2(2, 3));		//プレイヤーのフレームを読み込み
 	padFlag = false;
@@ -59,7 +71,10 @@ int SelectScene::Init(void)
 
 	objList->clear();
 
-	Draw();
+	bgm = LoadSoundMem("sound/selectScene/bgm_select.mp3");
+	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+
+	//Draw();
 	return 0;
 }
 

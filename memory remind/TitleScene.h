@@ -16,8 +16,8 @@ private:
 	sharedListObj objList;			// ²İ½Àİ½‚µ‚½î•ñ‚ğ“o˜^
 	int Pad[4];						// ƒpƒbƒhî•ñ
 	int animCnt;
-
-	int titleBgm;
+	bool fadeFinish;
+	int bgm;
 	int seNextButton;
 	bool padFlag;
 

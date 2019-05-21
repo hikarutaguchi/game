@@ -8,6 +8,7 @@
 #include "ImageMng.h"
 #include "ResultScene.h"
 #include "CntMng.h"
+#include "Fader.h"
 
 GameScene::GameScene()
 {
@@ -22,11 +23,24 @@ GameScene::~GameScene()
 
 unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 {
-
-	for (int i = 0; i < GetJoypadNum(); i++)
+	if (!fadeFinish)
 	{
-		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		if (/*(Pad[i] & PAD_INPUT_3) && */((Pad[i] & PAD_INPUT_4)))
+		if (lpFader.GetFadeState() == FADE_OUT_END)
+		{
+			lpFader.SetFadeIn(8);
+			fadeFinish = true;
+		}
+	}
+	if (bGetCtr == PAD_FREE)
+	{
+		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
+		{
+			lpFader.SetFadeOut(8);
+		}
+	}
+	if (fadeFinish)
+	{
+		if (lpFader.GetFadeState() == FADE_OUT_END)
 		{
 			SceneCnt += 1;
 			lpCntMng.SetCnt(SceneCnt);
@@ -34,10 +48,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 		}
 	}
 
-	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1] & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]))
-	//{
-	//	return std::make_unique<EditScene>();
-	//}
+	bGetCtr = controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1);
 
 	lpMapCtl.Updata();
 
@@ -49,6 +60,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 
 	objList->remove_if([](sharedObj& obj) {return obj->CheckDeth(); });
 	GameDraw();
+	lpFader.Updata();
 	return std::move(own);
 }
 
@@ -130,7 +142,6 @@ bool GameScene::GameDraw(void)
 	if (startCnt < 0)
 	{
 		timeCnt = 10800;
-		startCnt = 61;
 	}
 	else if (startCnt > 61)
 	{
@@ -138,10 +149,27 @@ bool GameScene::GameDraw(void)
 	}
 	else if (startCnt < 60)
 	{
+
 		DrawGraph(0, 0, lpImageMng.GetID("image/start.png")[0], true);
 	}
 
-
+	//サウンド処理
+	if (startCnt == 240)
+	{
+		PlaySoundMem(three, DX_PLAYTYPE_BACK);
+	}
+	else if (startCnt == 180)
+	{
+		PlaySoundMem(two, DX_PLAYTYPE_BACK);
+	}
+	else if (startCnt == 120)
+	{
+		PlaySoundMem(one, DX_PLAYTYPE_BACK);
+	}
+	else if (startCnt == 60)
+	{
+		PlaySoundMem(start,DX_PLAYTYPE_BACK);
+	}
 
 
 
@@ -182,14 +210,16 @@ bool GameScene::GameDraw(void)
 			break;
 		}
 	}
+	lpFader.Draw();
 	ScreenFlip();
 	return true;
 }
 
 int GameScene::Init(void)
 {
+	fadeFinish = false;
 	timeCnt = 0;
-	startCnt = 240;
+	startCnt = 241;
 	padFlag = false;
 	if (!objList)
 	{
@@ -204,6 +234,19 @@ int GameScene::Init(void)
 	lpSceneMng.SetDrawOffset( VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y) );
 	lpMapCtl.SetUp( VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y) , VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
 	lpMapCtl.MapLoad(objList, false);
+
+	//サウンド
+	bgm = LoadSoundMem("sound/gameScene/bgm_game.mp3");
+	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+	one = LoadSoundMem("sound/gameScene/voice_1.mp3");
+	two = LoadSoundMem("sound/gameScene/voice_2.mp3");
+	three = LoadSoundMem("sound/gameScene/voice_3.mp3");
+	sixty = LoadSoundMem("sound/gameScene/voice_60.mp3");
+	byou = LoadSoundMem("sound/gameScene/voice_byou.mp3");
+	nokori = LoadSoundMem("sound/gameScene/voice_nokori.mp3");
+	stop = LoadSoundMem("sound/gameScene/voice_stop.mp3");
+	start = LoadSoundMem("sound/gameScene/voice_start.mp3");
+
 	return true;
 }
 

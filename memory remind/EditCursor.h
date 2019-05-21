@@ -27,4 +27,10 @@ private:
 	MAP_ID befo2ID;
 	MAP_ID beforeID;
 	MAP_ID id;
+
+	//ƒTƒEƒ“ƒh
+	int kettei;
+	int cansell;
+	int choice;
+	int bu_bu;
 };

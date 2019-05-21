@@ -35,6 +35,11 @@ SelectCur::SelectCur()
 			GetCtr[i][p] = PAD_MAX;
 		}
 	}
+
+	kettei = LoadSoundMem("sound/allScene/se_kettei.mp3");
+	cansell = LoadSoundMem("sound/allScene/se_cansell.mp3");
+	menu = LoadSoundMem("sound/selectScene/se_menu.mp3");
+	choice = LoadSoundMem("sound/allScene/se_choice.mp3");
 }
 
 
@@ -43,7 +48,7 @@ SelectCur::~SelectCur()
 	
 }
 
-int SelectCur::GetCharData(Cursor playerNum)
+int SelectCur::GetCharData(P_TYPE playerNum)
 {
 	if (CharFlag[playerNum])
 	{
@@ -60,11 +65,7 @@ void SelectCur::Draw(void)
 	{
 		if (!CharFlag[i])
 		{
-			DrawBox(posTBL[P1].x, posTBL[P1].y, posTBL[P1].x + 80, posTBL[P1].y + 120, 0xff0000, false);
-			DrawBox(posTBL[P2].x, posTBL[P2].y, posTBL[P2].x + 80, posTBL[P2].y + 120, 0x0000ff, false);
-			DrawBox(posTBL[P3].x, posTBL[P3].y, posTBL[P3].x + 80, posTBL[P3].y + 120, 0x00ff00, false);
-			DrawBox(posTBL[P4].x, posTBL[P4].y, posTBL[P4].x + 80, posTBL[P4].y + 120, 0xffff00, false);
-
+			DrawBox(posTBL[i].x, posTBL[i].y, posTBL[i].x + 80, posTBL[i].y + 120,GetColor(255,128,64), false);
 			DrawFormatString(posTBL[i].x + 5, posTBL[i].y - 20, 0xffffff, "PLAYER_%d",i);
 		}
 		else
@@ -83,14 +84,12 @@ void SelectCur::Draw(void)
 	DrawGraph(900, 370, lpImageMng.GetID("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4))[0], true);
 
 #ifdef _DEBUG
-	DrawFormatString(0, 0, 0xff0000, "pos1,x = %d", posTBL[P1].x);
-	DrawFormatString(0, 15, 0xff0000, "pos2,x = %d", posTBL[P2].x);
-	DrawFormatString(0, 100, 0xff0000, "CharID[P1] = %d", static_cast<int>(CharID[P1]));
-	DrawFormatString(0, 115, 0xff0000, "CharID[P2] = %d", static_cast<int>(CharID[P2]));
-	DrawFormatString(0, 200, 0xff0000, "CharFlag1 = %d", static_cast<int>(CharFlag[P1]));
-	DrawFormatString(0, 215, 0xff0000, "CharFlag2 = %d", static_cast<int>(CharFlag[P2]));
-	DrawFormatString(0, 300, 0xff0000, "GetCharID1 = %d", static_cast<int>(GetCharData(P1)));
-	DrawFormatString(0, 315, 0xff0000, "GetCharID2 = %d", static_cast<int>(GetCharData(P2)));
+	for (int i = 0; i < CONTROLLER_MAX; i++)
+	{
+		DrawFormatString(0, 0 + (i * 15), 0xff0000, "pos%d,x = %d",i + 1,posTBL[i].x);
+		DrawFormatString(0, 100 + (i * 15), 0xff0000, "CharID[%d] = %d",i + 1, static_cast<int>(CharID[i]));
+		DrawFormatString(0, 200 + (i * 15), 0xff0000, "CharFlag%d = %d",i + 1, static_cast<int>(CharFlag[i]));
+	}
 	lpFader.Draw();
 #endif
 	ScreenFlip();
@@ -98,17 +97,19 @@ void SelectCur::Draw(void)
 
 void SelectCur::MoveCur(Game_ctr & controller)
 {
-	VECTOR2 tmpPos1(posTBL[P1]);		//‰¼ˆÚ“®•Ï”	
-	VECTOR2 tmpPos2(posTBL[P2]);
+	VECTOR2 tmpPos1(posTBL[CONTROLLER_P1]);		//‰¼ˆÚ“®•Ï”	
+	VECTOR2 tmpPos2(posTBL[CONTROLLER_P2]);		//‰¼ˆÚ“®•Ï”	
+	VECTOR2 tmpPos3(posTBL[CONTROLLER_P3]);		//‰¼ˆÚ“®•Ï”	
+	VECTOR2 tmpPos4(posTBL[CONTROLLER_P4]);		//‰¼ˆÚ“®•Ï”	
 
 	switch (ctrType[CONTROLLER_P1])
 	{
 	case SELECT:
-		CharFlag[P1] = true;
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
 	case CANSELL:
-		CharFlag[P1] = false;
+		PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+		CharFlag[CONTROLLER_P1] = false;
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
 	case LEFT:
@@ -117,7 +118,8 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		// CharID‚ðŽæ“¾
 		if (tmpPos1.x > 0)
 		{
-			CharID[P1] = (Character)(CharID[P1] - 1);
+			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+			CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
 		}
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
@@ -127,7 +129,8 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		// CharID‚ðŽæ“¾
 		if (tmpPos1.x < 1200)
 		{
-			CharID[P1] = (Character)(CharID[P1] + 1);
+			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+			CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
 		}
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
@@ -135,26 +138,27 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		break;
 	default:
 		break;
-
 	}
 
-	if (!CharFlag[P1])
+	if (!CharFlag[CONTROLLER_P1])
 	{
 		if (GetCtr[CONTROLLER_P1][SELECT] == PAD_FREE)
 		{
 			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1) == PAD_PUSH)
 			{
+				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+				CharFlag[CONTROLLER_P1] = true;
 				ctrType[CONTROLLER_P1] = SELECT;
 			}
 		}
-		if (GetCtr[P1][RIGHT] == PAD_FREE)
+		if (GetCtr[CONTROLLER_P1][RIGHT] == PAD_FREE)
 		{
 			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P1) == PAD_PUSH)
 			{
 				ctrType[CONTROLLER_P1] = RIGHT;
 			}
 		}
-		if (GetCtr[P1][LEFT] == PAD_FREE)
+		if (GetCtr[CONTROLLER_P1][LEFT] == PAD_FREE)
 		{
 			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P1) == PAD_PUSH)
 			{
@@ -164,7 +168,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 	}
 	else
 	{
-		if (GetCtr[P1][CANSELL] == PAD_FREE)
+		if (GetCtr[CONTROLLER_P1][CANSELL] == PAD_FREE)
 		{
 			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
 			{
@@ -178,107 +182,102 @@ void SelectCur::MoveCur(Game_ctr & controller)
 	GetCtr[CONTROLLER_P1][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P1);
 	GetCtr[CONTROLLER_P1][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1);
 
-		switch (ctrType[CONTROLLER_P2])
-		{
-		case SELECT:
-			CharFlag[P2] = true;
-			ctrType[CONTROLLER_P2] = TYPE_MAX;
-			break;
-		case CANSELL:
-			CharFlag[P2] = false;
-			ctrType[CONTROLLER_P2] = TYPE_MAX;
-			break;
-		case LEFT:
-			tmpPos2.x -= 360;
-
-			// CharID‚ðŽæ“¾
-			if (tmpPos2.x > 0)
-			{
-				CharID[P2] = (Character)(CharID[P2] - 1);
-			}
-			ctrType[CONTROLLER_P2] = TYPE_MAX;
-			break;
-		case RIGHT:
-			tmpPos2.x += 360;
-
-			// CharID‚ðŽæ“¾
-			if (tmpPos2.x < 1200)
-			{
-				CharID[P2] = (Character)(CharID[P2] + 1);
-			}
-			ctrType[CONTROLLER_P2] = TYPE_MAX;
-			break;
-		case TYPE_MAX:
-			break;
-		default:
-			break;
-
-		}
-
-	if (!CharFlag[P2])
+	switch (ctrType[CONTROLLER_P2])
 	{
-		if (GetCtr[CONTROLLER_P2][SELECT] == PAD_FREE)
+	case SELECT:		
+		ctrType[CONTROLLER_P2] = TYPE_MAX;
+		break;
+	case CANSELL:
+		CharFlag[CONTROLLER_P2] = false;
+		ctrType[CONTROLLER_P2] = TYPE_MAX;
+		break;
+	case LEFT:
+		tmpPos2.x -= 360;
+
+		// CharID‚ðŽæ“¾
+		if (tmpPos2.x > 0)
 		{
-			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
-			{
-				ctrType[CONTROLLER_P2] = SELECT;
-			}
+			CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] - 1);
 		}
-		if (GetCtr[CONTROLLER_P2][RIGHT] == PAD_FREE)
+		ctrType[CONTROLLER_P2] = TYPE_MAX;
+		break;
+	case RIGHT:
+		tmpPos2.x += 360;
+
+		// CharID‚ðŽæ“¾
+		if (tmpPos2.x < 1200)
 		{
-			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2) == PAD_PUSH)
-			{
-				ctrType[CONTROLLER_P2] = RIGHT;
-			}
+			CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] + 1);
 		}
-		if (GetCtr[CONTROLLER_P2][LEFT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P2) == PAD_PUSH)
-			{
-				ctrType[CONTROLLER_P2] = LEFT;
-			}
-		}
-	}
-	else
-	{
-		if (GetCtr[CONTROLLER_P2][CANSELL] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
-			{
-				ctrType[CONTROLLER_P2] = CANSELL;
-			}
-		}
+		ctrType[CONTROLLER_P2] = TYPE_MAX;
+		break;
+	case TYPE_MAX:
+		break;
+	default:
+		break;
+
 	}
 
-	GetCtr[CONTROLLER_P2][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2);
-	GetCtr[CONTROLLER_P2][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2);
-	GetCtr[CONTROLLER_P2][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P2);
-	GetCtr[CONTROLLER_P2][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2);
+if (!CharFlag[CONTROLLER_P2])
+{
+	if (GetCtr[CONTROLLER_P2][SELECT] == PAD_FREE)
+	{
+		if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
+		{
+			CharFlag[CONTROLLER_P2] = true;
+			ctrType[CONTROLLER_P2] = SELECT;
+		}
+	}
+	if (GetCtr[CONTROLLER_P2][RIGHT] == PAD_FREE)
+	{
+		if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2) == PAD_PUSH)
+		{
+			ctrType[CONTROLLER_P2] = RIGHT;
+		}
+	}
+	if (GetCtr[CONTROLLER_P2][LEFT] == PAD_FREE)
+	{
+		if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P2) == PAD_PUSH)
+		{
+			ctrType[CONTROLLER_P2] = LEFT;
+		}
+	}
+}
+else
+{
+	if (GetCtr[CONTROLLER_P2][CANSELL] == PAD_FREE)
+	{
+		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
+		{
+			ctrType[CONTROLLER_P2] = CANSELL;
+		}
+	}
+}
+
+GetCtr[CONTROLLER_P2][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2);
+GetCtr[CONTROLLER_P2][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2);
+GetCtr[CONTROLLER_P2][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P2);
+GetCtr[CONTROLLER_P2][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2);
 
 
 
 	// ‰¼ˆÚ“®‚©‚çŽÀˆÚ“®
 	if (0 < tmpPos1.x && tmpPos1.x < 1200)
 	{
-		posTBL[P1] = tmpPos1;
+		posTBL[CONTROLLER_P1] = tmpPos1;
 	}
 
 	// ‰¼ˆÚ“®‚©‚çŽÀˆÚ“®
 	if (0 < tmpPos2.x && tmpPos2.x < 1200)
 	{
-		posTBL[P2] = tmpPos2;
+		posTBL[CONTROLLER_P2] = tmpPos2;
 	}
 
 	Draw();
 }
 
-bool SelectCur::GetCharFlag(void)
+bool SelectCur::GetCharFlag(P_TYPE pType)
 {
-	return CharFlag[P1];
-}
-
-bool SelectCur::GetCharFlag2(void)
-{
-	return CharFlag[P2];
+	return CharFlag[pType];
 }
 

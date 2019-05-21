@@ -10,6 +10,11 @@
 
 EditCursor::EditCursor(VECTOR2 drawOffset) :Obj(drawOffset)
 {
+	kettei = LoadSoundMem("sound/allScene/se_kettei.mp3");
+	cansell = LoadSoundMem("sound/allScene/se_cansell.mp3");
+	choice = LoadSoundMem("sound/allScene/se_choice.mp3");
+	bu_bu = LoadSoundMem("sound/allScene/se_modoru.mp3");
+
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
 	id = static_cast<MAP_ID>(MAP_ID::HOLE);
@@ -116,6 +121,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
 		{
+			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
 			id = (MAP_ID)(id + 1);
 			if (id > MAP_ID::TOOL)
 			{
@@ -140,6 +146,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 					{
 						count += 1;
 					}
+					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
 					break;
 				case 1:
 					lpMapCtl.SetMapData(pos, id);
@@ -149,9 +156,17 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 					{
 						count += 1;
 					}
+					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
 					break;
 				default:
 					break;
+				}
+			}
+			else
+			{
+				if (CheckSoundMem(bu_bu) == 0)
+				{
+					PlaySoundMem(bu_bu, DX_PLAYTYPE_BACK);
 				}
 			}
 		}
@@ -167,11 +182,13 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				pos = befo2pos;
 				lpMapCtl.SetMapData(befo2pos, MAP_ID::YUKA);
 				count -= 1;
+				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
 				break;
 			case 2:
 				pos = beforepos;
 				lpMapCtl.SetMapData(beforepos, MAP_ID::YUKA);
 				count -= 1;
+				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
 				break;
 			default:
 				break;
