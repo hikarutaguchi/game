@@ -126,52 +126,62 @@ bool GameScene::GameDraw(void)
 
 	//時間表示
 
-	timeCnt--;
+		timeCnt--;
 
-	if (timeCnt <= 0)
-	{
-		startCnt--;
-	}
-	else
-	{
-		DrawGraph(SCREEN_SIZE_X / 2 - 75, 45, lpImageMng.GetID("image/number.png")[timeCnt / 6000 % 10], true);
-		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[timeCnt / 600 % 10], true);
-		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 100, 45, lpImageMng.GetID("image/number.png")[timeCnt / 60 % 10], true);
-	}
+		if (timeCnt <= 0)
+		{
+			startCnt--;
+		}
+		else
+		{
+			DrawGraph(SCREEN_SIZE_X / 2 - 75, 45, lpImageMng.GetID("image/number.png")[timeCnt / 6000 % 10], true);
+			DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[timeCnt / 600 % 10], true);
+			DrawGraph(SCREEN_SIZE_X / 2 - 75 + 100, 45, lpImageMng.GetID("image/number.png")[timeCnt / 60 % 10], true);
+		}
 
-	if (startCnt < 0)
-	{
-		timeCnt = 10800;
-	}
-	else if (startCnt > 61)
-	{
-		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[startCnt / 60 % 10], true);
-	}
-	else if (startCnt < 60)
-	{
+		if (startCnt < 0)
+		{
+			timeCnt = 3800;
+			startCnt = 61;
+		}
+		else if (startCnt > 61)
+		{
+			DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[startCnt / 60 % 10], true);
+		}
+		else if (startCnt < 60)
+		{
+			DrawGraph(0, 0, lpImageMng.GetID("image/start.png")[0], true);
+		}
 
-		DrawGraph(0, 0, lpImageMng.GetID("image/start.png")[0], true);
-	}
-
-	//サウンド処理
-	if (startCnt == 240)
-	{
-		PlaySoundMem(three, DX_PLAYTYPE_BACK);
-	}
-	else if (startCnt == 180)
-	{
-		PlaySoundMem(two, DX_PLAYTYPE_BACK);
-	}
-	else if (startCnt == 120)
-	{
-		PlaySoundMem(one, DX_PLAYTYPE_BACK);
-	}
-	else if (startCnt == 60)
-	{
-		PlaySoundMem(start,DX_PLAYTYPE_BACK);
-	}
-
-
+		////サウンド処理
+		if (startCnt == 240)
+		{
+			PlaySoundMem(three, DX_PLAYTYPE_BACK);
+		}
+		else if (startCnt == 180)
+		{
+			PlaySoundMem(two, DX_PLAYTYPE_BACK);
+		}
+		else if (startCnt == 120)
+		{
+			PlaySoundMem(one, DX_PLAYTYPE_BACK);
+		}
+		else if (startCnt == 60)
+		{
+			PlaySoundMem(start, DX_PLAYTYPE_BACK);
+		}
+		if (timeCnt == 3670)
+		{
+			PlaySoundMem(nokori, DX_PLAYTYPE_BACK);
+		}
+		if (timeCnt == 3631)
+		{
+			PlaySoundMem(sixty, DX_PLAYTYPE_BACK);
+		}
+		if (timeCnt == 3600)
+		{
+			PlaySoundMem(byou, DX_PLAYTYPE_BACK);
+		}
 
 	auto as = lpPlayer.Life();
 
@@ -249,4 +259,3 @@ int GameScene::Init(void)
 
 	return true;
 }
-
