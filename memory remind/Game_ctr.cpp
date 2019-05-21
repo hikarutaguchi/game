@@ -69,64 +69,25 @@ bool Game_ctr::Updata()
 			}
 		}
 	}
-
-	//Draw();
 	return true;
 }
 
 int Game_ctr::Init(void)
 {
-	//一台目
-	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_UP, CONTROLLER_1P_INPUT_UP);
-	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_DOWN, CONTROLLER_1P_INPUT_DOWN);
-	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_LEFT, CONTROLLER_1P_INPUT_LEFT);
-	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_RIGHT, CONTROLLER_1P_INPUT_RIGHT);
-	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_1, CONTROLLER_1P_INPUT_BUTTON_A);
-	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_2, CONTROLLER_1P_INPUT_BUTTON_B);
-	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_3, CONTROLLER_1P_INPUT_BUTTON_X);
-	InputAttachmentGamepad(DX_INPUT_PAD1, PAD_INPUT_4, CONTROLLER_1P_INPUT_BUTTON_Y);
-
-	//二台目
-	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_UP, CONTROLLER_2P_INPUT_UP);
-	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_DOWN, CONTROLLER_2P_INPUT_DOWN);
-	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_LEFT, CONTROLLER_2P_INPUT_LEFT);
-	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_RIGHT, CONTROLLER_2P_INPUT_RIGHT);
-	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_1, CONTROLLER_2P_INPUT_BUTTON_A);
-	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_2, CONTROLLER_2P_INPUT_BUTTON_B);
-	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_3, CONTROLLER_2P_INPUT_BUTTON_X);
-	InputAttachmentGamepad(DX_INPUT_PAD2, PAD_INPUT_4, CONTROLLER_2P_INPUT_BUTTON_Y);
+	InputAttachmentGamepad(PAD_INPUT_UP, INPUT_UP);
+	InputAttachmentGamepad(PAD_INPUT_DOWN, INPUT_DOWN);
+	InputAttachmentGamepad(PAD_INPUT_LEFT, INPUT_LEFT);
+	InputAttachmentGamepad(PAD_INPUT_RIGHT, INPUT_RIGHT);
+	InputAttachmentGamepad(PAD_INPUT_1, INPUT_BUTTON_A);
+	InputAttachmentGamepad(PAD_INPUT_2, INPUT_BUTTON_B);
+	InputAttachmentGamepad(PAD_INPUT_3,INPUT_BUTTON_X);
+	InputAttachmentGamepad(PAD_INPUT_4,INPUT_BUTTON_Y);
 
 	return 0;
 }
 
-void Game_ctr::Draw()
-{
-	ClsDrawScreen();
-	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
-	{
-		if (AttachGamepad_input[P_1][i] == PAD_INPUT_ON)
-		{
-			DrawFormatString(0, 20, 0xff0000, "PLAYER_1のボタンが押されました");
-		}
-		if (AttachGamepad_input[P_2][i] == PAD_INPUT_ON)
-		{
-			DrawFormatString(0, 40, 0xff0000, "PLAYER_2のボタンが押されました");
-		}
-		if (AttachGamepad_input[P_3][i] == PAD_INPUT_ON)
-		{
-			DrawFormatString(0, 60, 0xff0000, "PLAYER_3のボタンが押されました");
-		}
-		if (AttachGamepad_input[P_4][i] == PAD_INPUT_ON)
-		{
-			DrawFormatString(0, 80, 0xff0000, "PLAYER_4のボタンが押されました");
-		}
-	}
-	ScreenFlip();
-}
-
 // 入力関連 　ボタンのバインド
-void Game_ctr::InputAttachmentGamepad(int ePadNo, int ePadHandle, int eAttachHandle)
+void Game_ctr::InputAttachmentGamepad(int ePadHandle, int eAttachHandle)
 {
-	AttachGamepad_pad[eAttachHandle].intPadNo = ePadNo;
 	AttachGamepad_pad[eAttachHandle].intButtonHandle = ePadHandle;
 }

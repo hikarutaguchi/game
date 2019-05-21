@@ -57,10 +57,9 @@ private:
 	P_TYPE_CHAR CharID;					// キャラ選択ID
 	P_POS_TBL   posTBL;
 
-	int GetCtr[P_MAX][TYPE_MAX];
-	CTR_TYPE ctrType[P_MAX];
+	int GetCtr[CONTROLLER_MAX][TYPE_MAX];
+	CTR_TYPE ctrType[CONTROLLER_MAX];
 	CHAR_FLAG_TBL CharFlag;					// キャラが選択されているかどうか false = 選択されていない true = 選択されている
 
 	VECTOR2 pos;					// 選択カーソルのPos
 };
-

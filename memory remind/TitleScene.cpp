@@ -5,6 +5,7 @@
 #include "EditScene.h"
 #include "ImageMng.h"
 #include "Obj.h"
+#include "Fader.h"
 
 TitleScene::TitleScene()
 {
@@ -21,13 +22,16 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 
 	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
-		if (controller.GetCtr(i) == PAD_PUSH)
+		if (controller.GetCtr(i, CONTROLLER_P1) == PAD_PUSH)
 		{
 			StopSoundMem(titleBgm);
 			PlaySoundMem(seNextButton, DX_PLAYTYPE_BACK);	//ƒ{ƒ^ƒ“‚Ì‰¹
-
-			return std::make_unique<SelectScene>();
+			lpFader.SetFadeOut(4);
 		}
+	}
+	if (lpFader.GetFadeState() == FADE_OUT_END)
+	{
+		return std::make_unique<SelectScene>();
 	}
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
@@ -35,6 +39,7 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 		(*itr)->UpData(objList, controller);
 	}
 	animCnt += 10;
+	lpFader.Updata();
 	Draw();
 	return std::move(own);
 }
@@ -66,5 +71,6 @@ void TitleScene::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((int)(animCnt % 640) - 256));
 	DrawGraph(150, 700, lpImageMng.GetID("image/titlebutton.png")[0], true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	lpFader.Draw();
 	ScreenFlip();
 }

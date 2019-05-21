@@ -67,6 +67,9 @@
     <ClCompile Include="Fader.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SelectCur.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bomb.h">
@@ -134,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="Fader.h">
       <Filter>ヘッダーファイル\Tool.h</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectCur.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

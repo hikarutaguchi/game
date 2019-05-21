@@ -5,6 +5,8 @@
 #include "EditScene.h"
 #include "ImageMng.h"
 #include "Obj.h"
+#include "SelectCur.h"
+#include "Fader.h"
 
 
 SelectScene::SelectScene()
@@ -19,21 +21,28 @@ SelectScene::~SelectScene()
 
 unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 {
+	if (lpFader.GetFadeState() == FADE_OUT_END)
+	{
+		lpFader.SetFadeIn(8);
+	}
 	if (bGetCtr == PAD_FREE)
 	{
-		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A) == PAD_PUSH)
+		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
 		{
+			//lpFader.SetFadeOut(4);
 			return std::make_unique<EditScene>();
 		}
 	}
 
-	bGetCtr = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_A);
+	bGetCtr = controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1);
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
 		(*itr)->UpData(objList, controller);
 	}
 
+	lpFader.Updata();
+	lpSelCur.MoveCur(controller);
 	return std::move(own);
 }
 
@@ -56,9 +65,9 @@ int SelectScene::Init(void)
 
 void SelectScene::Draw()
 {
-	ClsDrawScreen();
-	DrawGraph(0, 0, lpImageMng.GetID("image/modeselect.png")[0], true);
-	DrawGraph(500, 50, lpImageMng.GetID("image/button_UI.png")[2], true);
-	DrawGraph(850, 50, lpImageMng.GetID("image/button_UI.png")[4], true);
-	ScreenFlip();
+	//ClsDrawScreen();
+	//DrawGraph(0, 0, lpImageMng.GetID("image/modeselect.png")[0], true);
+	//DrawGraph(500, 50, lpImageMng.GetID("image/button_UI.png")[2], true);
+	//DrawGraph(850, 50, lpImageMng.GetID("image/button_UI.png")[4], true);
+	//ScreenFlip();
 }

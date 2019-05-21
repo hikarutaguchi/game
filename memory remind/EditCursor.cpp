@@ -114,7 +114,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 
 	if (itemButton == PAD_FREE)
 	{
-		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_Y) == PAD_PUSH)
+		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
 		{
 			id = (MAP_ID)(id + 1);
 			if (id > MAP_ID::TOOL)
@@ -126,7 +126,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 
 	if (setButton == PAD_FREE)
 	{
-		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_B) == PAD_PUSH)
+		if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1) == PAD_PUSH)
 		{
 			if (count < 2)
 			{
@@ -159,7 +159,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 
 	if (resetButton == PAD_FREE)
 	{
-		if (controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_X) == PAD_PUSH)
+		if (controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P1) == PAD_PUSH)
 		{
 			switch (count)
 			{
@@ -179,9 +179,9 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 		}
 	}
 
-	itemButton = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_Y);
-	setButton = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_B);
-	resetButton = controller.GetCtr(CONTROLLER_1P_INPUT_BUTTON_X);
+	itemButton = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1);
+	setButton = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1);
+	resetButton = controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P1);
 
 }
 
