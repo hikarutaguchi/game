@@ -24,5 +24,16 @@ private:
 	bool GameDraw();															// ｴﾃﾞｨｯﾄ表示
 	int Pad[4];						// パッド情報
 	bool padFlag;
+
+	//サウンド
+	int bgm;
+	int one;
+	int two;
+	int three;
+	int sixty;
+	int byou;
+	int nokori;
+	int stop;
+	int start;
 };
 

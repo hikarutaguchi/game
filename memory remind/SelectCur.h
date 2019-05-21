@@ -50,6 +50,11 @@ private:
 	int GetCtr[CONTROLLER_MAX][TYPE_MAX];
 	CTR_TYPE ctrType[CONTROLLER_MAX];
 	CHAR_FLAG_TBL CharFlag;					// キャラが選択されているかどうか false = 選択されていない true = 選択されている
-
 	VECTOR2 pos;					// 選択カーソルのPos
+
+	//サウンド
+	int kettei;
+	int cansell;
+	int menu;
+	int choice;
 };

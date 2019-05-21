@@ -41,6 +41,7 @@ unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		if (lpFader.GetFadeState() == FADE_OUT_END)
 		{
+			StopSoundMem(bgm);
 			return std::make_unique<EditScene>();
 		}
 	}
@@ -70,7 +71,10 @@ int SelectScene::Init(void)
 
 	objList->clear();
 
-	Draw();
+	bgm = LoadSoundMem("sound/selectScene/bgm_select.mp3");
+	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+
+	//Draw();
 	return 0;
 }
 

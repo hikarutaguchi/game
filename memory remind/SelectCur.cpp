@@ -35,6 +35,11 @@ SelectCur::SelectCur()
 			GetCtr[i][p] = PAD_MAX;
 		}
 	}
+
+	kettei = LoadSoundMem("sound/allScene/se_kettei.mp3");
+	cansell = LoadSoundMem("sound/allScene/se_cansell.mp3");
+	menu = LoadSoundMem("sound/selectScene/se_menu.mp3");
+	choice = LoadSoundMem("sound/allScene/se_choice.mp3");
 }
 
 
@@ -81,9 +86,9 @@ void SelectCur::Draw(void)
 #ifdef _DEBUG
 	for (int i = 0; i < CONTROLLER_MAX; i++)
 	{
-		DrawFormatString(0, 0 + (i * 15), 0xff0000, "pos%d,x = %d",i,posTBL[i].x);
-		DrawFormatString(0, 100 + (i * 15), 0xff0000, "CharID[%d] = %d",i, static_cast<int>(CharID[i]));
-		DrawFormatString(0, 200 + (i * 15), 0xff0000, "CharFlag%d = %d",i, static_cast<int>(CharFlag[i]));
+		DrawFormatString(0, 0 + (i * 15), 0xff0000, "pos%d,x = %d",i + 1,posTBL[i].x);
+		DrawFormatString(0, 100 + (i * 15), 0xff0000, "CharID[%d] = %d",i + 1, static_cast<int>(CharID[i]));
+		DrawFormatString(0, 200 + (i * 15), 0xff0000, "CharFlag%d = %d",i + 1, static_cast<int>(CharFlag[i]));
 	}
 	lpFader.Draw();
 #endif
@@ -103,6 +108,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
 	case CANSELL:
+		PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
 		CharFlag[CONTROLLER_P1] = false;
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
 		break;
@@ -112,6 +118,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		// CharID‚ðŽæ“¾
 		if (tmpPos1.x > 0)
 		{
+			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
 			CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
 		}
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
@@ -122,6 +129,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		// CharID‚ðŽæ“¾
 		if (tmpPos1.x < 1200)
 		{
+			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
 			CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
 		}
 		ctrType[CONTROLLER_P1] = TYPE_MAX;
@@ -138,6 +146,7 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		{
 			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1) == PAD_PUSH)
 			{
+				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
 				CharFlag[CONTROLLER_P1] = true;
 				ctrType[CONTROLLER_P1] = SELECT;
 			}

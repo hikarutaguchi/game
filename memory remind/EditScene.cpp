@@ -46,6 +46,7 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		if (lpFader.GetFadeState() == FADE_OUT_END)
 		{
+			StopSoundMem(bgm);
 			if (a <= 3)
 			{
 				return std::make_unique<GameScene>();
@@ -57,10 +58,6 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 			}
 		}
 	}
-
-
-
-
 
 	bGetCtr = controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1);
 
@@ -132,6 +129,10 @@ void EditScene::Text()
 
 int EditScene::Init(void)
 {
+	bgm = LoadSoundMem("sound/editScene/bgm_edit.mp3");
+
+	PlaySoundMem(bgm,DX_PLAYTYPE_LOOP);
+
 	fadeFinish = false;
 	bGetCtr = PAD_MAX;
 	//¼°Ý‚ªˆÚ‚Á‚½‚çØ¾¯Ä
