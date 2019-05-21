@@ -24,7 +24,6 @@ enum SIDE_CHECK {
 	SIDE_MAX
 };
 
-#define PLAYER_MAX 4
 #define PLAYER_DEF_SPEED 2
 #define PLAYER_LIFE 6
 #define lpPlayer Player::GetInstance()

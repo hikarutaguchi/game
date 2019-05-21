@@ -8,7 +8,7 @@
 #include "GameScene.h"
 #include "CntMng.h"
 #include "ResultScene.h"
-
+#include "Fader.h"
 
 EditScene::EditScene()
 {
@@ -23,23 +23,44 @@ EditScene::~EditScene()
 
 unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 {
+	int a = lpCntMng.GetCnt();
 
+	if (!fadeFinish)
+	{
+		if (lpFader.GetFadeState() == FADE_OUT_END)
+		{
+			lpFader.SetFadeIn(8);
+			fadeFinish = true;
+		}
+	}
 	if (bGetCtr == PAD_FREE)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
 		{
 			MapCtl::GetInstance().MapSave();
-			return std::make_unique<GameScene>();
+			lpFader.SetFadeOut(8);
 		}
 	}
 
-	int a = lpCntMng.GetCnt();
-
-	if (a > 3)
+	if (fadeFinish)
 	{
-		lpCntMng.SetCnt(-4);
-		return std::make_unique<ResultScene>();
+		if (lpFader.GetFadeState() == FADE_OUT_END)
+		{
+			if (a <= 3)
+			{
+				return std::make_unique<GameScene>();
+			}
+			if (a > 3)
+			{
+				lpCntMng.SetCnt(-4);
+				return std::make_unique<ResultScene>();
+			}
+		}
 	}
+
+
+
+
 
 	bGetCtr = controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1);
 
@@ -57,6 +78,7 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 		(*itr)->UpData(objList, controller);
 	}
 	EditDraw();
+	lpFader.Updata();
 	return std::move(own);
 }
 
@@ -91,6 +113,7 @@ bool EditScene::EditDraw(void)
 		DrawGraph( ( (Drawpos.x + j * pos.x) * 3 ), pos.x * 2, lpImageMng.GetID("image/map.png")[j], true);
 	}*/
 	Text();
+	lpFader.Draw();
 	ScreenFlip();
 	return true;
 }
@@ -109,6 +132,7 @@ void EditScene::Text()
 
 int EditScene::Init(void)
 {
+	fadeFinish = false;
 	bGetCtr = PAD_MAX;
 	//¼°Ý‚ªˆÚ‚Á‚½‚çØ¾¯Ä
 	if (!objList)

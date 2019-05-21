@@ -8,6 +8,7 @@
 #include "ImageMng.h"
 #include "ResultScene.h"
 #include "CntMng.h"
+#include "Fader.h"
 
 GameScene::GameScene()
 {
@@ -22,11 +23,24 @@ GameScene::~GameScene()
 
 unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 {
-
-	for (int i = 0; i < GetJoypadNum(); i++)
+	if (!fadeFinish)
 	{
-		Pad[i] = GetJoypadInputState(DX_INPUT_PAD1 + i);
-		if (/*(Pad[i] & PAD_INPUT_3) && */((Pad[i] & PAD_INPUT_4)))
+		if (lpFader.GetFadeState() == FADE_OUT_END)
+		{
+			lpFader.SetFadeIn(8);
+			fadeFinish = true;
+		}
+	}
+	if (bGetCtr == PAD_FREE)
+	{
+		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
+		{
+			lpFader.SetFadeOut(8);
+		}
+	}
+	if (fadeFinish)
+	{
+		if (lpFader.GetFadeState() == FADE_OUT_END)
 		{
 			SceneCnt += 1;
 			lpCntMng.SetCnt(SceneCnt);
@@ -34,10 +48,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 		}
 	}
 
-	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F1] & (~controller.GetCtr(KEY_TYPE_OLD)[KEY_INPUT_F1]))
-	//{
-	//	return std::make_unique<EditScene>();
-	//}
+	bGetCtr = controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1);
 
 	lpMapCtl.Updata();
 
@@ -49,6 +60,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 
 	objList->remove_if([](sharedObj& obj) {return obj->CheckDeth(); });
 	GameDraw();
+	lpFader.Updata();
 	return std::move(own);
 }
 
@@ -182,12 +194,14 @@ bool GameScene::GameDraw(void)
 			break;
 		}
 	}
+	lpFader.Draw();
 	ScreenFlip();
 	return true;
 }
 
 int GameScene::Init(void)
 {
+	fadeFinish = false;
 	timeCnt = 0;
 	startCnt = 240;
 	padFlag = false;

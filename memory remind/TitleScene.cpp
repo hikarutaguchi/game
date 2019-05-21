@@ -20,6 +20,8 @@ TitleScene::~TitleScene()
 unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 {
 
+
+
 	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
 		if (controller.GetCtr(i, CONTROLLER_P1) == PAD_PUSH)
@@ -29,9 +31,19 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 			lpFader.SetFadeOut(4);
 		}
 	}
+
+	if (fadeFinish)
+	{
+		if (lpFader.GetFadeState() == FADE_OUT_END)
+		{
+			return std::make_unique<SelectScene>();
+		}
+	}
+
 	if (lpFader.GetFadeState() == FADE_OUT_END)
 	{
-		return std::make_unique<SelectScene>();
+		lpFader.SetFadeIn(8);
+		fadeFinish = true;
 	}
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
@@ -65,6 +77,7 @@ int TitleScene::Init(void)
 
 void TitleScene::Draw()
 {
+	fadeFinish = true;
 	ClsDrawScreen();
 	DrawGraph(0, 0, lpImageMng.GetID("image/title.png")[0], true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);

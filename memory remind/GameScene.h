@@ -18,6 +18,8 @@ private:
 	int SceneCnt;
 	int timeCnt;
 	int startCnt;
+	bool fadeFinish;
+	int bGetCtr;
 	int Init(void);																// 呼び出し
 	bool GameDraw();															// ｴﾃﾞｨｯﾄ表示
 	int Pad[4];						// パッド情報

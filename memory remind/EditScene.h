@@ -15,6 +15,7 @@ public:
 
 private:
 	sharedListObj objList;			// ²İ½Àİ½‚µ‚½î•ñ‚ğ“o˜^
+	bool fadeFinish;
 	int Init(void);					// ŒÄ‚Ño‚µ
 	void Text();					// •¶š•\¦ŠÖ”
 	bool EditDraw();				// ´ÃŞ¨¯Ä•\¦
