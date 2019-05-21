@@ -14,6 +14,7 @@ public:
 private:
 	int Init(void);
 	bool nextScene;
+	bool fadeFinish;
 	void Draw();
 	int bGetCtr;
 	sharedListObj objList;			// ²İ½Àİ½‚µ‚½î•ñ‚ğ“o˜^
