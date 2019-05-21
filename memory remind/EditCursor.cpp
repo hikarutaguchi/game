@@ -183,6 +183,8 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	setButton = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1);
 	resetButton = controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P1);
 
+	lpMapCtl.GetMapID(pos,id);
+
 }
 
 bool EditCursor::CheckObjType(OBJ_TYPE type)
