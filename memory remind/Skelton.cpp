@@ -2,7 +2,7 @@
 
 
 
-Skelton::Skelton(VECTOR2 setupPos, VECTOR2 drawOffset)
+Skelton::Skelton(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	speed = 2;
 
@@ -29,6 +29,13 @@ Skelton::Skelton(VECTOR2 setupPos, VECTOR2 drawOffset)
 
 	};
 
+	huttobi = {
+		-128,			// è„
+		 128,			// â∫
+		-128,			// ç∂
+		 128			// âE
+	};
+
 	mapMove = {
 		true,	// YUKA	
 		false,	// IWA
@@ -44,8 +51,6 @@ Skelton::Skelton(VECTOR2 setupPos, VECTOR2 drawOffset)
 		true,	// 8
 	};
 
-	drawOffset = Obj::drawOffset;
-	setupPos = { 200,140 };
 	Init("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
 	InitAnim();
 	cnt = 240;
@@ -62,11 +67,42 @@ Skelton::~Skelton()
 
 void Skelton::ColTrap(CharacterStatusData * charData)
 {
+	if ((pos % lpMapCtl.GetChipSize()) != VECTOR2(0, 0))		//É}ÉXñ⁄ÀﬂØ¿ÿÇÃéûÇæÇØèàóù
+	{
+		return;
+	}
+
+	MAP_ID trapID = lpMapCtl.GetMapID(pos, id);
+
+	switch (trapID)
+	{
+	case (MAP_ID::YUKA):
+	case (MAP_ID::IWA):
+		break;
+	case (MAP_ID::UNTI):
+	case (MAP_ID::EKI):
+	case (MAP_ID::NULLL):
+	case (MAP_ID::WIND):
+	case (MAP_ID::MAGIC):
+	case (MAP_ID::MAGIC1):
+	case (MAP_ID::BORN):
+	case (MAP_ID::ESA):
+	case (MAP_ID::TOOL):
+	case (MAP_ID::HOLE):
+		//Player::DethProcess();
+		(*posTbl[Player::dir][TBL_MAIN]) += huttobi[Player::dir];
+		break;
+	default:
+		break;
+	}
+
 }
 
 void Skelton::SetMove(weekListObj objList, const Game_ctr & controller)
 {
 	Player::SetMove(objList, controller);
+	CharacterStatusData Character1StatusData = { 10, false,false };
+	ColTrap(&Character1StatusData);
 }
 
 bool Skelton::InitAnim(void)

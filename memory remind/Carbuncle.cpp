@@ -2,7 +2,7 @@
 
 
 
-Carbuncle::Carbuncle(VECTOR2 setupPos, VECTOR2 drawOffset)
+Carbuncle::Carbuncle(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	speed = 2;
 
@@ -21,6 +21,14 @@ Carbuncle::Carbuncle(VECTOR2 setupPos, VECTOR2 drawOffset)
 				 PLAYER_DEF_SPEED			// 右
 
 	};
+
+	huttobi = {
+			-128,			// 上
+			 128,			// 下
+			-128,			// 左
+			 128			// 右
+	};
+
 	//MAIN	   OPP			SUB1		SUB2
 	dirTbl = { DIR_UP,    DIR_DOWN,	   DIR_RIGHT,   DIR_LEFT,		// 上(左,右)
 			   DIR_DOWN,  DIR_UP,	   DIR_RIGHT,	DIR_LEFT,		// 下(左,右)
@@ -44,8 +52,6 @@ Carbuncle::Carbuncle(VECTOR2 setupPos, VECTOR2 drawOffset)
 		true,	// 8
 	};
 
-	drawOffset = Obj::drawOffset;
-	setupPos = { 270,140 };
 	Init("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
 	InitAnim();
 	cnt = 240;
@@ -62,11 +68,42 @@ Carbuncle::~Carbuncle()
 
 void Carbuncle::ColTrap(CharacterStatusData * charData)
 {
+	if ((pos % lpMapCtl.GetChipSize()) != VECTOR2(0, 0))		//マス目ﾋﾟｯﾀﾘの時だけ処理
+	{
+		return;
+	}
+
+	MAP_ID trapID = lpMapCtl.GetMapID(pos, id);
+
+	switch (trapID)
+	{
+	case (MAP_ID::YUKA):
+	case (MAP_ID::IWA):
+		break;
+	case (MAP_ID::UNTI):
+	case (MAP_ID::EKI):
+	case (MAP_ID::NULLL):
+	case (MAP_ID::WIND):
+	case (MAP_ID::MAGIC):
+	case (MAP_ID::MAGIC1):
+	case (MAP_ID::BORN):
+	case (MAP_ID::ESA):
+	case (MAP_ID::TOOL):
+	case (MAP_ID::HOLE):
+		//Player::DethProcess();
+		(*posTbl[Player::dir][TBL_MAIN]) += huttobi[Player::dir];
+		break;
+	default:
+		break;
+	}
+
 }
 
 void Carbuncle::SetMove(weekListObj objList, const Game_ctr & controller)
 {
 	Player::SetMove(objList, controller);
+	CharacterStatusData Character1StatusData = { 10, false,false };
+	ColTrap(&Character1StatusData);
 }
 
 bool Carbuncle::InitAnim(void)

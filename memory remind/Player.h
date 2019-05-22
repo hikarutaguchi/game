@@ -43,7 +43,7 @@ using DIR_TBL_DIR = std::array<DIR[DIR_TBL_MAX], DIR_MAX>;
 using MAP_MOVE_TBL = std::array<bool, static_cast<int>(MAP_ID::MAX)>;
 
 class Player :
-	public Obj
+	virtual public Obj
 {
 public:
 	//static Player &GetInstance(void)
@@ -98,6 +98,7 @@ protected:
 	int speed;
 
 	DIR_TBL_ARRAY speedTbl;		// ½Ëß°ÄŞÃ°ÌŞÙ
+	DIR_TBL_ARRAY huttobi;		// ‚Á”ò‚ÑÃ°ÌŞÙ
 	DIR_TBL_PTR_ARRAY posTbl;	// À•WÃ°ÌŞÙ
 	DIR_TBL_DIR dirTbl;			// •ûŒüÃ°ÌŞÙ
 	MAP_MOVE_TBL mapMove;		// µÌŞ¼Şª¸ÄˆÚ“®”»’èÃ°ÌŞÙ
