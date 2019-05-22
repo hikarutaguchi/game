@@ -21,5 +21,8 @@ private:
 	int Pad[4];						// パッド情報
 	bool padFlag;
 
+	//サウンド
+	int bgm;
+
 };
 

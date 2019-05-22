@@ -4,9 +4,6 @@
     <ClCompile Include="EditCursor.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Game_ctr.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
@@ -64,10 +61,16 @@
     <ClCompile Include="CntMng.cpp">
       <Filter>ソースファイル\Tool.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Fader.cpp">
+    <ClCompile Include="SelectCur.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SelectCur.cpp">
+    <ClCompile Include="Fader.cpp">
+      <Filter>ソースファイル\Tool.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenShake.cpp">
+      <Filter>ソースファイル\Tool.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_ctr.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -132,13 +135,16 @@
     <ClInclude Include="CntMng.h">
       <Filter>ヘッダーファイル\Tool.h</Filter>
     </ClInclude>
-    <ClInclude Include="Game_ctr.h">
-      <Filter>ヘッダーファイル\Tool.h</Filter>
-    </ClInclude>
     <ClInclude Include="Fader.h">
       <Filter>ヘッダーファイル\Tool.h</Filter>
     </ClInclude>
     <ClInclude Include="SelectCur.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenShake.h">
+      <Filter>ヘッダーファイル\Tool.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Game_ctr.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

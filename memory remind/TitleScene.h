@@ -17,7 +17,7 @@ private:
 	int Pad[4];						// ƒpƒbƒhî•ñ
 	int animCnt;
 	bool fadeFinish;
-	int titleBgm;
+	int bgm;
 	int seNextButton;
 	bool padFlag;
 
