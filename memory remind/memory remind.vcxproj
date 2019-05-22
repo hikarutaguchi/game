@@ -145,6 +145,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SceneMng.cpp" />
+    <ClCompile Include="ScreenShake.cpp" />
     <ClCompile Include="SelectCur.cpp" />
     <ClCompile Include="SelectScene.cpp" />
     <ClCompile Include="Skelton.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="SceneMng.h" />
+    <ClInclude Include="ScreenShake.h" />
     <ClInclude Include="SelectCur.h" />
     <ClInclude Include="SelectScene.h" />
     <ClInclude Include="Skelton.h" />
