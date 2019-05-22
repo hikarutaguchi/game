@@ -1,11 +1,16 @@
-#include <type_traits>
-#include <memory>
+//#include <type_traits>
+//#include <memory>
 #include "DxLib.h"
 #include "ImageMng.h"
 #include "SceneMng.h"
 #include "MapCtl.h"
-#include "EditScene.h"
-#include "Player.h"
+#include "Game_ctr.h"
+#include "SelectCur.h"
+#include "Slime.h"
+#include "Skelton.h"
+#include "Carbuncle.h"
+//#include "EditScene.h"
+//#include "Player.h"
 
 struct DataHeader {
 	char fileID[13];					// ファイルのID情報
@@ -431,7 +436,29 @@ bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
 			//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y), drawOffset + VECTOR2(0, -20)));	//ｲﾝｽﾀﾝｽ
 		}
 		ListObj_itr obj;
-		obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+
+		// GetCharDataでもらった各プレイヤーのキャラIDでキャラクターをインスタンス
+		for (int i = 0; i < CONTROLLER_MAX; i++)
+		{
+			if (lpSelCur.GetCharFlag((P_TYPE)i))
+			{
+				if (lpSelCur.GetPlayerFlag((P_TYPE)i))
+				{
+					if (lpSelCur.GetCharData((P_TYPE)i) == 1)
+					{
+						obj = AddObjList()(objList, std::make_unique<Slime>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+					}
+					if (lpSelCur.GetCharData((P_TYPE)i) == 2)
+					{
+						obj = AddObjList()(objList, std::make_unique<Skelton>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+					}
+					if (lpSelCur.GetCharData((P_TYPE)i) == 3)
+					{
+						obj = AddObjList()(objList, std::make_unique<Carbuncle>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+					}
+				}
+			}
+		}
 	}
 
 	return true;

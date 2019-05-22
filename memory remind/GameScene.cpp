@@ -183,7 +183,7 @@ bool GameScene::GameDraw(void)
 			PlaySoundMem(byou, DX_PLAYTYPE_BACK);
 		}
 
-	auto as = lpPlayer.Life();
+	/*auto as = lpPlayer.Life();
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -219,7 +219,7 @@ bool GameScene::GameDraw(void)
 			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[2], true);
 			break;
 		}
-	}
+	}*/
 	lpFader.Draw();
 	ScreenFlip();
 	return true;

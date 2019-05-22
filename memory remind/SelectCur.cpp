@@ -7,6 +7,13 @@
 
 SelectCur::SelectCur()
 {
+	playerFlag = {
+		false,		// P1
+		false,		// P2
+		false,		// P3
+		false		// P4
+	};
+
 	CharFlag = {
 		false,		// P1
 		false,		// P2
@@ -15,10 +22,10 @@ SelectCur::SelectCur()
 	};
 
 	CharID = {
-		static_cast<Character>(Character::Slime),		// P1
-		static_cast<Character>(Character::Slime),		// P2
-		static_cast<Character>(Character::Slime),		// P3
-		static_cast<Character>(Character::Slime)		// P4
+		static_cast<Character>(Character::NON),		// P1
+		static_cast<Character>(Character::NON),		// P2
+		static_cast<Character>(Character::NON),		// P3
+		static_cast<Character>(Character::NON)		// P4
 	};
 
 	posTBL = {
@@ -34,6 +41,44 @@ SelectCur::SelectCur()
 		{
 			GetCtr[i][p] = PAD_MAX;
 		}
+	}
+
+	switch (GetJoypadNum())
+	{
+	case 1:
+		playerFlag[CONTROLLER_P1] = true;
+
+		CharID[CONTROLLER_P1] = static_cast<Character>(Character::slime);
+		break;
+	case 2:
+		playerFlag[CONTROLLER_P1] = true;
+		playerFlag[CONTROLLER_P2] = true;
+
+		CharID[CONTROLLER_P1] = static_cast<Character>(Character::slime);
+		CharID[CONTROLLER_P2] = static_cast<Character>(Character::slime);
+		break;
+	case 3:
+		playerFlag[CONTROLLER_P1] = true;
+		playerFlag[CONTROLLER_P2] = true;
+		playerFlag[CONTROLLER_P3] = true;
+
+		CharID[CONTROLLER_P1] = static_cast<Character>(Character::slime);
+		CharID[CONTROLLER_P2] = static_cast<Character>(Character::slime);
+		CharID[CONTROLLER_P3] = static_cast<Character>(Character::slime);
+		break;
+	case 4:
+		playerFlag[CONTROLLER_P1] = true;
+		playerFlag[CONTROLLER_P2] = true;
+		playerFlag[CONTROLLER_P3] = true;
+		playerFlag[CONTROLLER_P4] = true;
+
+		CharID[CONTROLLER_P1] = static_cast<Character>(Character::slime);
+		CharID[CONTROLLER_P2] = static_cast<Character>(Character::slime);
+		CharID[CONTROLLER_P3] = static_cast<Character>(Character::slime);
+		CharID[CONTROLLER_P4] = static_cast<Character>(Character::slime);
+		break;
+	default:
+		break;
 	}
 
 	kettei = LoadSoundMem("sound/allScene/se_kettei.mp3");
@@ -63,14 +108,17 @@ void SelectCur::Draw(void)
 
 	for (int i = 0; i < CONTROLLER_MAX; i++)
 	{
-		if (!CharFlag[i])
+		if (playerFlag[(P_TYPE)i])
 		{
-			DrawBox(posTBL[i].x, posTBL[i].y, posTBL[i].x + 80, posTBL[i].y + 120,GetColor(255,128,64), false);
-			DrawFormatString(posTBL[i].x + 5, posTBL[i].y - 20, 0xffffff, "PLAYER_%d",i + 1);
-		}
-		else
-		{
-			DrawBox(posTBL[i].x + 10, posTBL[i].y + 10, posTBL[i].x + 70, posTBL[i].y + 110, 0xffffff, true);
+			if (!CharFlag[i])
+			{
+				DrawBox(posTBL[i].x, posTBL[i].y, posTBL[i].x + 80, posTBL[i].y + 120, GetColor(255, 128, 64), false);
+				DrawFormatString(posTBL[i].x + 5, posTBL[i].y - 20, 0xffffff, "PLAYER_%d", i + 1);
+			}
+			else
+			{
+				DrawBox(posTBL[i].x + 10, posTBL[i].y + 10, posTBL[i].x + 70, posTBL[i].y + 110, 0xffffff, true);
+			}
 		}
 	}
 
@@ -357,5 +405,10 @@ void SelectCur::MoveCur(Game_ctr & controller)
 bool SelectCur::GetCharFlag(P_TYPE pType)
 {
 	return CharFlag[pType];
+}
+
+bool SelectCur::GetPlayerFlag(P_TYPE pType)
+{
+	return playerFlag[pType];
 }
 

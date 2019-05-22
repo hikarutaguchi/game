@@ -3,9 +3,10 @@
 #include"VECTOR2.h"
 
 enum Character {
-	Slime,
-	Skeleton,
-	Carbuncle,
+	NON,
+	slime,
+	skeleton,
+	carbuncle,
 	Char_MAX,
 };
 
@@ -36,21 +37,26 @@ public:
 	SelectCur();
 	~SelectCur();
 
-	int GetCharData(P_TYPE playerNum);	// 選択されたCharIDを返す
+	int GetCharData(P_TYPE playerNum);		// 選択されたCharIDを返す
 
 	void MoveCur(Game_ctr & controller);	// 選択カーソル
 
-	bool GetCharFlag(P_TYPE pType);
+	bool GetCharFlag(P_TYPE pType);			// キャラを選択したかどうかのFlagを返す
+	bool GetPlayerFlag(P_TYPE pType);
+
 private:
 	void Draw(void);
 
+	P_TYPE_TBL  playerFlag;				// プレイヤーの数に応じてFlagを管理
+	CHAR_FLAG_TBL CharFlag;				// キャラが選択されているかどうか false = 選択されていない true = 選択されている
+	P_POS_TBL   posTBL;					// 各カーソルの座標
 	P_TYPE_CHAR CharID;					// キャラ選択ID
-	P_POS_TBL   posTBL;
-	VECTOR2 tmpPos[CONTROLLER_MAX];		//仮移動変数
-	int GetCtr[CONTROLLER_MAX][TYPE_MAX];
+
 	CTR_TYPE ctrType[CONTROLLER_MAX];
-	CHAR_FLAG_TBL CharFlag;					// キャラが選択されているかどうか false = 選択されていない true = 選択されている
-	VECTOR2 pos;					// 選択カーソルのPos
+	VECTOR2 tmpPos[CONTROLLER_MAX];		//仮移動変数
+	VECTOR2 pos;						// 選択カーソルのPos
+
+	int GetCtr[CONTROLLER_MAX][TYPE_MAX];
 
 	//サウンド
 	int kettei;
