@@ -9,15 +9,31 @@
 #include "ResultScene.h"
 #include "CntMng.h"
 #include "Fader.h"
+#include "ScreenShake.h"
 
 GameScene::GameScene()
 {
 	Init();
+
+	hpPos_TBL = {
+		hpPos[ONE_HP] = {0,0},
+		hpPos[TWO_HP] = {64,0},
+		hpPos[THREE_HP] = {128,0},
+		hpPos[FOUR_HP] = {192,0},
+	};
+
+	hpFlag = {
+		true,
+		true,
+		true,
+		false,
+	};
 }
 
 
 GameScene::~GameScene()
 {
+
 }
 
 unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
@@ -60,6 +76,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 	objList->remove_if([](sharedObj& obj) {return obj->CheckDeth(); });
 	GameDraw();
 	lpFader.Updata();
+	lpScreenShake.UpData();
 	return std::move(own);
 }
 
@@ -118,107 +135,124 @@ bool GameScene::GameDraw(void)
 	DrawGraph(SCREEN_SIZE_X / 2 - 100, 0, lpImageMng.GetID("image/kannbann.png")[0], true);
 
 	//プレイヤーのフレームを表示
-	DrawGraph(0, 0, lpImageMng.GetID("image/flame.png")[0],true);
+	DrawGraph(0, 0, lpImageMng.GetID("image/flame.png")[0], true);
 	DrawGraph(SCREEN_SIZE_X - 120, 0, lpImageMng.GetID("image/flame.png")[1], true);
 	DrawGraph(0, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[2], true);
 	DrawGraph(SCREEN_SIZE_X - 120, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[3], true);
 
 	//時間表示
 
-		timeCnt--;
+	timeCnt--;
 
-		if (timeCnt <= 0)
-		{
-			startCnt--;
-		}
-		else
-		{
-			DrawGraph(SCREEN_SIZE_X / 2 - 75, 45, lpImageMng.GetID("image/number.png")[timeCnt / 6000 % 10], true);
-			DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[timeCnt / 600 % 10], true);
-			DrawGraph(SCREEN_SIZE_X / 2 - 75 + 100, 45, lpImageMng.GetID("image/number.png")[timeCnt / 60 % 10], true);
-		}
-
-		if (startCnt < 0)
-		{
-			timeCnt = 3800;
-			startCnt = 61;
-		}
-		else if (startCnt > 61)
-		{
-			DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[startCnt / 60 % 10], true);
-		}
-		else if (startCnt < 60)
-		{
-			DrawGraph(0, 0, lpImageMng.GetID("image/start.png")[0], true);
-		}
-
-		////サウンド処理
-		if (startCnt == 240)
-		{
-			PlaySoundMem(three, DX_PLAYTYPE_BACK);
-		}
-		else if (startCnt == 180)
-		{
-			PlaySoundMem(two, DX_PLAYTYPE_BACK);
-		}
-		else if (startCnt == 120)
-		{
-			PlaySoundMem(one, DX_PLAYTYPE_BACK);
-		}
-		else if (startCnt == 60)
-		{
-			PlaySoundMem(start, DX_PLAYTYPE_BACK);
-		}
-		if (timeCnt == 3670)
-		{
-			PlaySoundMem(nokori, DX_PLAYTYPE_BACK);
-		}
-		if (timeCnt == 3631)
-		{
-			PlaySoundMem(sixty, DX_PLAYTYPE_BACK);
-		}
-		if (timeCnt == 3600)
-		{
-			PlaySoundMem(byou, DX_PLAYTYPE_BACK);
-		}
-
-	/*auto as = lpPlayer.Life();
-
-	for (int i = 0; i < 3; i++)
+	if (timeCnt <= 0)
 	{
-		switch (as)
+		startCnt--;
+	}
+	else
+	{
+		DrawGraph(SCREEN_SIZE_X / 2 - 75, 45, lpImageMng.GetID("image/number.png")[timeCnt / 6000 % 10], true);
+		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[timeCnt / 600 % 10], true);
+		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 100, 45, lpImageMng.GetID("image/number.png")[timeCnt / 60 % 10], true);
+	}
+
+	if (startCnt < 0)
+	{
+		timeCnt = 10800;
+		startCnt = 61;
+	}
+	else if (startCnt > 61)
+	{
+		DrawGraph(SCREEN_SIZE_X / 2 - 75 + 50, 45, lpImageMng.GetID("image/number.png")[startCnt / 60 % 10], true);
+	}
+	else if (startCnt < 60)
+	{
+		DrawGraph(0, 0, lpImageMng.GetID("image/start.png")[0], true);
+	}
+
+	////サウンド処理
+	if (startCnt == 240)
+	{
+		PlaySoundMem(three, DX_PLAYTYPE_BACK);
+	}
+	else if (startCnt == 180)
+	{
+		PlaySoundMem(two, DX_PLAYTYPE_BACK);
+	}
+	else if (startCnt == 120)
+	{
+		PlaySoundMem(one, DX_PLAYTYPE_BACK);
+	}
+	else if (startCnt == 60)
+	{
+		PlaySoundMem(start, DX_PLAYTYPE_BACK);
+	}
+	if (timeCnt == 3670)
+	{
+		PlaySoundMem(nokori, DX_PLAYTYPE_BACK);
+	}
+	if (timeCnt == 3631)
+	{
+		PlaySoundMem(sixty, DX_PLAYTYPE_BACK);
+	}
+	if (timeCnt == 3600)
+	{
+		PlaySoundMem(byou, DX_PLAYTYPE_BACK);
+	}
+
+	auto as = 6/*lpPlayer.Life()*/;
+
+	if (as == 8)
+	{
+		hpFlag[FOUR_HP] = true;
+	}
+	else if (as == 6)
+	{
+		hpFlag[FOUR_HP] = false;
+	}
+	else if (as == 4)
+	{
+		hpFlag[THREE_HP] = false;
+	}
+	else if (as == 2)
+	{
+		hpFlag[TWO_HP] = false;
+	}
+	else if (as == 0)
+	{
+		hpFlag[ONE_HP] = false;
+	}
+
+	for (int p = 0; p < CONTROLLER_MAX; p++)
+	{
+		for (int i = 0; i < MAX_HP; i++)
 		{
-		case 6:
-			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
-			break;
-		case 5:
-			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
-			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[1], true);
-			break;
-		case 4:
-			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
-			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[2], true);
-			break;
-		case 3:
-			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
-			DrawGraph(120 + 64 * 1, 0, lpImageMng.GetID("image/hp.png")[1], true);
-			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[2], true);
-			break;
-		case 2:
-			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[0], true);
-			DrawGraph(120 + 64 * 1, 0, lpImageMng.GetID("image/hp.png")[2], true);
-			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[2], true);
-			break;
-		case 1:
-			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[1], true);
-			DrawGraph(120 + 64 * 1, 0, lpImageMng.GetID("image/hp.png")[2], true);
-			DrawGraph(120 + 64 * 2, 0, lpImageMng.GetID("image/hp.png")[2], true);
-			break;
-		default:
-			DrawGraph(120 + 64 * i, 0, lpImageMng.GetID("image/hp.png")[2], true);
-			break;
+			if (hpFlag[i] == true)
+			{
+				DrawGraph(hpPos_TBL[i].x + pPos[p].x, hpPos_TBL[i].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[0], true);
+			}
+			else if (hpFlag[i] == false)
+			{
+				DrawGraph(hpPos_TBL[i].x + pPos[p].x, hpPos_TBL[i].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[2], true);
+			}
 		}
-	}*/
+		if (as == 7)
+		{
+			DrawGraph(hpPos_TBL[FOUR_HP].x + pPos[p].x, hpPos_TBL[FOUR_HP].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[1], true);
+		}
+		else if (as == 5)
+		{
+			DrawGraph(hpPos_TBL[THREE_HP].x + pPos[p].x, hpPos_TBL[THREE_HP].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[1], true);
+		}
+		else if (as == 3)
+		{
+			DrawGraph(hpPos_TBL[TWO_HP].x + pPos[p].x, hpPos_TBL[TWO_HP].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[1], true);
+		}
+		else if (as == 1)
+		{
+			DrawGraph(hpPos_TBL[ONE_HP].x + pPos[p].x, hpPos_TBL[ONE_HP].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[1], true);
+		}
+	}
+
 	lpFader.Draw();
 	ScreenFlip();
 	return true;
@@ -226,6 +260,11 @@ bool GameScene::GameDraw(void)
 
 int GameScene::Init(void)
 {
+	pPos[CONTROLLER_P1] = { 120,30 };
+	pPos[CONTROLLER_P2] = { SCREEN_SIZE_X - 120 - (64 * 4),30 };
+	pPos[CONTROLLER_P3] = { 120,SCREEN_SIZE_Y - 90 };
+	pPos[CONTROLLER_P4] = { SCREEN_SIZE_X - 120 - (64 * 4),SCREEN_SIZE_Y - 90 };
+
 	fadeFinish = false;
 	timeCnt = 0;
 	startCnt = 241;
@@ -240,8 +279,8 @@ int GameScene::Init(void)
 	lpImageMng.GetID("image/number.png", VECTOR2(50, 50), VECTOR2(10, 1));		// ナンバー
 	lpImageMng.GetID("image/hp.png", VECTOR2(64, 64), VECTOR2(3, 1));			// HP
 
-	lpSceneMng.SetDrawOffset( VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y) );
-	lpMapCtl.SetUp( VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y) , VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
+	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
+	lpMapCtl.SetUp(VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y), VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
 	lpMapCtl.MapLoad(objList, false);
 
 	//サウンド
