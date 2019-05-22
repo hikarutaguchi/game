@@ -18,7 +18,6 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-
 }
 
 unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
