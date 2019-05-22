@@ -4,6 +4,14 @@
 #include "Obj.h"
 #include "MapCtl.h"
 
+typedef struct
+{
+	int HP;
+	bool DethFlag;
+	bool EvoFlag;
+}CharacterStatusData;
+
+
 enum TBL_ID {
 	TBL_MAIN,
 	TBL_SUB,
@@ -26,7 +34,7 @@ enum SIDE_CHECK {
 
 #define PLAYER_DEF_SPEED 2
 #define PLAYER_LIFE 6
-#define lpPlayer Player::GetInstance()
+//#define lpPlayer Player::GetInstance()
 
 
 using DIR_TBL_ARRAY = std::array<int, DIR_MAX>;
@@ -38,18 +46,44 @@ class Player :
 	public Obj
 {
 public:
-	static Player &GetInstance(void)
-	{
-		static Player s_instance;
-		return s_instance;
-	}
+	//static Player &GetInstance(void)
+	//{
+	//	static Player s_instance;
+	//	return s_instance;
+	//}
 	Player(VECTOR2 setupPos, VECTOR2 drawOffset);						// 引数付き(Pos,描画の際のoffset)ｺﾝｽﾄﾗｸﾀ
 	Player();
 	~Player();
 	int Life();
 	bool InitAnim(void);												// 画像呼び出し
+	virtual void ColTrap(CharacterStatusData *charData) = 0;
+
 private:
 
+	//void SetMove(weekListObj objList, const Game_ctr &controller);		//　ﾌﾟﾚｲﾔｰ移動,当たり判定
+	//bool CheckObjType(OBJ_TYPE type);									//　ｵﾌﾞｼﾞｪｸﾄﾀｲﾌﾟﾁｪｯｸ
+	//bool afterkeyFlag;													//　ｻﾌﾞｷｰ入力ﾌﾗｸﾞ
+	//bool DethProcess();													//	死ぬ時処理
+	//bool PassF();
+	//void GetItem(void);													//	item取得時の処理
+	//int fireLength;
+
+	//int cnt;
+	//int life;
+	//int count;
+	//int speed;
+
+	//DIR_TBL_ARRAY speedTbl;		// ｽﾋﾟｰﾄﾞﾃｰﾌﾞﾙ
+	//DIR_TBL_PTR_ARRAY posTbl;	// 座標ﾃｰﾌﾞﾙ
+	//DIR_TBL_DIR dirTbl;			// 方向ﾃｰﾌﾞﾙ
+	//MAP_MOVE_TBL mapMove;		// ｵﾌﾞｼﾞｪｸﾄ移動判定ﾃｰﾌﾞﾙ
+
+	//MAP_ID id;
+
+	//unsigned int reStartCnt;	// こいつが時間値を持つ間は無敵
+
+	//unsigned int fireGuardFlag;
+protected:
 	void SetMove(weekListObj objList, const Game_ctr &controller);		//　ﾌﾟﾚｲﾔｰ移動,当たり判定
 	bool CheckObjType(OBJ_TYPE type);									//　ｵﾌﾞｼﾞｪｸﾄﾀｲﾌﾟﾁｪｯｸ
 	bool afterkeyFlag;													//　ｻﾌﾞｷｰ入力ﾌﾗｸﾞ
@@ -73,4 +107,5 @@ private:
 	unsigned int reStartCnt;	// こいつが時間値を持つ間は無敵
 
 	unsigned int fireGuardFlag;
+
 };

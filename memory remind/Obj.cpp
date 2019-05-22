@@ -83,6 +83,7 @@ void Obj::Draw(unsigned int id)
 		{
 			//Žó‚¯‚Á‚Æ‚½drawOffset‚Å•\Ž¦‚ð‚¸‚ç‚µ‚Ä‚¨‚­
 			DrawGraph(drawOffset.x + pos.x, drawOffset.y + pos.y, IMAGE_ID(imageName)[id], true);
+			
 		}
 	}
 }
