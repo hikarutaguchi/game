@@ -53,6 +53,9 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		(*itr)->UpData(objList, controller);
 	}
+
+	if (titleLogoCnt <= 256)	titleLogoCnt++;
+
 	animCnt += 10;
 	lpFader.Updata();
 	Draw();
@@ -61,6 +64,7 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 
 int TitleScene::Init(void)
 {
+	titleLogoCnt = 0;
 	bgm = LoadSoundMem("sound/titleScene/bgm_title.mp3");
 
 	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
@@ -73,7 +77,6 @@ int TitleScene::Init(void)
 		//µÌÞ¼Þª¸Ä‚Åtrue,false‚ª•Ô‚é
 		objList = std::make_shared<sharedObjList>();
 	}
-
 	objList->clear();
 	return 0;
 }
@@ -82,9 +85,26 @@ void TitleScene::Draw()
 {
 	fadeFinish = true;
 	ClsDrawScreen();
-	DrawGraph(0, 0, lpImageMng.GetID("image/title.png")[0], true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((int)(animCnt % 640) - 256));
+	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack_Sky.png")[0], true);
+
+	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack.png")[0], true);
+
+	if (titleLogoCnt <= 256)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((int)(titleLogoCnt % 640)));
+		DrawGraph(200, titleLogoCnt - 56, lpImageMng.GetID("image/titles.png")[0], true);
+	}
+	else
+	{
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		DrawGraph(200, 200, lpImageMng.GetID("image/titles.png")[0], true);
+	}
+
+	if (CheckSoundMem(seNextButton) == 0)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((int)(animCnt % 640) - 256));
+	}
 	DrawGraph(150, 700, lpImageMng.GetID("image/titlebutton.png")[0], true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	lpFader.Draw();

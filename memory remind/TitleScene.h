@@ -17,9 +17,10 @@ private:
 	int Pad[4];						// ƒpƒbƒhî•ñ
 	int animCnt;
 	bool fadeFinish;
+	bool padFlag;
+	int titleLogoCnt;
+
 	int bgm;
 	int seNextButton;
-	bool padFlag;
-
 };
 
