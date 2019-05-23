@@ -89,7 +89,7 @@ void TitleScene::Draw()
 
 	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack.png")[0], true);
 
-	if (titleLogoCnt <= 256)
+	if ((titleLogoCnt <= 256) && (CheckSoundMem(seNextButton) == 0))
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((int)(titleLogoCnt % 640)));
 		DrawGraph(200, titleLogoCnt - 56, lpImageMng.GetID("image/titles.png")[0], true);
