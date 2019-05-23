@@ -9,7 +9,14 @@ typedef struct Cloud
 	int High;
 	int speed;
 	bool visivle;
-};
+}Cloud;
+
+typedef struct Weather
+{
+	int cnt;
+	int state;
+	bool flag;
+}Weather;
 
 class TitleScene :
 	public BaseScene
@@ -30,6 +37,7 @@ private:
 	bool padFlag;
 	int titleLogoCnt;
 	Cloud cloud[4];
+	Weather weather;
 	int bgm;
 	int timeCnt;
 	int seNextButton;
