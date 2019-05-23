@@ -59,6 +59,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 		{
 			SceneCnt += 1;
 			lpCntMng.SetCnt(SceneCnt);
+			StopSoundMem(bgm);
 			return std::make_unique<EditScene>();
 		}
 	}
