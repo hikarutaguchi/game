@@ -1,6 +1,16 @@
 #pragma once
 #include "BaseScene.h"
 #include "classObj.h"
+
+typedef struct Cloud
+{
+	int Cnt;
+	int getID;
+	int High;
+	int speed;
+	bool visivle;
+};
+
 class TitleScene :
 	public BaseScene
 {
@@ -19,8 +29,9 @@ private:
 	bool fadeFinish;
 	bool padFlag;
 	int titleLogoCnt;
-
+	Cloud cloud[4];
 	int bgm;
+	int timeCnt;
 	int seNextButton;
 };
 

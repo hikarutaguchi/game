@@ -7,6 +7,8 @@
 #include "Obj.h"
 #include "Fader.h"
 
+#define PI 3.141592
+
 TitleScene::TitleScene()
 {
 	Init();
@@ -21,6 +23,7 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 {
 
 
+	timeCnt++;
 
 	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
@@ -56,6 +59,18 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 
 	if (titleLogoCnt <= 256)	titleLogoCnt++;
 
+	for (int i = 0; i < 4; i++)
+	{
+		if (cloud[i].Cnt >= SCREEN_SIZE_X + 400)
+		{
+			if (GetRand(3) == 0) cloud[i].visivle = false;
+			cloud[i].getID = GetRand(19);
+			cloud[i].High = GetRand(400);
+			cloud[i].speed = GetRand(3) + 1;
+			cloud[i].Cnt = 0;
+		}
+		cloud[i].Cnt += cloud[i].speed;
+	}
 	animCnt += 10;
 	lpFader.Updata();
 	Draw();
@@ -65,6 +80,17 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 int TitleScene::Init(void)
 {
 	titleLogoCnt = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		cloud[i].Cnt = SCREEN_SIZE_X + 397 + i;
+		cloud[i].getID = 0;
+		cloud[i].High = 0;
+		cloud[i].speed = 1;
+		cloud[i].visivle = true;
+	}
+	lpImageMng.GetID("image/cloud_s.png", VECTOR2(400, 200), VECTOR2(2, 10));
+
 	bgm = LoadSoundMem("sound/titleScene/bgm_title.mp3");
 
 	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
@@ -87,6 +113,11 @@ void TitleScene::Draw()
 	ClsDrawScreen();
 	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack_Sky.png")[0], true);
 
+	if (cloud[0].visivle)	DrawGraph(cloud[0].Cnt - 400, cloud[0].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[0].getID], true);
+	if (cloud[1].visivle)	DrawGraph(SCREEN_SIZE_X - cloud[1].Cnt, cloud[1].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[1].getID], true);
+	if (cloud[2].visivle)	DrawGraph(cloud[2].Cnt - 400, cloud[2].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[2].getID], true);
+	if (cloud[3].visivle)	DrawGraph(SCREEN_SIZE_X - cloud[3].Cnt, cloud[3].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[3].getID], true);
+
 	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack.png")[0], true);
 
 	if ((titleLogoCnt <= 256) && (CheckSoundMem(seNextButton) == 0))
@@ -97,7 +128,7 @@ void TitleScene::Draw()
 	else
 	{
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		DrawGraph(200, 200, lpImageMng.GetID("image/titles.png")[0], true);
+		DrawGraph(200, 200 + (10 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/titles.png")[0], true);
 	}
 
 	if (CheckSoundMem(seNextButton) == 0)
