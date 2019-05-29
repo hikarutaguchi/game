@@ -4,7 +4,7 @@ class Skelton :
 	public Player
 {
 public:
-	Skelton(VECTOR2 setupPos, VECTOR2 drawOffset);
+	Skelton(VECTOR2 drawOffset);
 	Skelton();
 	~Skelton();
 

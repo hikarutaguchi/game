@@ -2,18 +2,27 @@
 
 
 
-Slime::Slime(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
+Slime::Slime(VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	speed = 2;
 
 	fireLength = 2;
 	// MAIN
 	posTbl = { &pos.y,  &pos.x,	 // 上
-			   &pos.y,	&pos.x,  // 下
-			   &pos.x,	&pos.y,  // 左
-			   &pos.x,	&pos.y  // 右
+				   &pos.y,	&pos.x,  // 下
+				   &pos.x,	&pos.y,  // 左
+				   &pos.x,	&pos.y  // 右
 
 	};
+
+
+	posTbl2 = { &pos2.y,  &pos2.x,	 // 上
+				&pos2.y,	&pos2.x,  // 下
+			 &pos2.x,	&pos2.y,  // 左
+			 &pos2.x,	&pos2.y  // 右
+
+	};
+
 	//MAIN			
 	speedTbl = { -PLAYER_DEF_SPEED,			// 上
 				 PLAYER_DEF_SPEED,			// 下
@@ -28,6 +37,7 @@ Slime::Slime(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 			   DIR_RIGHT, DIR_LEFT,	   DIR_UP,		DIR_DOWN,			// 右(下,上)
 
 	};
+
 
 	huttobi = {
 		-128,			// 上
@@ -51,7 +61,15 @@ Slime::Slime(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 		true,	// 8
 	};
 
-	Init("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
+	if (lpSelCur.GetCharData(CONTROLLER_P1) == 1)
+	{
+		Init("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4), VECTOR2(64, 64));
+	}
+
+	if (lpSelCur.GetCharData(CONTROLLER_P2) == 1)
+	{
+		Init2("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4), VECTOR2(64, 128));
+	}
 	InitAnim();
 	cnt = 240;
 }

@@ -29,7 +29,6 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		if (controller.GetCtr(i, CONTROLLER_P1) == PAD_PUSH)
 		{
-
 			StopSoundMem(bgm);
 			if (CheckSoundMem(seNextButton) == 0)
 			{
@@ -39,27 +38,19 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 		}
 	}
 
-	if (weather.flag == false)
+	if (fadeFinish)
 	{
-		if (fadeFinish)
-		{
-			if (lpFader.GetFadeState() == FADE_OUT_END)
-			{
-				return std::make_unique<SelectScene>();
-			}
-		}
-	}
 		if (lpFader.GetFadeState() == FADE_OUT_END)
 		{
-			lpFader.SetFadeIn(8);
-			weather.state += 1;
-			if (weather.state == 4)
-			{
-				weather.state = 0;
-			}
-			weather.cnt = 0;
-			fadeFinish = true;
+			return std::make_unique<SelectScene>();
 		}
+	}
+
+	if (lpFader.GetFadeState() == FADE_OUT_END)
+	{
+		lpFader.SetFadeIn(8);
+		fadeFinish = true;
+	}
 
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
@@ -80,31 +71,6 @@ unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 		}
 		cloud[i].Cnt += cloud[i].speed;
 	}
-
-	if (weather.cnt >= 600)
-	{
-		lpFader.SetFadeOut(4);
-		weather.flag = true;
-	}
-	else
-	{
-		weather.flag = false;
-	}
-
-	if (weather.state == 1)
-	{
-		SetDrawBright(255, 180, 130);
-	}
-	else if (weather.state == 2)
-	{
-		SetDrawBright(130, 130, 130);
-	}
-	else if (weather.state == 3)
-	{
-		SetDrawBright(80, 80, 80);
-	}
-
-	weather.cnt++;
 	animCnt += 10;
 	lpFader.Updata();
 	Draw();
@@ -115,10 +81,6 @@ int TitleScene::Init(void)
 {
 	titleLogoCnt = 0;
 
-	weather.flag = false;
-	weather.cnt = 0;
-	weather.state = 0;
-
 	for (int i = 0; i < 4; i++)
 	{
 		cloud[i].Cnt = SCREEN_SIZE_X + 397 + i;
@@ -128,7 +90,6 @@ int TitleScene::Init(void)
 		cloud[i].visivle = true;
 	}
 	lpImageMng.GetID("image/cloud_s.png", VECTOR2(400, 200), VECTOR2(2, 10));
-	lpImageMng.GetID("image/titleBack_Skys.png", VECTOR2(1200, 944), VECTOR2(2, 2));
 
 	bgm = LoadSoundMem("sound/titleScene/bgm_title.mp3");
 
@@ -150,7 +111,7 @@ void TitleScene::Draw()
 {
 	fadeFinish = true;
 	ClsDrawScreen();
-	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack_Skys.png")[weather.state], true);
+	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack_Sky.png")[0], true);
 
 	if (cloud[0].visivle)	DrawGraph(cloud[0].Cnt - 400, cloud[0].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[0].getID], true);
 	if (cloud[1].visivle)	DrawGraph(SCREEN_SIZE_X - cloud[1].Cnt, cloud[1].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[1].getID], true);

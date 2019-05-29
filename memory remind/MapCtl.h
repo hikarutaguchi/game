@@ -9,6 +9,16 @@
 #define PI 3.141592654
 #define RAD(X) ( (X * PI) / 180.0)			// X‚Í“x”
 
+enum {
+	PLAYER_1,
+	PLAYER_2,
+	PLAYER_3,
+	PLAYER_4,
+	PLAYER_MAX
+};
+
+using POS = std::array<VECTOR2, PLAYER_MAX>;
+
 class MapCtl
 {
 public:
@@ -31,9 +41,11 @@ public:
 	bool MapLoad(sharedListObj objList, bool editModeFlag);									// Ï¯ÌßÛ°ÄŞ
 	bool MapSaveBase(void);
 	bool MapLoadBase(sharedListObj objList, bool editModeFlag);								// Ï¯ÌßÛ°ÄŞ	
-	bool SetUpGameObj(sharedListObj objList, bool editModeFlag);							// µÌŞ¼Şª¸Ä‚Ì¾¯Ä
+	bool SetUpGameObj(sharedListObj objList,  bool editModeFlag);							// µÌŞ¼Şª¸Ä‚Ì¾¯Ä
 	const VECTOR2& GetChipSize(void);														// Á¯Ìß»²½Ş‚ğó‚¯æ‚é
 	const VECTOR2& GetMapSize(void);														// Ï¯Ìß»²½Ş‚ğó‚¯æ‚é
+
+	POS postbl;
 private:
 	MapCtl();
 	~MapCtl();

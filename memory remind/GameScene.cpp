@@ -59,7 +59,6 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 		{
 			SceneCnt += 1;
 			lpCntMng.SetCnt(SceneCnt);
-			StopSoundMem(bgm);
 			return std::make_unique<EditScene>();
 		}
 	}
@@ -88,6 +87,7 @@ bool GameScene::GameDraw(void)
 	//ｵﾌﾞｼﾞｪｸﾄが登録されているobjLis t登録している順をいじっていいか、どうか
 	//後に書くものは形が決まっている。ｿｰﾄに必ず必要なものは2つのｵﾌﾞｼﾞｪｸﾄがいる１つじゃ入れ替えられないので
 	//uniqueを参照でもらってy座標をくらべて1つ目のほうが小さかったら真を返す
+
 	(*objList).sort([](sharedObj &pos1, sharedObj &pos2) {return ((*pos1).GetPos().y) < ((*pos2).GetPos().y); });
 
 
@@ -97,10 +97,18 @@ bool GameScene::GameDraw(void)
 	//　ｲﾃﾚｰﾀｰを普通に書いた場合
 	/*for (std::list<Obj*>::iterator itr = objList.begin(); itr != objList.end(); itr++)*/
 	//型推論を用いて書いた場合　 autoを用いて型を予想
+
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
 		(*itr)->Draw();
+		(*itr)->Draw2();
 	}
+
+	//for (auto itr2 = objList2->begin(); itr2 != objList2->end(); itr2++)
+	//{
+	//	(*itr2)->Draw2();
+	//}
+
 	//for (auto itr: objList)	//開始位置と終端位置が分かればautoでいける
 	//{
 	//	itr->Draw();

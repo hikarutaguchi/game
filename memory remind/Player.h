@@ -3,6 +3,7 @@
 #include <array>
 #include "Obj.h"
 #include "MapCtl.h"
+#include "SelectCur.h"
 
 typedef struct
 {
@@ -89,6 +90,7 @@ protected:
 	bool afterkeyFlag;													//　ｻﾌﾞｷｰ入力ﾌﾗｸﾞ
 	bool DethProcess();													//	死ぬ時処理
 	bool PassF();
+	bool PassF2();
 	void GetItem(void);													//	item取得時の処理
 	int fireLength;
 
@@ -100,10 +102,13 @@ protected:
 	DIR_TBL_ARRAY speedTbl;		// ｽﾋﾟｰﾄﾞﾃｰﾌﾞﾙ
 	DIR_TBL_ARRAY huttobi;		// 吹っ飛びﾃｰﾌﾞﾙ
 	DIR_TBL_PTR_ARRAY posTbl;	// 座標ﾃｰﾌﾞﾙ
+	DIR_TBL_PTR_ARRAY posTbl2;	// 座標ﾃｰﾌﾞﾙ
 	DIR_TBL_DIR dirTbl;			// 方向ﾃｰﾌﾞﾙ
+	DIR_TBL_DIR dirTbl2;			// 方向ﾃｰﾌﾞﾙ
 	MAP_MOVE_TBL mapMove;		// ｵﾌﾞｼﾞｪｸﾄ移動判定ﾃｰﾌﾞﾙ
 
 	MAP_ID id;
+	MAP_ID id2;
 
 	unsigned int reStartCnt;	// こいつが時間値を持つ間は無敵
 

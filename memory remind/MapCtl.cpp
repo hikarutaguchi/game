@@ -252,7 +252,7 @@ bool MapCtl::MapSave(void)
 	return true;
 }
 
-bool MapCtl::MapLoad(sharedListObj objList, bool editModeFlag)//
+bool MapCtl::MapLoad(sharedListObj objList,  bool editModeFlag)//
 {
 	FILE *file;													// ファイルポインタ
 	DataHeader exportData;
@@ -296,7 +296,7 @@ bool MapCtl::MapLoad(sharedListObj objList, bool editModeFlag)//
 	}
 	if (flag == true)
 	{
-		SetUpGameObj(objList, editModeFlag);
+		SetUpGameObj(objList,editModeFlag);
 	}
 	return flag;
 }
@@ -374,7 +374,7 @@ bool MapCtl::MapLoadBase(sharedListObj objList, bool editModeFlag)
 	}
 	if (flag == true)
 	{
-		SetUpGameObj(objList, editModeFlag);
+		SetUpGameObj(objList,editModeFlag);
 	}
 	return flag;
 }
@@ -393,6 +393,12 @@ MapCtl::~MapCtl()
 
 void MapCtl::InitTblData(void)
 {
+	postbl = {
+		VECTOR2{64,64},
+		VECTOR2{64,128},
+		VECTOR2{64,192},
+		VECTOR2{64,256}
+	};
 }
 
 bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
@@ -433,33 +439,69 @@ bool MapCtl::SetUpGameObj(sharedListObj objList, bool editModeFlag)//
 				case (MAP_ID::TOOL):
 				break;
 			}
-			//obj = AddObjList()(objList, std::make_unique<Player>(VECTOR2(x * chipSize.x, y * chipSize.y), drawOffset + VECTOR2(0, -20)));	//ｲﾝｽﾀﾝｽ
 		}
 		ListObj_itr obj;
-
 		// GetCharDataでもらった各プレイヤーのキャラIDでキャラクターをインスタンス
-		for (int i = 0; i < CONTROLLER_MAX; i++)
+		for (int i = 0; i < 3; i++)
 		{
-			if (lpSelCur.GetCharFlag((P_TYPE)i))
+			if (lpSelCur.GetCharFlag(P_TYPE(i)))
 			{
-				if (lpSelCur.GetPlayerFlag((P_TYPE)i))
+				if (lpSelCur.GetPlayerFlag(P_TYPE(i)))
 				{
-					if (lpSelCur.GetCharData((P_TYPE)i) == 1)
+					if (lpSelCur.GetCharData(P_TYPE(i)) == 1)
 					{
-						obj = AddObjList()(objList, std::make_unique<Slime>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+						obj = AddObjList()(objList, std::make_unique<Slime>(drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
 					}
-					if (lpSelCur.GetCharData((P_TYPE)i) == 2)
+					if (lpSelCur.GetCharData(P_TYPE(i)) == 2)
 					{
-						obj = AddObjList()(objList, std::make_unique<Skelton>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+						obj = AddObjList()(objList, std::make_unique<Skelton>(drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
 					}
-					if (lpSelCur.GetCharData((P_TYPE)i) == 3)
+					if (lpSelCur.GetCharData(P_TYPE(i)) == 3)
 					{
-						obj = AddObjList()(objList, std::make_unique<Carbuncle>(VECTOR2(64, 64), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+						obj = AddObjList()(objList, std::make_unique<Carbuncle>(drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
 					}
 				}
+				//obj = AddObjList()(objList, std::make_unique<Carbuncle>((VECTOR2(postbl[CONTROLLER_P1])), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+				//objList->pop_back();
 			}
 		}
+			//obj = AddObjList()(objList, std::make_unique<Carbuncle>((VECTOR2(postbl[CONTROLLER_P1])), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+			//objList->pop_back();
+			//if (lpSelCur.GetCharFlag(CONTROLLER_P2))
+			//{
+			//	if (lpSelCur.GetPlayerFlag(CONTROLLER_P2))
+			//	{
+
+			//		if (lpSelCur.GetCharData(CONTROLLER_P2) == 1)
+			//		{
+			//			obj = AddObjList()(objList, std::make_unique<Slime>(drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+			//		}
+			//		if (lpSelCur.GetCharData(CONTROLLER_P2) == 2)
+			//		{
+			//			obj = AddObjList()(objList, std::make_unique<Skelton>((VECTOR2(postbl[CONTROLLER_P2])), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+			//		}
+			//		if (lpSelCur.GetCharData(CONTROLLER_P2) == 3)
+			//		{
+			//			obj = AddObjList()(objList, std::make_unique<Carbuncle>((VECTOR2(postbl[CONTROLLER_P2])), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+			//		}
+			//		//objList->pop_front();
+			//	}
+			//}
+			//obj2 = AddObjList2()(objList2, std::make_unique<Carbuncle>((VECTOR2(postbl[CONTROLLER_P2])), drawOffset + VECTOR2(0, -30)));	//ｲﾝｽﾀﾝｽ
+			//objList2->pop_back();
+		//for (int i = 0; i < CONTROLLER_MAX; i++)
+		//{
+		//	if (lpSelCur.GetCharFlag((P_TYPE)i))
+		//	{
+		//		if (lpSelCur.GetPlayerFlag((P_TYPE)i))
+		//		{
+		//			obj[i] = AddObjList()(objList, std::make_unique<Player>(postbl[i], drawOffset + VECTOR2(0, -20)));	//ｲﾝｽﾀﾝｽ
+		//		}
+		//	}
+		//}
 	}
+
+
 
 	return true;
 }

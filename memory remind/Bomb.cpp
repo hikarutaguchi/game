@@ -6,10 +6,10 @@
 
 Bomb::Bomb(VECTOR2 setupPos, unsigned int length, VECTOR2 drawOffset) :Obj(drawOffset)
 {
-	Init("image/bomb.png", VECTOR2(40 / 2,  140 / 7), VECTOR2(2, 7), setupPos);
-	InitAnim();
-	SetAnim("í èÌ");
-	count = 180;
+	//Init("image/bomb.png", VECTOR2(40 / 2,  140 / 7), VECTOR2(2, 7), setupPos);
+	//InitAnim();
+	//SetAnim("í èÌ");
+	//count = 180;
 }
 
 

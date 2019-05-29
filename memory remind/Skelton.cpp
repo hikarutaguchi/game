@@ -2,7 +2,7 @@
 
 
 
-Skelton::Skelton(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
+Skelton::Skelton(VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	speed = 2;
 
@@ -12,6 +12,13 @@ Skelton::Skelton(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 			   &pos.y,	&pos.x,  // â∫
 			   &pos.x,	&pos.y,  // ç∂
 			   &pos.x,	&pos.y  // âE
+
+	};
+
+	posTbl2 = { &pos2.y,  &pos2.x,	 // è„
+			&pos2.y,	&pos2.x,  // â∫
+		 &pos2.x,	&pos2.y,  // ç∂
+		 &pos2.x,	&pos2.y  // âE
 
 	};
 	//MAIN			
@@ -28,6 +35,7 @@ Skelton::Skelton(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 			   DIR_RIGHT, DIR_LEFT,	   DIR_UP,		DIR_DOWN,			// âE(â∫,è„)
 
 	};
+
 
 	huttobi = {
 		-128,			// è„
@@ -51,7 +59,14 @@ Skelton::Skelton(VECTOR2 setupPos, VECTOR2 drawOffset) :Obj(drawOffset)
 		true,	// 8
 	};
 
-	Init("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4), setupPos);
+	if (lpSelCur.GetCharData(CONTROLLER_P1) == 2)
+	{
+		Init("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4), VECTOR2(64, 64));
+	}
+	if (lpSelCur.GetCharData(CONTROLLER_P2) == 2)
+	{
+		Init2("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4), VECTOR2(64, 128));
+	}
 	InitAnim();
 	cnt = 240;
 }

@@ -5,7 +5,7 @@ class Slime :
 	public Player
 {
 public:
-	Slime(VECTOR2 setupPos, VECTOR2 drawOffset);
+	Slime(VECTOR2 drawOffset);
 	Slime();
 	~Slime();
 

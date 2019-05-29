@@ -27,6 +27,7 @@ public:
 
 private:
 	sharedListObj objList;														// ╡щ╫ющ╫┌╣┌╫▐Н∙Я┌П⌠o≤^
+//sharedListObj2 objList2;														// ╡щ╫ющ╫┌╣┌╫▐Н∙Я┌П⌠o≤^
 	PLAYER_HP_TBL hpPos_TBL;
 	PLAYER_HP_FLAG hpFlag;
 	int SceneCnt;

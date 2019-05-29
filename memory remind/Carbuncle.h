@@ -5,7 +5,7 @@ class Carbuncle :
 	public Player
 {
 public:
-	Carbuncle(VECTOR2 setupPos, VECTOR2 drawOffset);
+	Carbuncle(VECTOR2 drawOffset);
 	Carbuncle();
 	~Carbuncle();
 
