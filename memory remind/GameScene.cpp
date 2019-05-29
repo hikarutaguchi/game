@@ -3,7 +3,7 @@
 #include "GameScene.h"
 #include "EditScene.h"
 #include "MapCtl.h"
-#include "Player.h"
+#include "PlayerMng.h"
 #include "Game_ctr.h"
 #include "ImageMng.h"
 #include "ResultScene.h"
@@ -14,20 +14,6 @@
 GameScene::GameScene()
 {
 	Init();
-
-	hpPos_TBL = {
-		hpPos[ONE_HP] = {0,0},
-		hpPos[TWO_HP] = {64,0},
-		hpPos[THREE_HP] = {128,0},
-		hpPos[FOUR_HP] = {192,0},
-	};
-
-	hpFlag = {
-		true,
-		true,
-		true,
-		false,
-	};
 }
 
 
@@ -208,59 +194,14 @@ bool GameScene::GameDraw(void)
 		PlaySoundMem(byou, DX_PLAYTYPE_BACK);
 	}
 
-	auto as = 6/*lpPlayer.Life()*/;
+	// HP•\Ž¦
+	lpPlayer.HP_Draw();
 
-	if (as == 8)
-	{
-		hpFlag[FOUR_HP] = true;
-	}
-	else if (as == 6)
-	{
-		hpFlag[FOUR_HP] = false;
-	}
-	else if (as == 4)
-	{
-		hpFlag[THREE_HP] = false;
-	}
-	else if (as == 2)
-	{
-		hpFlag[TWO_HP] = false;
-	}
-	else if (as == 0)
-	{
-		hpFlag[ONE_HP] = false;
-	}
-
-	for (int p = 0; p < CONTROLLER_MAX; p++)
-	{
-		for (int i = 0; i < MAX_HP; i++)
-		{
-			if (hpFlag[i] == true)
-			{
-				DrawGraph(hpPos_TBL[i].x + pPos[p].x, hpPos_TBL[i].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[0], true);
-			}
-			else if (hpFlag[i] == false)
-			{
-				DrawGraph(hpPos_TBL[i].x + pPos[p].x, hpPos_TBL[i].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[2], true);
-			}
-		}
-		if (as == 7)
-		{
-			DrawGraph(hpPos_TBL[FOUR_HP].x + pPos[p].x, hpPos_TBL[FOUR_HP].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[1], true);
-		}
-		else if (as == 5)
-		{
-			DrawGraph(hpPos_TBL[THREE_HP].x + pPos[p].x, hpPos_TBL[THREE_HP].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[1], true);
-		}
-		else if (as == 3)
-		{
-			DrawGraph(hpPos_TBL[TWO_HP].x + pPos[p].x, hpPos_TBL[TWO_HP].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[1], true);
-		}
-		else if (as == 1)
-		{
-			DrawGraph(hpPos_TBL[ONE_HP].x + pPos[p].x, hpPos_TBL[ONE_HP].y + pPos[p].y, lpImageMng.GetID("image/hp.png")[1], true);
-		}
-	}
+#ifdef _DEBUG 
+	DrawFormatString(0, 0, 0x00ff00, "sDamage = %d", lpPlayer.GetSlimeDamageData());
+	DrawFormatString(0, 15, 0x00ff00, "nDamage = %d", lpPlayer.GetSkeletonDamageData());
+	DrawFormatString(0, 30, 0x00ff00, "cDamage = %d", lpPlayer.GetCarbuncleDamageData());
+#endif
 
 	lpFader.Draw();
 	ScreenFlip();
@@ -269,15 +210,10 @@ bool GameScene::GameDraw(void)
 
 int GameScene::Init(void)
 {
-	pPos[CONTROLLER_P1] = { 120,30 };
-	pPos[CONTROLLER_P2] = { SCREEN_SIZE_X - 120 - (64 * 4),30 };
-	pPos[CONTROLLER_P3] = { 120,SCREEN_SIZE_Y - 90 };
-	pPos[CONTROLLER_P4] = { SCREEN_SIZE_X - 120 - (64 * 4),SCREEN_SIZE_Y - 90 };
-
 	fadeFinish = false;
 	timeCnt = 0;
 	startCnt = 241;
-	padFlag = false;
+
 	if (!objList)
 	{
 		//µÌÞ¼Þª¸Ä‚Åtrue,false‚ª•Ô‚é

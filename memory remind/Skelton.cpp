@@ -1,5 +1,5 @@
 #include "Skelton.h"
-
+#include "PlayerMng.h"
 
 
 Skelton::Skelton(VECTOR2 drawOffset) :Obj(drawOffset)
@@ -15,10 +15,10 @@ Skelton::Skelton(VECTOR2 drawOffset) :Obj(drawOffset)
 
 	};
 
-	posTbl2 = { &pos2.y,  &pos2.x,	 // ã
-			&pos2.y,	&pos2.x,  // ‰º
-		 &pos2.x,	&pos2.y,  // ¶
-		 &pos2.x,	&pos2.y  // ‰E
+	posTbl2 = { &pos2.y,	&pos2.x,	// ã
+				&pos2.y,	&pos2.x,	// ‰º
+				&pos2.x,	&pos2.y,	// ¶
+				&pos2.x,	&pos2.y		// ‰E
 
 	};
 	//MAIN			
@@ -95,17 +95,98 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 	case (MAP_ID::IWA):
 		break;
 	case (MAP_ID::UNTI):
+		charData->HP = charData->HP - 2;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+			/*Player::DethProcess();*/
+		}
+		break;
 	case (MAP_ID::EKI):
+		charData->HP = charData->HP - 2;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+
+		}
+		break;
 	case (MAP_ID::NULLL):
+		charData->HP = charData->HP - 2;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::WIND):
+		charData->HP = charData->HP - 2;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::MAGIC):
+		charData->HP = charData->HP - 3;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::MAGIC1):
+		charData->HP = charData->HP - 4;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::BORN):
+		charData->HP = charData->HP - 2;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::ESA):
+		charData->HP = charData->HP - 2;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::TOOL):
+		charData->HP = charData->HP - 2;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::HOLE):
-		//Player::DethProcess();
-		(*posTbl[Player::dir][TBL_MAIN]) += huttobi[Player::dir];
+		(*posTbl[Base_Player::dir][TBL_MAIN]) += huttobi[Base_Player::dir];
+		charData->HP = charData->HP - 1;
+		nDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSkeletonPlayerDamage(nDamage);
+
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
 		break;
 	default:
 		break;
@@ -115,8 +196,8 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 
 void Skelton::SetMove(weekListObj objList, const Game_ctr & controller)
 {
-	Player::SetMove(objList, controller);
-	CharacterStatusData Character1StatusData = { 10, false,false };
+	Base_Player::SetMove(objList, controller);
+	CharacterStatusData Character1StatusData = { PLAYER_DEF_LIFE - nDamage, false,false };
 	ColTrap(&Character1StatusData);
 }
 

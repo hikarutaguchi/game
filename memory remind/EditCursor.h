@@ -1,7 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include "MapCtl.h"
-#include "VECTOR2.h"
+
 class EditCursor :
 	public Obj
 {

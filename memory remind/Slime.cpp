@@ -1,5 +1,5 @@
 #include "Slime.h"
-
+#include "PlayerMng.h"
 
 
 Slime::Slime(VECTOR2 drawOffset) :Obj(drawOffset)
@@ -8,18 +8,18 @@ Slime::Slime(VECTOR2 drawOffset) :Obj(drawOffset)
 
 	fireLength = 2;
 	// MAIN
-	posTbl = { &pos.y,  &pos.x,	 // 上
-				   &pos.y,	&pos.x,  // 下
-				   &pos.x,	&pos.y,  // 左
-				   &pos.x,	&pos.y  // 右
+	posTbl = {  &pos.y, &pos.x,	 // 上
+				&pos.y,	&pos.x,  // 下
+				&pos.x,	&pos.y,  // 左
+				&pos.x,	&pos.y   // 右
 
 	};
 
 
-	posTbl2 = { &pos2.y,  &pos2.x,	 // 上
+	posTbl2 = { &pos2.y,  &pos2.x,	  // 上
 				&pos2.y,	&pos2.x,  // 下
-			 &pos2.x,	&pos2.y,  // 左
-			 &pos2.x,	&pos2.y  // 右
+				&pos2.x,	&pos2.y,  // 左
+				 &pos2.x,	&pos2.y   // 右
 
 	};
 
@@ -98,28 +98,108 @@ void Slime::ColTrap(CharacterStatusData * charData)
 	case (MAP_ID::IWA):
 		break;
 	case (MAP_ID::UNTI):
+		charData->HP = charData->HP - 2;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+			/*Player::DethProcess();*/
+		}
+		break;
 	case (MAP_ID::EKI):
+		charData->HP = charData->HP - 3;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+
+		}
+		break;
 	case (MAP_ID::NULLL):
+		charData->HP = charData->HP - 4;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::WIND):
+		charData->HP = charData->HP - 2;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::MAGIC):
+		charData->HP = charData->HP - 2;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::MAGIC1):
+		charData->HP = charData->HP - 2;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::BORN):
+		charData->HP = charData->HP - 2;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::ESA):
+		charData->HP = charData->HP - 2;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::TOOL):
+		charData->HP = charData->HP - 2;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
+		break;
 	case (MAP_ID::HOLE):
-		//Player::DethProcess();
-		(*posTbl[Player::dir][TBL_MAIN]) += huttobi[Player::dir];
+		(*posTbl[Base_Player::dir][TBL_MAIN]) += huttobi[Base_Player::dir];
+		charData->HP = charData->HP - 1;
+		sDamage = PLAYER_DEF_LIFE - charData->HP;
+		lpPlayer.SetSlimePlayerDamage(sDamage);
+
+		if (charData->HP == 0)
+		{
+			charData->DethFlag = true;
+		}
 		break;
 	default:
 		break;
 	}
-
 }
 
 void Slime::SetMove(weekListObj objList, const Game_ctr & controller)
 {
-	Player::SetMove(objList, controller);
-	CharacterStatusData Character1StatusData = { 10, false,false };
+	Base_Player::SetMove(objList, controller);
+	CharacterStatusData Character1StatusData = { PLAYER_DEF_LIFE- sDamage, false,false };
 	ColTrap(&Character1StatusData);
 }
 

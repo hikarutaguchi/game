@@ -5,18 +5,6 @@
 #include "BaseScene.h"
 #include "Game_ctr.h"
 
-enum P_HP
-{
-	ONE_HP,
-	TWO_HP,
-	THREE_HP,
-	FOUR_HP,
-	MAX_HP
-};
-
-using PLAYER_HP_TBL = std::array<VECTOR2, static_cast<int>(P_HP::MAX_HP)>;
-using PLAYER_HP_FLAG = std::array<bool, static_cast<int>(P_HP::MAX_HP)>;
-
 class GameScene :
 	public BaseScene
 {
@@ -27,20 +15,17 @@ public:
 
 private:
 	sharedListObj objList;														// ｲﾝｽﾀﾝｽした情報を登録
-//sharedListObj2 objList2;														// ｲﾝｽﾀﾝｽした情報を登録
-	PLAYER_HP_TBL hpPos_TBL;
-	PLAYER_HP_FLAG hpFlag;
+	//sharedListObj2 objList2;														// ｲﾝｽﾀﾝｽした情報を登録
+
 	int SceneCnt;
 	int timeCnt;
 	int startCnt;
 	bool fadeFinish;
 	int bGetCtr;
+
 	int Init(void);																// 呼び出し
 	bool GameDraw();															// ｴﾃﾞｨｯﾄ表示
-	int Pad[4];						// パッド情報
-	bool padFlag;
-	VECTOR2 hpPos[MAX_HP];
-	VECTOR2 pPos[CONTROLLER_MAX];
+
 	//サウンド
 	int bgm;
 	int one;

@@ -1,8 +1,8 @@
 #pragma once
-#include "Player.h"
+#include "Base_Player.h"
 
 class Carbuncle :
-	public Player
+	public Base_Player
 {
 public:
 	Carbuncle(VECTOR2 drawOffset);
@@ -12,5 +12,8 @@ public:
 	void ColTrap(CharacterStatusData *charData);
 	void SetMove(weekListObj objList, const Game_ctr &controller);
 	bool InitAnim(void);
+
+private:
+	int cDamage;	// カーバンクル用のダメージ変数
 };
 

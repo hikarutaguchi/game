@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseScene.cpp" />
+    <ClCompile Include="Base_Player.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Carbuncle.cpp" />
     <ClCompile Include="CntMng.cpp" />
@@ -142,7 +143,7 @@
     <ClCompile Include="MapCtl.cpp" />
     <ClCompile Include="MapID.cpp" />
     <ClCompile Include="Obj.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerMng.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="SceneMng.cpp" />
     <ClCompile Include="ScreenShake.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
+    <ClInclude Include="Base_Player.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Carbuncle.h" />
     <ClInclude Include="classObj.h" />
@@ -168,7 +170,7 @@
     <ClInclude Include="MapCtl.h" />
     <ClInclude Include="MapID.h" />
     <ClInclude Include="Obj.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerMng.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="SceneMng.h" />
     <ClInclude Include="ScreenShake.h" />

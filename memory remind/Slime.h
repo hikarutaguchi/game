@@ -1,8 +1,8 @@
 #pragma once
-#include "Player.h"
+#include "Base_Player.h"
 
 class Slime :
-	public Player
+	public Base_Player
 {
 public:
 	Slime(VECTOR2 drawOffset);
@@ -12,5 +12,8 @@ public:
 	void ColTrap(CharacterStatusData *charData);
 	void SetMove(weekListObj objList, const Game_ctr &controller);
 	bool InitAnim(void);
+
+private:
+	int sDamage; // スライム用のダメージ変数
 };
 

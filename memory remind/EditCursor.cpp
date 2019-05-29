@@ -2,11 +2,10 @@
 #include "EditCursor.h"
 #include "SceneMng.h"
 #include "Game_ctr.h"
+#include "SelectCur.h"
 
 #define EDIT_KEY_GET_DEF_RNG 30
 #define MIN_KEY_RNG 5
-
-#define lpScene SceneMng::GetInstance()
 
 EditCursor::EditCursor(VECTOR2 drawOffset) :Obj(drawOffset)
 {
@@ -74,14 +73,14 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 				if (PAD_INPUT_RIGHT & Pad[i])
 				{
-					if (tmpPos.x < lpScene.GetInstance().GetGameSize().x - divSize.x)
+					if (tmpPos.x < lpSceneMng.GetInstance().GetGameSize().x - divSize.x)
 					{
 						tmpPos.x += divSize.x;
 					}
 				}
 				if (PAD_INPUT_DOWN & Pad[i])
 				{
-					if (tmpPos.y < lpScene.GetInstance().GetGameSize().y - divSize.y)
+					if (tmpPos.y < lpSceneMng.GetInstance().GetGameSize().y - divSize.y)
 					{
 						tmpPos.y += divSize.y;
 					}
@@ -122,10 +121,41 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
 		{
 			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-			id = (MAP_ID)(id + 1);
-			if (id > MAP_ID::TOOL)
+			if (lpSelCur.GetCharData(CONTROLLER_P1) == 1)
 			{
-				id = MAP_ID::IWA + 1;
+				id = (MAP_ID)(id + 1);
+				if (id > MAP_ID::NULLL)
+				{
+					id = MAP_ID::HOLE;
+				}
+			}
+
+			if (lpSelCur.GetCharData(CONTROLLER_P1) == 2 && id == MAP_ID::HOLE)
+			{
+				id = (MAP_ID)(id + 4);
+			}
+			else if (lpSelCur.GetCharData(CONTROLLER_P1) == 2 && id != MAP_ID::HOLE)
+			{
+				id = (MAP_ID)(id + 1);
+
+				if (id > MAP_ID::MAGIC1)
+				{
+					id = MAP_ID::HOLE;
+				}
+			}
+
+			if (lpSelCur.GetCharData(CONTROLLER_P1) == 3 && id == MAP_ID::HOLE)
+			{
+				id = (MAP_ID)(id + 7);
+			}
+			else if (lpSelCur.GetCharData(CONTROLLER_P1) == 3 && id != MAP_ID::HOLE)
+			{
+				id = (MAP_ID)(id + 1);
+
+				if (id > MAP_ID::TOOL)
+				{
+					id = MAP_ID::HOLE;
+				}
 			}
 		}
 	}

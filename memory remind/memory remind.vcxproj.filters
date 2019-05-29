@@ -46,9 +46,6 @@
     <ClCompile Include="Carbuncle.cpp">
       <Filter>ソースファイル\Character.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソースファイル\Character.cpp</Filter>
-    </ClCompile>
     <ClCompile Include="VECTOR2.cpp">
       <Filter>ソースファイル\Tool.cpp</Filter>
     </ClCompile>
@@ -72,6 +69,12 @@
     </ClCompile>
     <ClCompile Include="Game_ctr.cpp">
       <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMng.cpp">
+      <Filter>ソースファイル\Character.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Base_Player.cpp">
+      <Filter>ソースファイル\Character.cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -120,9 +123,6 @@
     <ClInclude Include="Carbuncle.h">
       <Filter>ヘッダーファイル\Character.h</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダーファイル\Character.h</Filter>
-    </ClInclude>
     <ClInclude Include="ImageMng.h">
       <Filter>ヘッダーファイル\Tool.h</Filter>
     </ClInclude>
@@ -146,6 +146,12 @@
     </ClInclude>
     <ClInclude Include="Game_ctr.h">
       <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMng.h">
+      <Filter>ヘッダーファイル\Character.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Base_Player.h">
+      <Filter>ヘッダーファイル\Character.h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "classObj.h"
-#include "Player.h"
+#include "PlayerMng.h"
 
 class ResultScene :
 	public BaseScene

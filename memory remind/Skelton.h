@@ -1,7 +1,8 @@
 #pragma once
-#include "Player.h"
+#include "Base_Player.h"
+
 class Skelton :
-	public Player
+	public Base_Player
 {
 public:
 	Skelton(VECTOR2 drawOffset);
@@ -11,5 +12,8 @@ public:
 	void ColTrap(CharacterStatusData *charData);
 	void SetMove(weekListObj objList, const Game_ctr &controller);
 	bool InitAnim(void);
+
+private:
+	int nDamage;	// スケルトン用のダメージ変数
 };
 

@@ -4,7 +4,6 @@
 #include "Game_ctr.h"
 #include "ImageMng.h"
 #include "Obj.h"
-#include "Player.h"
 #include "Fader.h"
 
 ResultScene::ResultScene()

@@ -6,7 +6,7 @@
 //#include "EditScene.h"
 #include "TitleScene.h"
 #include "MapCtl.h"
-#include "Player.h"
+#include "PlayerMng.h"
 #include "Game_ctr.h"
 
 
