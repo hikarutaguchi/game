@@ -153,11 +153,11 @@ int EditScene::Init(void)
 		{
 		case 1:
 			obj[0] = AddObjList()(objList, std::make_unique<EditCursor>(SceneMng::GetInstance().GetDrawOffset(), i));
-			(*obj[0])->Init("image/yukas.png", VECTOR2(64, 64), VECTOR2(4, 3));
+			(*obj[0])->Init("image/yukas.png", VECTOR2(64, 64), VECTOR2(4, 4));
 			break;
 		case 2:
 			obj[1] = AddObjList()(objList, std::make_unique<EditCursor2>(SceneMng::GetInstance().GetDrawOffset(), 1 + i));
-			(*obj[1])->Init("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));
+			(*obj[1])->Init("image/yukas.png", VECTOR2(64, 64), VECTOR2(4, 4));
 			break;
 		default:
 			break;
