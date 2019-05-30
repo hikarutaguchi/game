@@ -157,7 +157,6 @@
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Base_Player.h" />
-    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Carbuncle.h" />
     <ClInclude Include="classObj.h" />
     <ClInclude Include="CntMng.h" />

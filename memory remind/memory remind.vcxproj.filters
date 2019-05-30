@@ -78,9 +78,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bomb.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
     <ClInclude Include="EditCursor.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
