@@ -34,11 +34,20 @@ public:
 	const int SetSlimePlayerDamage(int Damage);					// SlimeプレイヤーのDamageをSet
 	const int GetSlimeDamageData();								// SlimeプレイヤーのDamageをGet
 
-	const int SetSkeletonPlayerDamage(int Damage);				// SlimeプレイヤーのDamageをSet
-	const int GetSkeletonDamageData();							// SlimeプレイヤーのDamageをGet
+	const int SetSkeletonPlayerDamage(int Damage);				// SkeletonプレイヤーのDamageをSet
+	const int GetSkeletonDamageData();							// SkeletonプレイヤーのDamageをGet
 
-	const int SetCarbunclePlayerDamage(int Damage);				// SlimeプレイヤーのDamageをSet
-	const int GetCarbuncleDamageData();							// SlimeプレイヤーのDamageをGet
+	const int SetCarbunclePlayerDamage(int Damage);				// CarbuncleプレイヤーのDamageをSet
+	const int GetCarbuncleDamageData();							// CarbuncleプレイヤーのDamageをGet
+
+	const int SetSlimePlayerDamage2(int Damage);					// Slimeプレイヤー2のDamageをSet
+	const int GetSlimeDamageData2();								// Slimeプレイヤー2のDamageをGet
+
+	const int SetSkeletonPlayerDamage2(int Damage);				// Skeletonプレイヤー2のDamageをSet
+	const int GetSkeletonDamageData2();							// Skeletonプレイヤー2のDamageをGet
+
+	const int SetCarbunclePlayerDamage2(int Damage);				// Carbuncleプレイヤー2のDamageをSet
+	const int GetCarbuncleDamageData2();							// Carbuncleプレイヤー2のDamageをGet
 
 	/*int AttackPoint(void);
 	int DamagePoint(void);*/
@@ -52,6 +61,10 @@ private:
 	int SDamage;		// SlimeのDamage変数
 	int NDamage;		// SkeletonのDamage変数
 	int CDamage;		// CarbuncleのDamage変数
+
+	int SDamage2;		// SlimeのDamage変数
+	int NDamage2;		// SkeletonのDamage変数
+	int CDamage2;		// CarbuncleのDamage変数
 
 	VECTOR2 hpPos[MAX_HP];
 	VECTOR2 pPos[CONTROLLER_MAX];

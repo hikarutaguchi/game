@@ -3,6 +3,7 @@
 #include "SceneMng.h"
 #include "Game_ctr.h"
 #include "SelectCur.h"
+#include "CntMng.h"
 
 #define EDIT_KEY_GET_DEF_RNG 30
 #define MIN_KEY_RNG 5
@@ -186,6 +187,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 					if (lpMapCtl.SetMapData(pos, id) != false)
 					{
 						count += 1;
+						lpCntMng.SetEditFlag(true);
 					}
 					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
 					break;
@@ -207,6 +209,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P1) == PAD_PUSH)
 		{
+			lpCntMng.SetEditFlag(false);
 			switch (count)
 			{
 			case 1:

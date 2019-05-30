@@ -34,13 +34,12 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 			fadeFinish = true;
 		}
 	}
-	if (bGetCtr == PAD_FREE)
+
+	if (lpCntMng.GetEditFlag() == true)
 	{
-		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
-		{
-			MapCtl::GetInstance().MapSave();
-			lpFader.SetFadeOut(8);
-		}
+		MapCtl::GetInstance().MapSave();
+		lpFader.SetFadeOut(8);
+		lpCntMng.SetEditFlag(false);
 	}
 
 	if (fadeFinish)
@@ -59,8 +58,6 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 			}
 		}
 	}
-
-	bGetCtr = controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1);
 
 	//if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F2]) //åªç›ÇÃ∑∞èÓïÒÇéÊìæ
 	//{

@@ -9,8 +9,8 @@ public:
 	EditCursor(VECTOR2 drawOffset, int pad);
 	EditCursor();
 	~EditCursor();
-
 	void Draw(void);
+
 private:
 	void SetMove(weekListObj objList, const Game_ctr &controller);		// ˆÚ“®¾¯Ä
 	bool CheckObjType(OBJ_TYPE type);									// µÌÞ¼Þª¸ÄÀ²ÌßÁª¯¸
