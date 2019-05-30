@@ -79,6 +79,7 @@ bool GameScene::GameDraw(void)
 
 
 	ClsDrawScreen();
+	DrawGraph(0, 0, lpImageMng.GetID("image/game.png")[0], true);
 	lpMapCtl.Draw(false);
 
 	//@²ÃÚ°À°‚ğ•’Ê‚É‘‚¢‚½ê‡

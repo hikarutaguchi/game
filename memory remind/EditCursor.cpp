@@ -40,10 +40,9 @@ EditCursor::~EditCursor()
 void EditCursor::Draw(void)
 {
 	//±ÙÌ§ÌŞÚİÃŞ¨İ¸Ş
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//‘¼‚ÌŠ‚ÅBLEND‚ğ‚µ‚ÄŒ³‚É–ß‚·‚Ì‚ğ–Y‚ê‚Ä‚¢‚½‚Ì‚½‚ß‚Ì¶Ş°ÄŞˆ—
-	Obj::Draw((int)id);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//‘¼‚ÌŠ‚ÅBLEND‚ğ‚µ‚ÄŒ³‚É–ß‚·‚Ì‚ğ–Y‚ê‚Ä‚¢‚½‚Ì‚½‚ß‚Ì¶Ş°ÄŞˆ—	
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((int)(animCnt % 512) - 256));
-	Obj::Draw((static_cast<int>(MAP_ID::YUKA)));
+	Obj::Draw((int)id);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	animCnt += 10;
 }
@@ -117,7 +116,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
 		{
-			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+			/*PlaySoundMem(choice, DX_PLAYTYPE_BACK);
 			if (lpSelCur.GetCharData(CONTROLLER_P1) == 1)
 			{
 				id = (MAP_ID)(id + 1);
@@ -153,6 +152,11 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				{
 					id = MAP_ID::HOLE;
 				}
+			}*/
+			id = (MAP_ID)(id + 1);
+			if (id > MAP_ID::GOAL)
+			{
+				id = MAP_ID::HOLE;
 			}
 		}
 	}

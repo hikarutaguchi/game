@@ -13,6 +13,10 @@ enum class MAP_ID {			// image.mapÇéQè∆
 	BORN,
 	ESA,
 	TOOL,
+	GOAL,
+	NON1,
+	NON2,
+	NON3,
 	MAX
 };
 MAP_ID operator+(MAP_ID m, int j);

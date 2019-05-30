@@ -63,7 +63,7 @@ void MapCtl::Draw(bool editModeFlag)
 			case (MAP_ID::HOLE):
 				if (editModeFlag == false)
 				{
-					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::YUKA)], true);
+					DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yukas.png")[static_cast<int>(MAP_ID::YUKA)], true);
 					break;
 				}
 			case (MAP_ID::YUKA):
@@ -77,11 +77,15 @@ void MapCtl::Draw(bool editModeFlag)
 			case (MAP_ID::BORN):
 			case (MAP_ID::ESA):
 			case (MAP_ID::TOOL):
-				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(id)], true);
+			case (MAP_ID::GOAL):
+			case (MAP_ID::NON1):
+			case (MAP_ID::NON2):
+			case (MAP_ID::NON3):
+				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yukas.png")[static_cast<int>(id)], true);
 				break;
 				// ´×°
 #ifdef _DEBUG
-				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yuka.png")[static_cast<int>(MAP_ID::UNTI)], true);
+				DrawGraph(drawOffset.x + x * chipSize.x, drawOffset.y + y * chipSize.y, lpImageMng.GetID("image/yukas.png")[static_cast<int>(MAP_ID::UNTI)], true);
 #endif
 				break;
 			}
@@ -91,7 +95,7 @@ void MapCtl::Draw(bool editModeFlag)
 
 bool MapCtl::SetUp(const VECTOR2 & size, const VECTOR2 & chipSize, const VECTOR2 drawOffset)
 {
-	lpImageMng.GetID("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));	//Ï¯Ìß‚ð‚æ‚ñ‚Å‚¢‚½‚ç½Ù°
+	lpImageMng.GetID("image/yukas.png", VECTOR2(64, 64), VECTOR2(4, 4));	//Ï¯Ìß‚ð‚æ‚ñ‚Å‚¢‚½‚ç½Ù°
 
 	//‰æ–Ê‰ð‘œ“x‚ÆÁ¯Ìß»²½Þ‚ðŽó‚¯Žæ‚Á‚½
 	mapSize = VECTOR2(size.x / chipSize.x, size.y / chipSize.y);

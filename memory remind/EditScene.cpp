@@ -83,6 +83,7 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 bool EditScene::EditDraw(void)
 {
 	ClsDrawScreen();
+	DrawGraph(0, 0, lpImageMng.GetID("image/game.png")[0], true);
 	lpMapCtl.Draw(true);
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
@@ -155,7 +156,7 @@ int EditScene::Init(void)
 		{
 		case 1:
 			obj[0] = AddObjList()(objList, std::make_unique<EditCursor>(SceneMng::GetInstance().GetDrawOffset(), i));
-			(*obj[0])->Init("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));
+			(*obj[0])->Init("image/yukas.png", VECTOR2(64, 64), VECTOR2(4, 3));
 			break;
 		case 2:
 			obj[1] = AddObjList()(objList, std::make_unique<EditCursor2>(SceneMng::GetInstance().GetDrawOffset(), 1 + i));
