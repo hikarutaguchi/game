@@ -1,27 +1,28 @@
 #include "DxLib.h"
-#include "EditCursor.h"
+#include "EditCursor2.h"
 #include "SceneMng.h"
-#include "Game_ctr.h"
-#include "SelectCur.h"
+#include "CntMng.h"
+#include "TitleScene.h"
 
 #define EDIT_KEY_GET_DEF_RNG 30
 #define MIN_KEY_RNG 5
 
-EditCursor::EditCursor(VECTOR2 drawOffset, int pad) :Obj(drawOffset)
-{
-	kettei = LoadSoundMem("sound/allScene/se_kettei.mp3");
-	cansell = LoadSoundMem("sound/allScene/se_cansell.mp3");
-	choice = LoadSoundMem("sound/allScene/se_choice.mp3");
-	bu_bu = LoadSoundMem("sound/allScene/se_modoru.mp3");
+#define lpScene SceneMng::GetInstance()
 
+EditCursor2::EditCursor2(VECTOR2 drawOffset, int pad) :Obj(drawOffset)
+{
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
 	id = static_cast<MAP_ID>(MAP_ID::HOLE);
+	itemButton = PAD_MAX;
+	setButton = PAD_MAX;
+	count = 0;
+	pos.y += 64;
 	//Ãﬂ€√∏√ØƒﬁÇÃèÍçá
 	//Obj::drawOffset = drawOffset;
 }
 
-EditCursor::EditCursor()
+EditCursor2::EditCursor2()
 {
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
@@ -32,12 +33,12 @@ EditCursor::EditCursor()
 }
 
 
-EditCursor::~EditCursor()
+EditCursor2::~EditCursor2()
 {
 
 }
 
-void EditCursor::Draw(void)
+void EditCursor2::Draw(void)
 {
 	//±ŸÃßÃﬁ⁄›√ﬁ®›∏ﬁ
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//ëºÇÃèäÇ≈BLENDÇÇµÇƒå≥Ç…ñﬂÇ∑ÇÃÇñYÇÍÇƒÇ¢ÇΩéûÇÃÇΩÇﬂÇÃ∂ﬁ∞ƒﬁèàóù
@@ -48,42 +49,40 @@ void EditCursor::Draw(void)
 	animCnt += 10;
 }
 
-void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
+void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
 {
-	//auto cnt = controller.GetCtr(KEY_TYPE_NOW);
-	//auto cntOld = controller.GetCtr(KEY_TYPE_OLD);
-	int Pad;
-	Pad = GetJoypadInputState(DX_INPUT_PAD1);
+	int Pad2;
+	Pad2 = GetJoypadInputState(DX_INPUT_PAD2);
 
 	for (int j = 0; j < 28; j++)
 	{
-		if (Pad & (1 << j))
+		if (Pad2 & (1 << j))
 		{
 			VECTOR2 tmpPos(pos);
 			//tmpPosÇ≈ãÛà⁄ìÆ
 
-			if (PAD_INPUT_LEFT & Pad)
+			if (PAD_INPUT_LEFT & Pad2)
 			{
 				if (tmpPos.x > 0)
 				{
 					tmpPos.x -= divSize.x;
 				}
 			}
-			if (PAD_INPUT_RIGHT & Pad)
+			if (PAD_INPUT_RIGHT & Pad2)
 			{
 				if (tmpPos.x < lpSceneMng.GetGameSize().x - divSize.x)
 				{
 					tmpPos.x += divSize.x;
 				}
 			}
-			if (PAD_INPUT_DOWN & Pad)
+			if (PAD_INPUT_DOWN & Pad2)
 			{
-				if (tmpPos.y < lpSceneMng.GetInstance().GetGameSize().y - divSize.y)
+				if (tmpPos.y < lpSceneMng.GetGameSize().y - divSize.y)
 				{
 					tmpPos.y += divSize.y;
 				}
 			}
-			if (PAD_INPUT_UP & Pad)
+			if (PAD_INPUT_UP & Pad2)
 			{
 				if (tmpPos.y > 0)
 				{
@@ -115,10 +114,10 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 
 	if (itemButton == PAD_FREE)
 	{
-		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
+		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
 		{
 			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-			if (lpSelCur.GetCharData(CONTROLLER_P1) == 1)
+			if (lpSelCur.GetCharData(CONTROLLER_P2) == 1)
 			{
 				id = (MAP_ID)(id + 1);
 				if (id > MAP_ID::NULLL)
@@ -127,11 +126,11 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 			}
 
-			if (lpSelCur.GetCharData(CONTROLLER_P1) == 2 && id == MAP_ID::HOLE)
+			if (lpSelCur.GetCharData(CONTROLLER_P2) == 2 && id == MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 4);
 			}
-			else if (lpSelCur.GetCharData(CONTROLLER_P1) == 2 && id != MAP_ID::HOLE)
+			else if (lpSelCur.GetCharData(CONTROLLER_P2) == 2 && id != MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 1);
 
@@ -141,11 +140,11 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 			}
 
-			if (lpSelCur.GetCharData(CONTROLLER_P1) == 3 && id == MAP_ID::HOLE)
+			if (lpSelCur.GetCharData(CONTROLLER_P2) == 3 && id == MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 7);
 			}
-			else if (lpSelCur.GetCharData(CONTROLLER_P1) == 3 && id != MAP_ID::HOLE)
+			else if (lpSelCur.GetCharData(CONTROLLER_P2) == 3 && id != MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 1);
 
@@ -159,7 +158,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 
 	if (setButton == PAD_FREE)
 	{
-		if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1) == PAD_PUSH)
+		if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
 		{
 			if (count < 2)
 			{
@@ -201,7 +200,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 
 	if (resetButton == PAD_FREE)
 	{
-		if (controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P1) == PAD_PUSH)
+		if (controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P2) == PAD_PUSH)
 		{
 			switch (count)
 			{
@@ -223,15 +222,15 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 		}
 	}
 
-	itemButton = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1);
-	setButton = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1);
-	resetButton = controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P1);
+	itemButton = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2);
+	setButton = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2);
+	resetButton = controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P2);
 
-	lpMapCtl.GetMapID(pos,id);
+	lpMapCtl.GetMapID(pos, id);
 
 }
 
-bool EditCursor::CheckObjType(OBJ_TYPE type)
+bool EditCursor2::CheckObjType(OBJ_TYPE type)
 {
 	//Ç§ÇØÇ¡Ç∆ÇΩèÓïÒÇ™ìØÇ∂Ç»ÇÁê^ÇøÇ™Ç¡ÇΩÇÁãU
 	return (type == OBJ_EDIT_CUR);

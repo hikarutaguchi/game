@@ -1,14 +1,16 @@
 #pragma once
 #include "Obj.h"
 #include "MapCtl.h"
-
-class EditCursor :
+#include "Game_ctr.h"
+#include "VECTOR2.h"
+class EditCursor2 :
 	public Obj
 {
 public:
-	EditCursor(VECTOR2 drawOffset, int pad);
-	EditCursor();
-	~EditCursor();
+	//EditCursor(weekListObj objList, const Game_ctr & controller);
+	EditCursor2(VECTOR2 drawOffset, int pad);
+	EditCursor2();
+	~EditCursor2();
 
 	void Draw(void);
 private:
