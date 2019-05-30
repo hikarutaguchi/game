@@ -11,9 +11,12 @@ public:
 	}
 	void SetCnt(int count);
 	int & GetCnt(void);
+	void SetEditFlag(bool flag);
+	bool & GetEditFlag();
 private:
 	CntMng();
 	~CntMng();
 	int cnt;
+	bool editFlag;
 };
 

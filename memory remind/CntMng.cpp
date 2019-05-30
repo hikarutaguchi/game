@@ -12,8 +12,19 @@ int & CntMng::GetCnt(void)
 	return cnt;
 }
 
+void CntMng::SetEditFlag(bool flag)
+{
+	editFlag = flag;
+}
+
+bool & CntMng::GetEditFlag()
+{
+	return editFlag;
+}
+
 CntMng::CntMng()
 {
+	editFlag = false;
 }
 
 
