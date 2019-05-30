@@ -10,10 +10,12 @@ public:
 	~Slime();
 
 	void ColTrap(CharacterStatusData *charData);
+	void ColTrap2(CharacterStatusData *charData);
 	void SetMove(weekListObj objList, const Game_ctr &controller);
 	bool InitAnim(void);
 
 private:
 	int sDamage; // スライム用のダメージ変数
+	int sDamage2; // スライム用のダメージ変数
 };
 

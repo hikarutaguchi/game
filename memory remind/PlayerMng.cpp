@@ -73,6 +73,40 @@ const int PlayerMng::GetCarbuncleDamageData()
 	return CDamage;
 }
 
+const int PlayerMng::SetSlimePlayerDamage2(int Damage)
+{
+	SDamage2 = Damage;
+	return 0;
+}
+
+const int PlayerMng::GetSlimeDamageData2()
+{
+	return SDamage2;
+}
+
+const int PlayerMng::SetSkeletonPlayerDamage2(int Damage)
+{
+	NDamage2 = Damage;
+	return 0;
+}
+
+const int PlayerMng::GetSkeletonDamageData2()
+{
+	return NDamage2;
+}
+
+const int PlayerMng::SetCarbunclePlayerDamage2(int Damage)
+{
+	CDamage2 = Damage;
+	return 0;
+}
+
+const int PlayerMng::GetCarbuncleDamageData2()
+{
+	return CDamage2;
+}
+
+
 const void PlayerMng::HP_Draw()
 {
 	for (int i = 0; i < GetJoypadNum(); i++)
@@ -348,18 +382,18 @@ const void PlayerMng::HP_Draw()
 					DrawGraph(hpPos_TBL[i].x + pPos[CONTROLLER_P2].x, hpPos_TBL[i].y + pPos[CONTROLLER_P2].y, lpImageMng.GetID("image/hp.png")[0], true);
 
 					// 体力が0
-					if (GetSlimeDamageData() > 6)
+					if (GetSlimeDamageData2() > 6)
 					{
 						DrawGraph(hpPos_TBL[i].x + pPos[CONTROLLER_P2].x, hpPos_TBL[i].y + pPos[CONTROLLER_P2].y, lpImageMng.GetID("image/hp.png")[2], true);
 					}
 				}
 				// ダメージを受けていた時
-				if (GetSlimeDamageData() != 0)
+				if (GetSlimeDamageData2() != 0)
 				{
 					// ダメージ値が偶数の時
-					if (GetSlimeDamageData() % 2 == 0)
+					if (GetSlimeDamageData2() % 2 == 0)
 					{
-						switch (GetSlimeDamageData())
+						switch (GetSlimeDamageData2())
 						{
 						case 2:
 							for (int i = 0; i < FOUR_HP - 1; i++)
@@ -392,7 +426,7 @@ const void PlayerMng::HP_Draw()
 					// ダメージ値が奇数の時
 					else
 					{
-						switch (GetSlimeDamageData())
+						switch (GetSlimeDamageData2())
 						{
 						case 1:
 							for (int i = 0; i < FOUR_HP - 1; i++)
@@ -434,18 +468,18 @@ const void PlayerMng::HP_Draw()
 					DrawGraph(hpPos_TBL[i].x + pPos[CONTROLLER_P2].x, hpPos_TBL[i].y + pPos[CONTROLLER_P2].y, lpImageMng.GetID("image/hp.png")[0], true);
 
 					// 体力が0
-					if (GetSkeletonDamageData() > 6)
+					if (GetSkeletonDamageData2() > 6)
 					{
 						DrawGraph(hpPos_TBL[i].x + pPos[CONTROLLER_P2].x, hpPos_TBL[i].y + pPos[CONTROLLER_P2].y, lpImageMng.GetID("image/hp.png")[2], true);
 					}
 				}
 				// ダメージを受けていた時
-				if (GetSkeletonDamageData() != 0)
+				if (GetSkeletonDamageData2() != 0)
 				{
 					// ダメージ値が偶数の時
-					if (GetSkeletonDamageData() % 2 == 0)
+					if (GetSkeletonDamageData2() % 2 == 0)
 					{
-						switch (GetSkeletonDamageData())
+						switch (GetSkeletonDamageData2())
 						{
 						case 2:
 							for (int i = 0; i < FOUR_HP - 1; i++)
@@ -478,7 +512,7 @@ const void PlayerMng::HP_Draw()
 					// ダメージ値が奇数の時
 					else
 					{
-						switch (GetSkeletonDamageData())
+						switch (GetSkeletonDamageData2())
 						{
 						case 1:
 							for (int i = 0; i < FOUR_HP - 1; i++)
@@ -520,18 +554,18 @@ const void PlayerMng::HP_Draw()
 					DrawGraph(hpPos_TBL[i].x + pPos[CONTROLLER_P2].x, hpPos_TBL[i].y + pPos[CONTROLLER_P2].y, lpImageMng.GetID("image/hp.png")[0], true);
 
 					// 体力が0
-					if (GetCarbuncleDamageData() > 6)
+					if (GetCarbuncleDamageData2() > 6)
 					{
 						DrawGraph(hpPos_TBL[i].x + pPos[CONTROLLER_P2].x, hpPos_TBL[i].y + pPos[CONTROLLER_P2].y, lpImageMng.GetID("image/hp.png")[2], true);
 					}
 				}
 				// ダメージを受けていた時
-				if (GetCarbuncleDamageData() != 0)
+				if (GetCarbuncleDamageData2() != 0)
 				{
 					// ダメージ値が偶数の時
-					if (GetCarbuncleDamageData() % 2 == 0)
+					if (GetCarbuncleDamageData2() % 2 == 0)
 					{
-						switch (GetCarbuncleDamageData())
+						switch (GetCarbuncleDamageData2())
 						{
 						case 2:
 							for (int i = 0; i < FOUR_HP - 1; i++)
@@ -564,7 +598,7 @@ const void PlayerMng::HP_Draw()
 					// ダメージ値が奇数の時
 					else
 					{
-						switch (GetCarbuncleDamageData())
+						switch (GetCarbuncleDamageData2())
 						{
 						case 1:
 							for (int i = 0; i < FOUR_HP - 1; i++)
