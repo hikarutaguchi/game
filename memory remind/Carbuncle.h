@@ -15,7 +15,8 @@ public:
 	bool InitAnim(void);
 
 private:
-	int cDamage;	// カーバンクル用のダメージ変数
-	int cDamage2;	// カーバンクル用のダメージ変数
+	int cDamage;		// カーバンクル用のダメージ変数
+	int cDamage2;		// カーバンクル用のダメージ変数
+	int cGoalCnt[4];	// カーバンクルのゴールした回数
 };
 

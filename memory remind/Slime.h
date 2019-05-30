@@ -17,5 +17,6 @@ public:
 private:
 	int sDamage; // スライム用のダメージ変数
 	int sDamage2;
+	int sGoalCnt[4];	// スライムのゴールした回数
 };
 

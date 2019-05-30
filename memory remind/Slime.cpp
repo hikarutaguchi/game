@@ -1,6 +1,6 @@
 #include "Slime.h"
 #include "PlayerMng.h"
-
+#include "CntMng.h"
 
 Slime::Slime(VECTOR2 drawOffset) :Obj(drawOffset)
 {
@@ -190,13 +190,19 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
 
+		sGoalCnt[0]++;
+
+		lpCntMng.GoalSetCnt(sGoalCnt[0], CONTROLLER_P1);		// デバック用
+
 		if (charData->HP == 0)
 		{
 			charData->DethFlag = true;
 		}
 		break;
 	case (MAP_ID::GOAL):
+		//sGoalCnt++;
 
+		//lpCntMng.GoalSetCnt(sGoalCnt, CONTROLLER_P1);
 		visible = false;
 		break;
 	default:
@@ -307,13 +313,19 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
 
+		sGoalCnt[1]++;
+
+		lpCntMng.GoalSetCnt(sGoalCnt[1], CONTROLLER_P2);		// デバック用
+
 		if (charData->HP == 0)
 		{
 			charData->DethFlag = true;
 		}
 		break;
 	case (MAP_ID::GOAL):
+		/*sGoalCnt2++;
 
+		lpCntMng.GoalSetCnt(sGoalCnt2, CONTROLLER_P1);*/
 		visible = false;
 		break;
 	default:

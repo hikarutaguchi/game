@@ -11,14 +11,27 @@ public:
 	~ResultScene();
 	virtual unique_Base Updata(unique_Base own, Game_ctr &controller);	// 純粋仮想関数UpDate
 
+	const VECTOR2 & PointUpDrawPos();		// P1リザルト表示
+	const VECTOR2 & PointUpDrawPos2();		// P2リザルト表示
+
 private:
+	int Init(void);
+	void Draw();
+
 	int bGetCtr;
 	bool fadeFinish;
-	int Init(void);
 	bool nextScene;
-	void Draw();
+	
 	sharedListObj objList;			// ｲﾝｽﾀﾝｽした情報を登録
-	int Pad[4];						// パッド情報
-	bool padFlag;
+
+	VECTOR2 PointPos;		
+	int Poscnt;
+	int resultCnt;
+	bool FlameFlag;
+
+	VECTOR2 PointPos2;
+	int Poscnt2;
+	int resultCnt2;
+	bool FlameFlag2;
 };
 

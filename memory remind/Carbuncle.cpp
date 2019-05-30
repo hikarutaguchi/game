@@ -1,6 +1,6 @@
 #include "Carbuncle.h"
 #include "PlayerMng.h"
-
+#include "CntMng.h"
 
 Carbuncle::Carbuncle(VECTOR2 drawOffset) :Obj(drawOffset)
 {
@@ -188,13 +188,19 @@ void Carbuncle::ColTrap(CharacterStatusData * charData)
 		cDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetCarbunclePlayerDamage(cDamage);
 
+		cGoalCnt[0]++;
+
+		lpCntMng.GoalSetCnt(cGoalCnt[0], CONTROLLER_P1);		// デバック用
+
 		if (charData->HP == 0)
 		{
 			charData->DethFlag = true;
 		}
 		break;
 	case (MAP_ID::GOAL):
+		/*cGoalCnt[0]++;
 
+		lpCntMng.GoalSetCnt(cGoalCnt[0], CONTROLLER_P1);*/		
 		visible = false;
 		break;
 	default:
@@ -305,6 +311,10 @@ void Carbuncle::ColTrap2(CharacterStatusData * charData)
 		cDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetCarbunclePlayerDamage2(cDamage2);
 
+		cGoalCnt[1]++;
+
+		lpCntMng.GoalSetCnt(cGoalCnt[1], CONTROLLER_P2);		// デバック用
+
 		if (charData->HP == 0)
 		{
 			charData->DethFlag = true;
@@ -312,6 +322,9 @@ void Carbuncle::ColTrap2(CharacterStatusData * charData)
 		break;
 	case (MAP_ID::GOAL):
 
+	/*	cGoalCnt[1]++;
+
+		lpCntMng.GoalSetCnt(cGoalCnt[1], CONTROLLER_P2);	*/	
 		visible = false;
 		break;
 	default:

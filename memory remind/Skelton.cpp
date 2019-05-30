@@ -1,6 +1,6 @@
 #include "Skelton.h"
 #include "PlayerMng.h"
-
+#include "CntMng.h"
 
 Skelton::Skelton(VECTOR2 drawOffset) :Obj(drawOffset)
 {
@@ -187,13 +187,19 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
 
+		nGoalCnt[0]++;
+
+		lpCntMng.GoalSetCnt(nGoalCnt[0], CONTROLLER_P1);		// デバック用
+
 		if (charData->HP == 0)
 		{
 			charData->DethFlag = true;
 		}
 		break;
 	case (MAP_ID::GOAL):
+		//nGoalCnt[0]++;
 
+		//lpCntMng.GoalSetCnt(nGoalCnt[0], CONTROLLER_P1);		
 		visible = false;
 		break;
 	default:
@@ -305,13 +311,19 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
 
+		nGoalCnt[1]++;
+
+		lpCntMng.GoalSetCnt(nGoalCnt[1], CONTROLLER_P2);		// デバック用
+
 		if (charData->HP == 0)
 		{
 			charData->DethFlag = true;
 		}
 		break;
 	case (MAP_ID::GOAL):
+	/*	nGoalCnt[1]++;
 
+		lpCntMng.GoalSetCnt(nGoalCnt[1], CONTROLLER_P2);*/		
 		visible = false;
 		break;
 	default:

@@ -1,4 +1,6 @@
 #pragma once
+#include "Game_ctr.h"
+
 #define lpCntMng CntMng::GetInstance()
 
 class CntMng
@@ -13,10 +15,17 @@ public:
 	int & GetCnt(void);
 	void SetEditFlag(bool flag);
 	bool & GetEditFlag();
+
+	void GoalSetCnt(int gcount, P_TYPE pType);
+	int GoalGetCnt(void);
+	int GoalGetCnt2(void);
+
 private:
 	CntMng();
 	~CntMng();
 	int cnt;
 	bool editFlag;
+
+	int Gcount[4];		// ÉSÅ[ÉãÇµÇΩâÒêî
 };
 

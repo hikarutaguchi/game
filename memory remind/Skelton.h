@@ -15,7 +15,8 @@ public:
 	bool InitAnim(void);
 
 private:
-	int nDamage;	// スケルトン用のダメージ変数
-	int nDamage2;	// スケルトン用のダメージ変数
+	int nDamage;		// スケルトン用のダメージ変数
+	int nDamage2;		// スケルトン用のダメージ変数
+	int nGoalCnt[4];	// スケルトンのゴールした回数
 };
 
