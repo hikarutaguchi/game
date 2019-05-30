@@ -32,9 +32,12 @@ unique_Base SelectScene::Updata(unique_Base own, Game_ctr & controller)
 
 	if (bGetCtr == PAD_FREE)
 	{
-		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
+		if ((lpSelCur.GetCharFlag(CONTROLLER_P1) == true) && (lpSelCur.GetCharFlag(CONTROLLER_P2) == true))
 		{
-			lpFader.SetFadeOut(4);
+			if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
+			{
+				lpFader.SetFadeOut(4);
+			}
 		}
 	}
 	if (fadeFinish)
