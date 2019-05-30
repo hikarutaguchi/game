@@ -130,7 +130,6 @@
   <ItemGroup>
     <ClCompile Include="BaseScene.cpp" />
     <ClCompile Include="Base_Player.cpp" />
-    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Carbuncle.cpp" />
     <ClCompile Include="CntMng.cpp" />
     <ClCompile Include="EditCursor.cpp" />

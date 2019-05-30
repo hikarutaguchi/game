@@ -19,9 +19,6 @@
     <ClCompile Include="EditScene.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Bomb.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>ソースファイル\Scene</Filter>
     </ClCompile>
