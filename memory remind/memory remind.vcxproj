@@ -130,7 +130,6 @@
   <ItemGroup>
     <ClCompile Include="BaseScene.cpp" />
     <ClCompile Include="Base_Player.cpp" />
-    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Carbuncle.cpp" />
     <ClCompile Include="CntMng.cpp" />
     <ClCompile Include="EditCursor.cpp" />
@@ -158,7 +157,6 @@
   <ItemGroup>
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="Base_Player.h" />
-    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Carbuncle.h" />
     <ClInclude Include="classObj.h" />
     <ClInclude Include="CntMng.h" />
