@@ -4,6 +4,7 @@
 #include "EditScene.h"
 #include "MapCtl.h"
 #include "EditCursor.h"
+#include "EditCursor2.h"
 #include "Game_ctr.h"
 #include "GameScene.h"
 #include "CntMng.h"
@@ -146,8 +147,24 @@ int EditScene::Init(void)
 	SceneMng::GetInstance().SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
 
 	lpMapCtl.SetUp(VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y), VECTOR2(CHIP_SIZE, CHIP_SIZE), SceneMng::GetInstance().GetDrawOffset());
-	auto obj = AddObjList()(objList, std::make_unique<EditCursor>(SceneMng::GetInstance().GetDrawOffset()));
-	(*obj)->Init("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));
+	ListObj_itr obj[4];
+	for (int i = 0; i <= GetJoypadNum(); i++)
+	{
+
+		switch (i)
+		{
+		case 1:
+			obj[0] = AddObjList()(objList, std::make_unique<EditCursor>(SceneMng::GetInstance().GetDrawOffset(), i));
+			(*obj[0])->Init("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));
+			break;
+		case 2:
+			obj[1] = AddObjList()(objList, std::make_unique<EditCursor2>(SceneMng::GetInstance().GetDrawOffset(), 1 + i));
+			(*obj[1])->Init("image/yuka.png", VECTOR2(64, 64), VECTOR2(4, 3));
+			break;
+		default:
+			break;
+		}
+	}
 
 	if (lpCntMng.GetCnt() == 0)
 	{

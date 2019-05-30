@@ -76,6 +76,9 @@
     <ClCompile Include="Base_Player.cpp">
       <Filter>ソースファイル\Character.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="EditCursor2.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bomb.h">
@@ -152,6 +155,9 @@
     </ClInclude>
     <ClInclude Include="Base_Player.h">
       <Filter>ヘッダーファイル\Character.h</Filter>
+    </ClInclude>
+    <ClInclude Include="EditCursor2.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
