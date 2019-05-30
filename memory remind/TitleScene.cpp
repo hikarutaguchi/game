@@ -21,20 +21,20 @@ TitleScene::~TitleScene()
 
 unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 {
-
-
 	timeCnt++;
-
 	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
-		if (controller.GetCtr(i, CONTROLLER_P1) == PAD_PUSH)
+		for (int j = 0; j < CONTROLLER_MAX; j++)
 		{
-			StopSoundMem(bgm);
-			if (CheckSoundMem(seNextButton) == 0)
+			if (controller.GetCtr(i, (P_TYPE)j) == PAD_PUSH)
 			{
-				PlaySoundMem(seNextButton, DX_PLAYTYPE_BACK);	//ボタンの音
+				StopSoundMem(bgm);
+				if (CheckSoundMem(seNextButton) == 0)
+				{
+					PlaySoundMem(seNextButton, DX_PLAYTYPE_BACK);	//ボタンの音
+				}
+				lpFader.SetFadeOut(4);
 			}
-			lpFader.SetFadeOut(4);
 		}
 	}
 

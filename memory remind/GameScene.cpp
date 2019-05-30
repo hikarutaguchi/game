@@ -36,6 +36,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
 		{
+			StopSoundMem(bgm);
 			lpFader.SetFadeOut(8);
 		}
 	}
