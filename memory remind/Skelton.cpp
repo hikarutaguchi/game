@@ -57,7 +57,7 @@ Skelton::Skelton(VECTOR2 drawOffset) :Obj(drawOffset)
 		true,	// T8
 		true,	// T9
 		true,	// TA
-		false,	// GOALE
+		true,	// GOALE
 		true,	// NON1
 		true,	// NON2
 		true,	// NON3
@@ -192,6 +192,10 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 			charData->DethFlag = true;
 		}
 		break;
+	case (MAP_ID::GOAL):
+
+		visible = false;
+		break;
 	default:
 		break;
 	}
@@ -306,6 +310,10 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 			charData->DethFlag = true;
 		}
 		break;
+	case (MAP_ID::GOAL):
+
+		visible = false;
+		break;
 	default:
 		break;
 	}
@@ -313,9 +321,12 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 
 void Skelton::SetMove(weekListObj objList, const Game_ctr & controller)
 {
-	Base_Player::SetMove(objList, controller);
-	CharacterStatusData Character1StatusData = { PLAYER_DEF_LIFE - nDamage, false,false };
-	ColTrap(&Character1StatusData);
+	if (visible)
+	{
+		Base_Player::SetMove(objList, controller);
+		CharacterStatusData Character1StatusData = { PLAYER_DEF_LIFE - nDamage, false,false };
+		ColTrap(&Character1StatusData);
+	}
 	CharacterStatusData Character2StatusData = { PLAYER_DEF_LIFE - nDamage2, false,false };
 	ColTrap2(&Character2StatusData);
 }
