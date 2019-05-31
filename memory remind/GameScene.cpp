@@ -14,6 +14,29 @@
 GameScene::GameScene()
 {
 	Init();
+	switch (GetJoypadNum())
+	{
+	case 1:
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P1);
+		break;
+	case 2:
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P1);
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P2);
+		break;
+	case 3:
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P1);
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P2);
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P3);
+		break;
+	case 4:
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P1);
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P2);
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P3);
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P4);
+		break;
+	default:
+		break;
+	}
 }
 
 
@@ -37,8 +60,8 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		StopSoundMem(bgm);
 		lpFader.SetFadeOut(8);
-		lpCntMng.GetGoalFlag(CONTROLLER_P1) = false;
-		lpCntMng.GetGoalFlag(CONTROLLER_P2) = false;
+		lpCntMng.SetGoalFlag(false ,CONTROLLER_P1);
+		lpCntMng.SetGoalFlag(false, CONTROLLER_P2);
 	}
 
 	if (fadeFinish)

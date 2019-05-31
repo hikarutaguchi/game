@@ -76,6 +76,10 @@ Slime::Slime(VECTOR2 drawOffset) :Obj(drawOffset)
 	}
 	InitAnim();
 	cnt = 240;
+	lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
+	lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
+	lpCntMng.SetGoalFlag(true, CONTROLLER_P3);
+	lpCntMng.SetGoalFlag(true, CONTROLLER_P4);
 }
 
 Slime::Slime()

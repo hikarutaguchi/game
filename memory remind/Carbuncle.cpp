@@ -72,6 +72,12 @@ Carbuncle::Carbuncle(VECTOR2 drawOffset) :Obj(drawOffset)
 	{
 		Init2("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4), VECTOR2(64, 128));
 	}
+
+	lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
+	lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
+	lpCntMng.SetGoalFlag(true, CONTROLLER_P3);
+	lpCntMng.SetGoalFlag(true, CONTROLLER_P4);
+
 	InitAnim();
 	cnt = 240;
 }
