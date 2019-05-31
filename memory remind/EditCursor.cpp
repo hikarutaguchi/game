@@ -157,7 +157,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 			}*/
 			id = (MAP_ID)(id + 1);
-			if (id > MAP_ID::GOAL)
+			if (id > MAP_ID::TOOL)
 			{
 				id = MAP_ID::HOLE;
 			}
