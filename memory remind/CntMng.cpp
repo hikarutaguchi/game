@@ -12,14 +12,14 @@ int & CntMng::GetCnt(void)
 	return cnt;
 }
 
-void CntMng::SetEditFlag(bool flag)
+void CntMng::SetEditFlag(bool flag,P_TYPE ptype)
 {
-	editFlag = flag;
+	editFlag[ptype] = flag;
 }
 
-bool & CntMng::GetEditFlag()
+bool & CntMng::GetEditFlag(P_TYPE ptype)
 {
-	return editFlag;
+	return editFlag[ptype];
 }
 
 void CntMng::GoalSetCnt(int gcount, P_TYPE pType)
@@ -47,7 +47,6 @@ int CntMng::GoalGetCnt2(void)
 
 CntMng::CntMng()
 {
-	editFlag = false;
 }
 
 

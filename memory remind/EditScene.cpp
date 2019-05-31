@@ -13,7 +13,34 @@
 
 EditScene::EditScene()
 {
+	for (int i = 0; i < CONTROLLER_MAX; i++)
+	{
+		lpCntMng.SetEditFlag(true, (P_TYPE)i);
+	}
 	Init();
+	switch (GetJoypadNum())
+	{
+	case 1:
+		lpCntMng.SetEditFlag(false, CONTROLLER_P1);
+		break;
+	case 2:
+		lpCntMng.SetEditFlag(false, CONTROLLER_P1);
+		lpCntMng.SetEditFlag(false, CONTROLLER_P2);
+		break;
+	case 3:
+		lpCntMng.SetEditFlag(false, CONTROLLER_P1);
+		lpCntMng.SetEditFlag(false, CONTROLLER_P2);
+		lpCntMng.SetEditFlag(false, CONTROLLER_P3);
+		break;
+	case 4:
+		lpCntMng.SetEditFlag(false, CONTROLLER_P1);
+		lpCntMng.SetEditFlag(false, CONTROLLER_P2);
+		lpCntMng.SetEditFlag(false, CONTROLLER_P3);
+		lpCntMng.SetEditFlag(false, CONTROLLER_P4);
+		break;
+	default:
+		break;
+	}
 }
 
 
@@ -35,11 +62,13 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 		}
 	}
 
-	if (lpCntMng.GetEditFlag() == true)
+	if ((lpCntMng.GetEditFlag(CONTROLLER_P1) == true)
+	&& (lpCntMng.GetEditFlag(CONTROLLER_P2) == true))
 	{
 		MapCtl::GetInstance().MapSave();
 		lpFader.SetFadeOut(8);
-		lpCntMng.SetEditFlag(false);
+		lpCntMng.SetEditFlag(false,CONTROLLER_P1);
+		lpCntMng.SetEditFlag(false, CONTROLLER_P2);
 	}
 
 	if (fadeFinish)

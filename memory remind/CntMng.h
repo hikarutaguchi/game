@@ -13,8 +13,8 @@ public:
 	}
 	void SetCnt(int count);
 	int & GetCnt(void);
-	void SetEditFlag(bool flag);
-	bool & GetEditFlag();
+	void SetEditFlag(bool flag, P_TYPE ptype);
+	bool & GetEditFlag(P_TYPE ptype);
 
 	void GoalSetCnt(int gcount, P_TYPE pType);
 	int GoalGetCnt(void);
@@ -24,7 +24,7 @@ private:
 	CntMng();
 	~CntMng();
 	int cnt;
-	bool editFlag;
+	bool editFlag[CONTROLLER_MAX];
 
 	int Gcount[4];		// ÉSÅ[ÉãÇµÇΩâÒêî
 };

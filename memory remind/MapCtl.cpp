@@ -172,6 +172,7 @@ bool MapCtl::SetData(mapType maps, const VECTOR2 & pos, idType id)		//inline‚ÍŽg
 	{
 		return false;
 	}
+
 	if ((maps[selPos.y][selPos.x]) == MAP_ID::IWA)
 	{
 		return false;

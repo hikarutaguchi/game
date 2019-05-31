@@ -24,6 +24,7 @@ EditCursor::EditCursor(VECTOR2 drawOffset, int pad) :Obj(drawOffset)
 
 EditCursor::EditCursor()
 {
+	lpCntMng.SetEditFlag(false,CONTROLLER_P1);
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
 	itemButton = PAD_MAX;
@@ -50,6 +51,7 @@ void EditCursor::Draw(void)
 
 void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 {
+
 	//auto cnt = controller.GetCtr(KEY_TYPE_NOW);
 	//auto cntOld = controller.GetCtr(KEY_TYPE_OLD);
 	int Pad;
@@ -187,7 +189,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 					if (lpMapCtl.SetMapData(pos, id) != false)
 					{
 						count += 1;
-						lpCntMng.SetEditFlag(true);
+						lpCntMng.SetEditFlag(true, CONTROLLER_P1);
 					}
 					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
 					break;
@@ -209,7 +211,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P1) == PAD_PUSH)
 		{
-			lpCntMng.SetEditFlag(false);
+			lpCntMng.SetEditFlag(false, CONTROLLER_P1);
 			switch (count)
 			{
 			case 1:

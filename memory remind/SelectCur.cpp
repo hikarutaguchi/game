@@ -15,10 +15,10 @@ SelectCur::SelectCur()
 	};
 
 	CharFlag = {
-		false,		// P1
-		false,		// P2
-		false,		// P3
-		false		// P4
+		true,		// P1
+		true,		// P2
+		true,		// P3
+		true		// P4
 	};
 
 	CharID = {
@@ -47,13 +47,14 @@ SelectCur::SelectCur()
 	{
 	case 1:
 		playerFlag[CONTROLLER_P1] = true;
-
+		CharFlag[CONTROLLER_P1] = false;
 		CharID[CONTROLLER_P1] = static_cast<Character>(Character::slime);
 		break;
 	case 2:
 		playerFlag[CONTROLLER_P1] = true;
 		playerFlag[CONTROLLER_P2] = true;
-
+		CharFlag[CONTROLLER_P1] = false;
+		CharFlag[CONTROLLER_P2] = false;
 		CharID[CONTROLLER_P1] = static_cast<Character>(Character::slime);
 		CharID[CONTROLLER_P2] = static_cast<Character>(Character::slime);
 		break;
@@ -61,7 +62,9 @@ SelectCur::SelectCur()
 		playerFlag[CONTROLLER_P1] = true;
 		playerFlag[CONTROLLER_P2] = true;
 		playerFlag[CONTROLLER_P3] = true;
-
+		CharFlag[CONTROLLER_P1] = false;
+		CharFlag[CONTROLLER_P2] = false;
+		CharFlag[CONTROLLER_P3] = false;
 		CharID[CONTROLLER_P1] = static_cast<Character>(Character::slime);
 		CharID[CONTROLLER_P2] = static_cast<Character>(Character::slime);
 		CharID[CONTROLLER_P3] = static_cast<Character>(Character::slime);
@@ -71,7 +74,10 @@ SelectCur::SelectCur()
 		playerFlag[CONTROLLER_P2] = true;
 		playerFlag[CONTROLLER_P3] = true;
 		playerFlag[CONTROLLER_P4] = true;
-
+		CharFlag[CONTROLLER_P1] = false;
+		CharFlag[CONTROLLER_P2] = false;
+		CharFlag[CONTROLLER_P3] = false;
+		CharFlag[CONTROLLER_P4] = false;
 		CharID[CONTROLLER_P1] = static_cast<Character>(Character::slime);
 		CharID[CONTROLLER_P2] = static_cast<Character>(Character::slime);
 		CharID[CONTROLLER_P3] = static_cast<Character>(Character::slime);

@@ -24,6 +24,7 @@ EditCursor2::EditCursor2(VECTOR2 drawOffset, int pad) :Obj(drawOffset)
 
 EditCursor2::EditCursor2()
 {
+	lpCntMng.SetEditFlag(false, CONTROLLER_P2);
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
 	itemButton = PAD_MAX;
@@ -185,6 +186,7 @@ void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
 					if (lpMapCtl.SetMapData(pos, id) != false)
 					{
 						count += 1;
+						lpCntMng.SetEditFlag(true, CONTROLLER_P2);
 					}
 					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
 					break;
@@ -206,6 +208,7 @@ void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P2) == PAD_PUSH)
 		{
+			lpCntMng.SetEditFlag(false, CONTROLLER_P2);
 			switch (count)
 			{
 			case 1:
