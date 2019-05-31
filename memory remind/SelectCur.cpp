@@ -29,10 +29,17 @@ SelectCur::SelectCur()
 	};
 
 	posTBL = {
-		pos = {170,360},		// P1
-		pos = {170,360},		// P2
-		pos = {170,360},		// P3
-		pos = {170,360}			// P4
+		pos = {300,300},		// P1
+		pos = {300,300},		// P2
+		pos = {300,300},		// P3
+		pos = {300,300}			// P4
+	};
+
+	DrawTBL = {
+		pos = {300,300},
+		pos = {450,150},
+		pos = {600,300},
+		pos = {1200,360}			// 下
 	};
 
 	for (int p = 0; p < TYPE_MAX; p++)
@@ -87,6 +94,9 @@ SelectCur::SelectCur()
 		break;
 	}
 
+	lpImageMng.GetID("image/yubis_s.png", VECTOR2(64, 64), VECTOR2(4, 1));		//
+	lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2));		//プレイヤーのフレームを読み込み
+	lpImageMng.GetID("image/selectf_s.png", VECTOR2(300, 300), VECTOR2(2, 2));		//プレイヤーのフレームを読み込み
 	kettei = LoadSoundMem("sound/allScene/se_kettei.mp3");
 	cansell = LoadSoundMem("sound/allScene/se_cansell.mp3");
 	menu = LoadSoundMem("sound/selectScene/se_menu.mp3");
@@ -96,7 +106,7 @@ SelectCur::SelectCur()
 
 SelectCur::~SelectCur()
 {
-	
+
 }
 
 int SelectCur::GetCharData(P_TYPE playerNum)
@@ -112,8 +122,14 @@ void SelectCur::Draw(void)
 {
 	ClsDrawScreen();
 
+	DrawGraph(DrawTBL[0].x, DrawTBL[0].y, lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2))[0], true);
+	DrawGraph(DrawTBL[1].x, DrawTBL[1].y, lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2))[0], true);
+	DrawGraph(DrawTBL[2].x, DrawTBL[2].y, lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2))[0], true);
+
 	for (int i = 0; i < CONTROLLER_MAX; i++)
 	{
+		DrawGraph(posTBL[i].x, posTBL[i].y, lpImageMng.GetID("image/selectf_s.png", VECTOR2(300, 300), VECTOR2(2, 2))[i], true);
+
 		if (playerFlag[(P_TYPE)i])
 		{
 			if (!CharFlag[i])
@@ -133,16 +149,16 @@ void SelectCur::Draw(void)
 
 	DrawGraph(0, 0, lpImageMng.GetID("image/erandene.png")[0], true);
 
-	DrawGraph(180, 370, lpImageMng.GetID("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
-	DrawGraph(540, 370, lpImageMng.GetID("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
-	DrawGraph(900, 370, lpImageMng.GetID("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+	DrawGraph(DrawTBL[0].x + 120, DrawTBL[0].y + 80, lpImageMng.GetID("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+	DrawGraph(DrawTBL[1].x + 120, DrawTBL[1].y + 80, lpImageMng.GetID("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+	DrawGraph(DrawTBL[2].x + 120, DrawTBL[2].y + 80, lpImageMng.GetID("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 
 #ifdef _DEBUG
 	for (int i = 0; i < CONTROLLER_MAX; i++)
 	{
-		DrawFormatString(0, 0 + (i * 15), 0xff0000, "pos%d,x = %d",i + 1,posTBL[i].x);
-		DrawFormatString(0, 100 + (i * 15), 0xff0000, "CharID[%d] = %d",i + 1, static_cast<int>(CharID[i]));
-		DrawFormatString(0, 200 + (i * 15), 0xff0000, "CharFlag%d = %d",i + 1, static_cast<int>(CharFlag[i]));
+		DrawFormatString(0, 0 + (i * 15), 0xff0000, "pos%d,x = %d", i + 1, posTBL[i].x);
+		DrawFormatString(0, 100 + (i * 15), 0xff0000, "CharID[%d] = %d", i + 1, static_cast<int>(CharID[i]));
+		DrawFormatString(0, 200 + (i * 15), 0xff0000, "CharFlag%d = %d", i + 1, static_cast<int>(CharFlag[i]));
 	}
 	lpFader.Draw();
 #endif
@@ -170,13 +186,14 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		{
 			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P1) == PAD_PUSH)
 			{
-				tmpPos1.x += 360;
+				tmpPos1.x += 150;
 
 				// CharIDを取得
-				if (tmpPos1.x < 1200)
+				if (tmpPos1.x <= 600)
 				{
 					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
 					CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
+					tmpPos1.x = 600;
 				}
 			}
 		}
@@ -184,15 +201,24 @@ void SelectCur::MoveCur(Game_ctr & controller)
 		{
 			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P1) == PAD_PUSH)
 			{
-				tmpPos1.x -= 360;
+				tmpPos1.x -= 150;
 
 				// CharIDを取得
-				if (tmpPos1.x > 0)
+				if (tmpPos1.x >= 300)
 				{
 					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
 					CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
+					tmpPos1.x = 300;
 				}
 			}
+		}
+		if (tmpPos1.x == 450)
+		{
+			tmpPos1.y = 150;
+		}
+		else
+		{
+			tmpPos1.y = 300;
 		}
 	}
 	else

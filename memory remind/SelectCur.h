@@ -51,7 +51,7 @@ private:
 	CHAR_FLAG_TBL CharFlag;				// キャラが選択されているかどうか false = 選択されていない true = 選択されている
 	P_POS_TBL   posTBL;					// 各カーソルの座標
 	P_TYPE_CHAR CharID;					// キャラ選択ID
-
+	P_POS_TBL DrawTBL;
 	CTR_TYPE ctrType[CONTROLLER_MAX];
 	VECTOR2 tmpPos[CONTROLLER_MAX];		//仮移動変数
 	VECTOR2 pos;						// 選択カーソルのPos
