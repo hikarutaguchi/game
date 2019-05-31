@@ -188,11 +188,14 @@ void SelectCur::MoveCur(Game_ctr & controller)
 				if (tmpPos1.x <= 600)
 				{
 					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
-				}
-				else
-				{
-					tmpPos1.x = 600;
+					if (CharID[CONTROLLER_P1] != 3)
+					{
+						CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
+					}
+					else
+					{
+						CharID[CONTROLLER_P1] = (Character)CharID[CONTROLLER_P1];
+					}
 				}
 			}
 		}
@@ -215,12 +218,16 @@ void SelectCur::MoveCur(Game_ctr & controller)
 				if (tmpPos1.x >= 300)
 				{
 					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
+					if (CharID[CONTROLLER_P1] != 1)
+					{
+						CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
+					}
+					else
+					{
+						CharID[CONTROLLER_P1] = (Character)CharID[CONTROLLER_P1];
+					}
 				}
-				else
-				{
-					tmpPos1.x = 300;
-				}
+				
 			}
 		}
 
@@ -266,7 +273,14 @@ void SelectCur::MoveCur(Game_ctr & controller)
 					if (tmpPos2.x <= 600)
 					{
 						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-						CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] + 1);
+						if (CharID[CONTROLLER_P2] != 3)
+						{
+							CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] + 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P2] = (Character)CharID[CONTROLLER_P2];
+						}
 					}
 				}
 			}
@@ -289,7 +303,14 @@ void SelectCur::MoveCur(Game_ctr & controller)
 					if (tmpPos2.x >= 300)
 					{
 						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-						CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] - 1);
+						if (CharID[CONTROLLER_P2] != 1)
+						{
+							CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] - 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P2] = (Character)CharID[CONTROLLER_P2];
+						}
 					}
 				}
 			}
@@ -335,7 +356,14 @@ void SelectCur::MoveCur(Game_ctr & controller)
 					if (tmpPos3.x <= 600)
 					{
 						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-						CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] + 1);
+						if (CharID[CONTROLLER_P3] != 3)
+						{
+							CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] + 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P3] = (Character)CharID[CONTROLLER_P3];
+						}
 					}
 				}
 			}
@@ -358,7 +386,14 @@ void SelectCur::MoveCur(Game_ctr & controller)
 					if (tmpPos3.x >= 300)
 					{
 						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-						CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] - 1);
+						if (CharID[CONTROLLER_P3] != 1)
+						{
+							CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] - 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P3] = (Character)CharID[CONTROLLER_P3];
+						}
 					}
 				}
 			}
@@ -404,7 +439,14 @@ void SelectCur::MoveCur(Game_ctr & controller)
 					if (tmpPos4.x <= 600)
 					{
 						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-						CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] + 1);
+						if (CharID[CONTROLLER_P4] != 3)
+						{
+							CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] + 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P4] = (Character)CharID[CONTROLLER_P4];
+						}
 					}
 				}
 			}
@@ -427,7 +469,14 @@ void SelectCur::MoveCur(Game_ctr & controller)
 					if (tmpPos4.x >= 300)
 					{
 						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-						CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] - 1);
+						if (CharID[CONTROLLER_P4] != 1)
+						{
+							CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] - 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P4] = (Character)CharID[CONTROLLER_P4];
+						}
 					}
 				}
 			}
