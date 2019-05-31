@@ -36,10 +36,10 @@ SelectCur::SelectCur()
 	};
 
 	DrawTBL = {
-		pos = {300,300},
-		pos = {450,150},
-		pos = {600,300},
-		pos = {1200,360}			// 下
+		pos = {300,300},		// スライム選択
+		pos = {450,150},		// スケルトン選択
+		pos = {600,300},		// カーバンクル選択
+		pos = {450,450}		// ランダム選択
 	};
 
 	for (int p = 0; p < TYPE_MAX; p++)
@@ -126,22 +126,9 @@ void SelectCur::Draw(void)
 	DrawGraph(DrawTBL[1].x, DrawTBL[1].y, lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2))[0], true);
 	DrawGraph(DrawTBL[2].x, DrawTBL[2].y, lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2))[0], true);
 
-	for (int i = 0; i < CONTROLLER_MAX; i++)
+	for (int i = 0; i < GetPlayerFlag(CONTROLLER_P1)+ GetPlayerFlag(CONTROLLER_P2)+ GetPlayerFlag(CONTROLLER_P3)+ GetPlayerFlag(CONTROLLER_P4); i++)
 	{
 		DrawGraph(posTBL[i].x, posTBL[i].y, lpImageMng.GetID("image/selectf_s.png", VECTOR2(300, 300), VECTOR2(2, 2))[i], true);
-
-		if (playerFlag[(P_TYPE)i])
-		{
-			if (!CharFlag[i])
-			{
-				DrawBox(posTBL[i].x, posTBL[i].y, posTBL[i].x + 80, posTBL[i].y + 120, GetColor(255, 128, 64), false);
-				DrawFormatString(posTBL[i].x + 5, posTBL[i].y - 20, 0xffffff, "PLAYER_%d", i + 1);
-			}
-			else
-			{
-				DrawBox(posTBL[i].x + 10, posTBL[i].y + 10, posTBL[i].x + 70, posTBL[i].y + 110, 0xffffff, true);
-			}
-		}
 	}
 
 	DrawGraph(500, 800, lpImageMng.GetID("image/button_UI.png")[2], true);
@@ -188,12 +175,27 @@ void SelectCur::MoveCur(Game_ctr & controller)
 			{
 				tmpPos1.x += 150;
 
+				if (tmpPos1.x == 450)
+				{
+					tmpPos1 = DrawTBL[1];
+				}
+				else
+				{
+					tmpPos1 = DrawTBL[2];
+				}
+
 				// CharIDを取得
 				if (tmpPos1.x <= 600)
 				{
 					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
-					tmpPos1.x = 600;
+					if (CharID[CONTROLLER_P1] != 3)
+					{
+						CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] + 1);
+					}
+					else
+					{
+						CharID[CONTROLLER_P1] = (Character)CharID[CONTROLLER_P1];
+					}
 				}
 			}
 		}
@@ -203,234 +205,340 @@ void SelectCur::MoveCur(Game_ctr & controller)
 			{
 				tmpPos1.x -= 150;
 
+				if (tmpPos1.x == 450)
+				{
+					tmpPos1 = DrawTBL[1];
+				}
+				else
+				{
+					tmpPos1 = DrawTBL[0];
+				}
+
 				// CharIDを取得
 				if (tmpPos1.x >= 300)
 				{
 					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
-					tmpPos1.x = 300;
+					if (CharID[CONTROLLER_P1] != 1)
+					{
+						CharID[CONTROLLER_P1] = (Character)(CharID[CONTROLLER_P1] - 1);
+					}
+					else
+					{
+						CharID[CONTROLLER_P1] = (Character)CharID[CONTROLLER_P1];
+					}
+				}
+				
+			}
+		}
+
+	}
+		else
+		{
+			if (GetCtr[CONTROLLER_P1][CANSELL] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
+				{
+					PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+					CharFlag[CONTROLLER_P1] = false;
 				}
 			}
 		}
-		if (tmpPos1.x == 450)
+
+		if (!CharFlag[CONTROLLER_P2])
 		{
-			tmpPos1.y = 150;
+			if (GetCtr[CONTROLLER_P2][SELECT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
+				{
+					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+					CharFlag[CONTROLLER_P2] = true;
+				}
+			}
+			if (GetCtr[CONTROLLER_P2][RIGHT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2) == PAD_PUSH)
+				{
+					tmpPos2.x += 150;
+
+					if (tmpPos2.x == 450)
+					{
+						tmpPos2 = DrawTBL[1];
+					}
+					else
+					{
+						tmpPos2 = DrawTBL[2];
+					}
+
+					// CharIDを取得
+					if (tmpPos2.x <= 600)
+					{
+						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+						if (CharID[CONTROLLER_P2] != 3)
+						{
+							CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] + 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P2] = (Character)CharID[CONTROLLER_P2];
+						}
+					}
+				}
+			}
+			if (GetCtr[CONTROLLER_P2][LEFT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P2) == PAD_PUSH)
+				{
+					tmpPos2.x -= 150;
+
+					if (tmpPos2.x == 450)
+					{
+						tmpPos2 = DrawTBL[1];
+					}
+					else
+					{
+						tmpPos2 = DrawTBL[0];
+					}
+
+					// CharIDを取得
+					if (tmpPos2.x >= 300)
+					{
+						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+						if (CharID[CONTROLLER_P2] != 1)
+						{
+							CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] - 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P2] = (Character)CharID[CONTROLLER_P2];
+						}
+					}
+				}
+			}
 		}
 		else
 		{
-			tmpPos1.y = 300;
-		}
-	}
-	else
-	{
-		if (GetCtr[CONTROLLER_P1][CANSELL] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
+			if (GetCtr[CONTROLLER_P2][CANSELL] == PAD_FREE)
 			{
-				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
-				CharFlag[CONTROLLER_P1] = false;
-			}
-		}
-	}
-
-	if (!CharFlag[CONTROLLER_P2])
-	{
-		if (GetCtr[CONTROLLER_P2][SELECT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
-			{
-				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
-				CharFlag[CONTROLLER_P2] = true;
-			}
-		}
-		if (GetCtr[CONTROLLER_P2][RIGHT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2) == PAD_PUSH)
-			{
-				tmpPos2.x += 360;
-
-				// CharIDを取得
-				if (tmpPos2.x < 1200)
+				if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
 				{
-					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] + 1);
+					PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+					CharFlag[CONTROLLER_P2] = false;
 				}
 			}
 		}
-		if (GetCtr[CONTROLLER_P2][LEFT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P2) == PAD_PUSH)
-			{
-				tmpPos2.x -= 360;
 
-				// CharIDを取得
-				if (tmpPos2.x > 0)
+		if (!CharFlag[CONTROLLER_P3])
+		{
+			if (GetCtr[CONTROLLER_P3][SELECT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P3) == PAD_PUSH)
 				{
-					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P2] = (Character)(CharID[CONTROLLER_P2] - 1);
+					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+					CharFlag[CONTROLLER_P3] = true;
+				}
+			}
+			if (GetCtr[CONTROLLER_P3][RIGHT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P3) == PAD_PUSH)
+				{
+					tmpPos3.x += 150;
+
+					if (tmpPos3.x == 450)
+					{
+						tmpPos3 = DrawTBL[1];
+					}
+					else
+					{
+						tmpPos3 = DrawTBL[2];
+					}
+
+					// CharIDを取得
+					if (tmpPos3.x <= 600)
+					{
+						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+						if (CharID[CONTROLLER_P3] != 3)
+						{
+							CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] + 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P3] = (Character)CharID[CONTROLLER_P3];
+						}
+					}
+				}
+			}
+			if (GetCtr[CONTROLLER_P3][LEFT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P3) == PAD_PUSH)
+				{
+					tmpPos3.x -= 150;
+
+					if (tmpPos3.x == 450)
+					{
+						tmpPos3 = DrawTBL[1];
+					}
+					else
+					{
+						tmpPos3 = DrawTBL[0];
+					}
+
+					// CharIDを取得
+					if (tmpPos3.x >= 300)
+					{
+						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+						if (CharID[CONTROLLER_P3] != 1)
+						{
+							CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] - 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P3] = (Character)CharID[CONTROLLER_P3];
+						}
+					}
 				}
 			}
 		}
-	}
-	else
-	{
-		if (GetCtr[CONTROLLER_P2][CANSELL] == PAD_FREE)
+		else
 		{
-			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
+			if (GetCtr[CONTROLLER_P3][CANSELL] == PAD_FREE)
 			{
-				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
-				CharFlag[CONTROLLER_P2] = false;
-			}
-		}
-	}
-
-	if (!CharFlag[CONTROLLER_P3])
-	{
-		if (GetCtr[CONTROLLER_P3][SELECT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P3) == PAD_PUSH)
-			{
-				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
-				CharFlag[CONTROLLER_P3] = true;
-			}
-		}
-		if (GetCtr[CONTROLLER_P3][RIGHT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P3) == PAD_PUSH)
-			{
-				tmpPos3.x += 360;
-
-				// CharIDを取得
-				if (tmpPos3.x < 1200)
+				if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P3) == PAD_PUSH)
 				{
-					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] + 1);
+					PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+					CharFlag[CONTROLLER_P3] = false;
 				}
 			}
 		}
-		if (GetCtr[CONTROLLER_P3][LEFT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P3) == PAD_PUSH)
-			{
-				tmpPos3.x -= 360;
 
-				// CharIDを取得
-				if (tmpPos3.x > 0)
+		if (!CharFlag[CONTROLLER_P4])
+		{
+			if (GetCtr[CONTROLLER_P4][SELECT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P4) == PAD_PUSH)
 				{
-					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P3] = (Character)(CharID[CONTROLLER_P3] - 1);
+					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+					CharFlag[CONTROLLER_P4] = true;
+				}
+			}
+			if (GetCtr[CONTROLLER_P4][RIGHT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P4) == PAD_PUSH)
+				{
+					tmpPos4.x += 150;
+
+					if (tmpPos4.x == 450)
+					{
+						tmpPos4 = DrawTBL[1];
+					}
+					else
+					{
+						tmpPos4 = DrawTBL[2];
+					}
+
+					// CharIDを取得
+					if (tmpPos4.x <= 600)
+					{
+						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+						if (CharID[CONTROLLER_P4] != 3)
+						{
+							CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] + 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P4] = (Character)CharID[CONTROLLER_P4];
+						}
+					}
+				}
+			}
+			if (GetCtr[CONTROLLER_P4][LEFT] == PAD_FREE)
+			{
+				if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P4) == PAD_PUSH)
+				{
+					tmpPos4.x -= 150;
+
+					if (tmpPos4.x == 450)
+					{
+						tmpPos4 = DrawTBL[1];
+					}
+					else
+					{
+						tmpPos4 = DrawTBL[0];
+					}
+
+					// CharIDを取得
+					if (tmpPos4.x >= 300)
+					{
+						PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+						if (CharID[CONTROLLER_P4] != 1)
+						{
+							CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] - 1);
+						}
+						else
+						{
+							CharID[CONTROLLER_P4] = (Character)CharID[CONTROLLER_P4];
+						}
+					}
 				}
 			}
 		}
-	}
-	else
-	{
-		if (GetCtr[CONTROLLER_P3][CANSELL] == PAD_FREE)
+		else
 		{
-			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P3) == PAD_PUSH)
+			if (GetCtr[CONTROLLER_P4][CANSELL] == PAD_FREE)
 			{
-				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
-				CharFlag[CONTROLLER_P3] = false;
-			}
-		}
-	}
-
-	if (!CharFlag[CONTROLLER_P4])
-	{
-		if (GetCtr[CONTROLLER_P4][SELECT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P4) == PAD_PUSH)
-			{
-				PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
-				CharFlag[CONTROLLER_P4] = true;
-			}
-		}
-		if (GetCtr[CONTROLLER_P4][RIGHT] == PAD_FREE)
-		{
-			if (controller.GetCtr(INPUT_RIGHT, CONTROLLER_P4) == PAD_PUSH)
-			{
-				tmpPos4.x += 360;
-
-				// CharIDを取得
-				if (tmpPos4.x < 1200)
+				if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P4) == PAD_PUSH)
 				{
-					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] + 1);
+					PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
+					CharFlag[CONTROLLER_P4] = false;
 				}
 			}
 		}
-		if (GetCtr[CONTROLLER_P4][LEFT] == PAD_FREE)
+
+		GetCtr[CONTROLLER_P1][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1);
+		GetCtr[CONTROLLER_P1][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P1);
+		GetCtr[CONTROLLER_P1][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P1);
+		GetCtr[CONTROLLER_P1][DOWN] = controller.GetCtr(INPUT_DOWN, CONTROLLER_P1);
+		GetCtr[CONTROLLER_P1][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1);
+
+		GetCtr[CONTROLLER_P2][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2);
+		GetCtr[CONTROLLER_P2][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2);
+		GetCtr[CONTROLLER_P2][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P2);
+		GetCtr[CONTROLLER_P1][DOWN] = controller.GetCtr(INPUT_DOWN, CONTROLLER_P1);
+		GetCtr[CONTROLLER_P2][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2);
+
+		GetCtr[CONTROLLER_P3][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P3);
+		GetCtr[CONTROLLER_P3][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P3);
+		GetCtr[CONTROLLER_P3][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P3);
+		GetCtr[CONTROLLER_P3][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P3);
+
+		GetCtr[CONTROLLER_P4][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P4);
+		GetCtr[CONTROLLER_P4][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P4);
+		GetCtr[CONTROLLER_P4][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P4);
+		GetCtr[CONTROLLER_P4][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P4);
+
+
+		// 仮移動から実移動
+		if (300 <= tmpPos1.x && tmpPos1.x <= 600)
 		{
-			if (controller.GetCtr(INPUT_LEFT, CONTROLLER_P4) == PAD_PUSH)
-			{
-				tmpPos4.x -= 360;
-
-				// CharIDを取得
-				if (tmpPos4.x > 0)
-				{
-					PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-					CharID[CONTROLLER_P4] = (Character)(CharID[CONTROLLER_P4] - 1);
-				}
-			}
+			posTBL[CONTROLLER_P1] = tmpPos1;
 		}
-	}
-	else
-	{
-		if (GetCtr[CONTROLLER_P4][CANSELL] == PAD_FREE)
+
+		// 仮移動から実移動
+		if (0 < tmpPos2.x && tmpPos2.x < 1200)
 		{
-			if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P4) == PAD_PUSH)
-			{
-				PlaySoundMem(cansell, DX_PLAYTYPE_BACK);
-				CharFlag[CONTROLLER_P4] = false;
-			}
+			posTBL[CONTROLLER_P2] = tmpPos2;
 		}
-	}
 
-	GetCtr[CONTROLLER_P1][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1);
-	GetCtr[CONTROLLER_P1][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P1);
-	GetCtr[CONTROLLER_P1][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P1);
-	GetCtr[CONTROLLER_P1][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1);
+		// 仮移動から実移動
+		if (0 < tmpPos3.x && tmpPos3.x < 1200)
+		{
+			posTBL[CONTROLLER_P3] = tmpPos3;
+		}
 
-	GetCtr[CONTROLLER_P2][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2);
-	GetCtr[CONTROLLER_P2][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P2);
-	GetCtr[CONTROLLER_P2][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P2);
-	GetCtr[CONTROLLER_P2][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2);
-
-	GetCtr[CONTROLLER_P3][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P3);
-	GetCtr[CONTROLLER_P3][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P3);
-	GetCtr[CONTROLLER_P3][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P3);
-	GetCtr[CONTROLLER_P3][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P3);
-
-	GetCtr[CONTROLLER_P4][SELECT] = controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P4);
-	GetCtr[CONTROLLER_P4][RIGHT] = controller.GetCtr(INPUT_RIGHT, CONTROLLER_P4);
-	GetCtr[CONTROLLER_P4][LEFT] = controller.GetCtr(INPUT_LEFT, CONTROLLER_P4);
-	GetCtr[CONTROLLER_P4][CANSELL] = controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P4);
-
-
-	// 仮移動から実移動
-	if (0 < tmpPos1.x && tmpPos1.x < 1200)
-	{
-		posTBL[CONTROLLER_P1] = tmpPos1;
-	}
-
-	// 仮移動から実移動
-	if (0 < tmpPos2.x && tmpPos2.x < 1200)
-	{
-		posTBL[CONTROLLER_P2] = tmpPos2;
-	}
-
-	// 仮移動から実移動
-	if (0 < tmpPos3.x && tmpPos3.x < 1200)
-	{
-		posTBL[CONTROLLER_P3] = tmpPos3;
-	}
-
-	// 仮移動から実移動
-	if (0 < tmpPos4.x && tmpPos4.x < 1200)
-	{
-		posTBL[CONTROLLER_P4] = tmpPos4;
-	}
-
+		// 仮移動から実移動
+		if (0 < tmpPos4.x && tmpPos4.x < 1200)
+		{
+			posTBL[CONTROLLER_P4] = tmpPos4;
+		}
 	Draw();
 }
 

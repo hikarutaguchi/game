@@ -16,6 +16,7 @@ enum CTR_TYPE
 	CANSELL,
 	LEFT,
 	RIGHT,
+	DOWN,
 	TYPE_MAX
 };
 
