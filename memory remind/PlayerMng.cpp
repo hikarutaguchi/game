@@ -48,6 +48,10 @@ const int PlayerMng::SetSlimePlayerDamage(int Damage)
 
 const int PlayerMng::GetSlimeDamageData()
 {
+	if (GetRestartHpFlag())
+	{
+		SDamage = 0;
+	}
 	return SDamage;
 }
 
@@ -59,6 +63,10 @@ const int PlayerMng::SetSkeletonPlayerDamage(int Damage)
 
 const int PlayerMng::GetSkeletonDamageData()
 {
+	if (GetRestartHpFlag())
+	{
+		NDamage = 0;
+	}
 	return NDamage;
 }
 
@@ -70,6 +78,10 @@ const int PlayerMng::SetCarbunclePlayerDamage(int Damage)
 
 const int PlayerMng::GetCarbuncleDamageData()
 {
+	if (GetRestartHpFlag())
+	{
+		CDamage = 0;
+	}
 	return CDamage;
 }
 
@@ -81,6 +93,10 @@ const int PlayerMng::SetSlimePlayerDamage2(int Damage)
 
 const int PlayerMng::GetSlimeDamageData2()
 {
+	if (GetRestartHpFlag())
+	{
+		SDamage2 = 0;
+	}
 	return SDamage2;
 }
 
@@ -92,6 +108,10 @@ const int PlayerMng::SetSkeletonPlayerDamage2(int Damage)
 
 const int PlayerMng::GetSkeletonDamageData2()
 {
+	if (GetRestartHpFlag())
+	{
+		NDamage2 = 0;
+	}
 	return NDamage2;
 }
 
@@ -103,7 +123,22 @@ const int PlayerMng::SetCarbunclePlayerDamage2(int Damage)
 
 const int PlayerMng::GetCarbuncleDamageData2()
 {
+	if (GetRestartHpFlag())
+	{
+		CDamage2 = 0;
+	}
 	return CDamage2;
+}
+
+const bool PlayerMng::SetRestartHpFlag(bool rhpflag)
+{
+	HpFlag = rhpflag;
+	return true;
+}
+
+const bool PlayerMng::GetRestartHpFlag()
+{
+	return HpFlag;
 }
 
 const void PlayerMng::HP_Draw()

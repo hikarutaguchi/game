@@ -46,6 +46,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 		{
 			SceneCnt += 1;
 			lpCntMng.SetCnt(SceneCnt);
+			lpPlayer.SetRestartHpFlag(true);
 			return std::make_unique<EditScene>();
 		}
 	}
@@ -200,9 +201,13 @@ bool GameScene::GameDraw(void)
 	lpPlayer.HP_Draw();
 
 #ifdef _DEBUG 
-	DrawFormatString(0, 0, 0x00ff00, "sDamage = %d", lpPlayer.GetSlimeDamageData());
-	DrawFormatString(0, 15, 0x00ff00, "nDamage = %d", lpPlayer.GetSkeletonDamageData());
-	DrawFormatString(0, 30, 0x00ff00, "cDamage = %d", lpPlayer.GetCarbuncleDamageData());
+	DrawFormatString(0, 0, 0x0ffff0, "sDamage = %d", lpPlayer.GetSlimeDamageData());
+	DrawFormatString(0, 15, 0x0ffff0, "nDamage = %d", lpPlayer.GetSkeletonDamageData());
+	DrawFormatString(0, 30, 0x0ffff0, "cDamage = %d", lpPlayer.GetCarbuncleDamageData());
+	DrawFormatString(0, 45, 0x0ffff0, "sDamage2 = %d", lpPlayer.GetSlimeDamageData2());
+	DrawFormatString(0, 60, 0x0ffff0, "nDamage2 = %d", lpPlayer.GetSkeletonDamageData2());
+	DrawFormatString(0, 75, 0x0ffff0, "cDamage2 = %d", lpPlayer.GetCarbuncleDamageData2());
+	DrawFormatString(0, 90, 0x0ffff0, "restartHpFlag = %d", (int)lpPlayer.GetRestartHpFlag());
 #endif
 
 	lpFader.Draw();

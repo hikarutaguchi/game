@@ -78,6 +78,7 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 			StopSoundMem(bgm);
 			if (a <= 3)
 			{
+				lpPlayer.SetRestartHpFlag(false);
 				return std::make_unique<GameScene>();
 			}
 			if (a > 3)
@@ -137,6 +138,17 @@ bool EditScene::EditDraw(void)
 	{
 		DrawGraph( ( (Drawpos.x + j * pos.x) * 3 ), pos.x * 2, lpImageMng.GetID("image/map.png")[j], true);
 	}*/
+
+#ifdef _DEBUG 
+	DrawFormatString(0, 0, 0x00ff00, "sDamage = %d", lpPlayer.GetSlimeDamageData());
+	DrawFormatString(0, 15, 0x0fff00, "nDamage = %d", lpPlayer.GetSkeletonDamageData());
+	DrawFormatString(0, 30, 0x0fff00, "cDamage = %d", lpPlayer.GetCarbuncleDamageData());
+	DrawFormatString(0, 45, 0x0fff00, "sDamage2 = %d", lpPlayer.GetSlimeDamageData2());
+	DrawFormatString(0, 60, 0x0fff00, "nDamage2 = %d", lpPlayer.GetSkeletonDamageData2());
+	DrawFormatString(0, 75, 0x0fff00, "cDamage2 = %d", lpPlayer.GetCarbuncleDamageData2());
+	DrawFormatString(0, 90, 0x0fff00, "restartHpFlag = %d", (int)lpPlayer.GetRestartHpFlag());
+#endif
+
 	Text();
 	lpFader.Draw();
 	ScreenFlip();

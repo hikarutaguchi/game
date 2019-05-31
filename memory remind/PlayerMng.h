@@ -49,6 +49,9 @@ public:
 	const int SetCarbunclePlayerDamage2(int Damage);				// Carbuncleプレイヤー2のDamageをSet
 	const int GetCarbuncleDamageData2();							// Carbuncleプレイヤー2のDamageをGet
 
+	const bool SetRestartHpFlag(bool rhpflag);
+	const bool GetRestartHpFlag();
+
 	/*int AttackPoint(void);
 	int DamagePoint(void);*/
 
@@ -58,6 +61,7 @@ private:
 	void operator=(const PlayerMng& obj) {} // 代入演算子禁止
 	PlayerMng(const PlayerMng &obj) {}		  // コピーコンストラクタ禁止
 
+	bool HpFlag;		// HPのリセット用変数
 	int SDamage;		// SlimeのDamage変数
 	int NDamage;		// SkeletonのDamage変数
 	int CDamage;		// CarbuncleのDamage変数
