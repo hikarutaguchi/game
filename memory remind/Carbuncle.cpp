@@ -201,6 +201,7 @@ void Carbuncle::ColTrap(CharacterStatusData * charData)
 		/*cGoalCnt[0]++;
 
 		lpCntMng.GoalSetCnt(cGoalCnt[0], CONTROLLER_P1);*/		
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
 		visible = false;
 		break;
 	default:
@@ -325,6 +326,7 @@ void Carbuncle::ColTrap2(CharacterStatusData * charData)
 	/*	cGoalCnt[1]++;
 
 		lpCntMng.GoalSetCnt(cGoalCnt[1], CONTROLLER_P2);	*/	
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
 		visible = false;
 		break;
 	default:

@@ -200,6 +200,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		//nGoalCnt[0]++;
 
 		//lpCntMng.GoalSetCnt(nGoalCnt[0], CONTROLLER_P1);		
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
 		visible = false;
 		break;
 	default:
@@ -323,7 +324,8 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 	case (MAP_ID::GOAL):
 	/*	nGoalCnt[1]++;
 
-		lpCntMng.GoalSetCnt(nGoalCnt[1], CONTROLLER_P2);*/		
+		lpCntMng.GoalSetCnt(nGoalCnt[1], CONTROLLER_P2);*/	
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
 		visible = false;
 		break;
 	default:

@@ -203,6 +203,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		//sGoalCnt++;
 
 		//lpCntMng.GoalSetCnt(sGoalCnt, CONTROLLER_P1);
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
 		visible = false;
 		break;
 	default:
@@ -326,6 +327,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		/*sGoalCnt2++;
 
 		lpCntMng.GoalSetCnt(sGoalCnt2, CONTROLLER_P1);*/
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
 		visible = false;
 		break;
 	default:

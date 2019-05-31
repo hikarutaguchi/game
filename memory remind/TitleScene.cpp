@@ -113,10 +113,10 @@ void TitleScene::Draw()
 	ClsDrawScreen();
 	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack_Sky.png")[0], true);
 
-	if (cloud[0].visivle)	DrawGraph(cloud[0].Cnt - 400, cloud[0].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[0].getID], true);
-	if (cloud[1].visivle)	DrawGraph(SCREEN_SIZE_X - cloud[1].Cnt, cloud[1].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[1].getID], true);
-	if (cloud[2].visivle)	DrawGraph(cloud[2].Cnt - 400, cloud[2].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[2].getID], true);
-	if (cloud[3].visivle)	DrawGraph(SCREEN_SIZE_X - cloud[3].Cnt, cloud[3].High + (20 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/cloud_s.png")[cloud[3].getID], true);
+	if (cloud[0].visivle)	DrawGraph(cloud[0].Cnt - 400, cloud[0].High + static_cast<int>((20 * sin(PI * 2 / 180 * timeCnt))), lpImageMng.GetID("image/cloud_s.png")[cloud[0].getID], true);
+	if (cloud[1].visivle)	DrawGraph(SCREEN_SIZE_X - cloud[1].Cnt, cloud[1].High + static_cast<int>((20 * sin(PI * 2 / 180 * timeCnt))), lpImageMng.GetID("image/cloud_s.png")[cloud[1].getID], true);
+	if (cloud[2].visivle)	DrawGraph(cloud[2].Cnt - 400, cloud[2].High + static_cast<int>((20 * sin(PI * 2 / 180 * timeCnt))), lpImageMng.GetID("image/cloud_s.png")[cloud[2].getID], true);
+	if (cloud[3].visivle)	DrawGraph(SCREEN_SIZE_X - cloud[3].Cnt, cloud[3].High + static_cast<int>((20 * sin(PI * 2 / 180 * timeCnt))), lpImageMng.GetID("image/cloud_s.png")[cloud[3].getID], true);
 
 	DrawGraph(0, 0, lpImageMng.GetID("image/titleBack.png")[0], true);
 
@@ -128,7 +128,7 @@ void TitleScene::Draw()
 	else
 	{
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		DrawGraph(200, 200 + (10 * sin(PI * 2 / 180 * timeCnt)), lpImageMng.GetID("image/titles.png")[0], true);
+		DrawGraph(200, 200 + static_cast<int>((10 * sin(PI * 2 / 180 * timeCnt))), lpImageMng.GetID("image/titles.png")[0], true);
 	}
 
 	if (CheckSoundMem(seNextButton) == 0)

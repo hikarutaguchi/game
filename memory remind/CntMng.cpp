@@ -22,6 +22,16 @@ bool & CntMng::GetEditFlag(P_TYPE ptype)
 	return editFlag[ptype];
 }
 
+void CntMng::SetGoalFlag(bool flag, P_TYPE ptype)
+{
+	GoalFlag[ptype] = flag;
+}
+
+bool & CntMng::GetGoalFlag(P_TYPE ptype)
+{
+	return GoalFlag[ptype];
+}
+
 void CntMng::GoalSetCnt(int gcount, P_TYPE pType)
 {
 	switch (pType)

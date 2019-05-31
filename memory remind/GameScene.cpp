@@ -32,14 +32,15 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 			fadeFinish = true;
 		}
 	}
-	if (bGetCtr == PAD_FREE)
+
+	if ((lpCntMng.GetGoalFlag(CONTROLLER_P1) == true) && (lpCntMng.GetGoalFlag(CONTROLLER_P2) == true))
 	{
-		if (controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1) == PAD_PUSH)
-		{
-			StopSoundMem(bgm);
-			lpFader.SetFadeOut(8);
-		}
+		StopSoundMem(bgm);
+		lpFader.SetFadeOut(8);
+		lpCntMng.GetGoalFlag(CONTROLLER_P1) = false;
+		lpCntMng.GetGoalFlag(CONTROLLER_P2) = false;
 	}
+
 	if (fadeFinish)
 	{
 		if (lpFader.GetFadeState() == FADE_OUT_END)
