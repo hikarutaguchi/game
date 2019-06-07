@@ -122,6 +122,8 @@ void SelectCur::Draw(void)
 {
 	ClsDrawScreen();
 
+	DrawGraph(0, 0, lpImageMng.GetID("image/êX.png")[0], true);
+
 	DrawGraph(DrawTBL[0].x, DrawTBL[0].y, lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2))[0], true);
 	DrawGraph(DrawTBL[1].x, DrawTBL[1].y, lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2))[0], true);
 	DrawGraph(DrawTBL[2].x, DrawTBL[2].y, lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2))[0], true);

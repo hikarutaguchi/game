@@ -144,6 +144,7 @@ void ResultScene::Draw()
 	DrawFormatString(0, 245, 0xffff00, "Poscnt2= %d", Poscnt2);
 	DrawFormatString(0, 260, 0xffff00, "resultFlag2= %d", (int)FlameFlag2);
 #endif
+	DrawGraph(0, 0, lpImageMng.GetID("image/ëêå¥.png")[0], true);
 	DrawGraph(0, 0, lpImageMng.GetID("image/kannbann.png")[0], true);
 
 	switch (lpSelCur.GetCharData(CONTROLLER_P1))
