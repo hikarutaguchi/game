@@ -21,12 +21,15 @@ TitleScene::~TitleScene()
 
 unique_Base TitleScene::Updata(unique_Base own, Game_ctr & controller)
 {
+	auto &keyTbl = controller.GetCtr(KEY_TYPE_NOW);			//auto‚Ìê‡À‘Ì‚ğì‚é‚Ì‚Å‘‚«Š·‚¦‚ª‰Â”\
+	auto &keyTblOld = controller.GetCtr(KEY_TYPE_OLD);
+
 	timeCnt++;
 	for (int i = 0; i < CONTROLLER_INPUT_MAX; i++)
 	{
 		for (int j = 0; j < CONTROLLER_MAX; j++)
 		{
-			if (controller.GetCtr(i, (P_TYPE)j) == PAD_PUSH)
+			if (controller.GetCtr(i, (P_TYPE)j) == PAD_PUSH || ((keyTbl[KEY_INPUT_SPACE]) & (~keyTblOld[KEY_INPUT_SPACE])))
 			{
 				StopSoundMem(bgm);
 				if (CheckSoundMem(seNextButton) == 0)

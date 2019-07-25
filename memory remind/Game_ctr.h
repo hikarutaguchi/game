@@ -5,6 +5,14 @@
 #define PAD_INPUT_ON	1	// 押された
 #define PAD_INPUT_OFF	0	// 押されてない。
 
+using KEY_ARRAY = std::array<char, 256>;
+
+enum KEY_TYPE {
+	KEY_TYPE_NOW,
+	KEY_TYPE_OLD,
+	KEY_TYPE_MAX
+};
+
 enum eKeyInout
 {
 	INPUT_UP,			// 十字キー上
@@ -59,8 +67,10 @@ public:
 	bool Updata(void);								// 情報更新
 
 	const PAD_TYPE & GetCtr(int eAttachHandle, P_TYPE pType) const;
-
+	const KEY_ARRAY &GetCtr(KEY_TYPE type) const;	// ｷｰ取得
 private:
+	KEY_ARRAY data;									// ｷｰ入力ﾃﾞｰﾀ
+	KEY_ARRAY dataOld;								// 前ｷｰ入力ﾃﾞｰﾀ
 	int Init(void);
 	int pad[CONTROLLER_MAX];
 	int AttachGamepad_input[CONTROLLER_MAX][CONTROLLER_INPUT_MAX];	//パッドの入力情報(押されたかどうか)

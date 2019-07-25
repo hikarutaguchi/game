@@ -69,6 +69,10 @@ bool Game_ctr::Updata()
 			}
 		}
 	}
+	//array‚ğg‚Á‚Ä‚¢‚é‚Ì‚Åµ°ÊŞ°Û°ÄŞ‚É‚È‚é
+	dataOld = data;
+	GetHitKeyStateAll(&data[0]);
+	return true;
 	return true;
 }
 
@@ -90,4 +94,14 @@ int Game_ctr::Init(void)
 void Game_ctr::InputAttachmentGamepad(int ePadHandle, int eAttachHandle)
 {
 	AttachGamepad_pad[eAttachHandle].intButtonHandle = ePadHandle;
+}
+
+const KEY_ARRAY & Game_ctr::GetCtr(KEY_TYPE type) const
+{
+	if (type == KEY_TYPE_OLD)
+	{
+		return dataOld;
+	}
+	//QÆ‚È‚Ì‚Å‚»‚Ì‚Ü‚Ü•Ô‚·
+	return data;
 }
