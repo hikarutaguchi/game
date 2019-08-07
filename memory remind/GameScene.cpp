@@ -47,6 +47,51 @@ GameScene::~GameScene()
 
 unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 {
+	//if (!fadeFinish)
+	//{
+	//	if (lpFader.GetFadeState() == FADE_OUT_END)
+	//	{
+	//		lpFader.SetFadeIn(8);
+	//		fadeFinish = true;
+	//	}
+	//}
+
+	//if ((lpCntMng.GetGoalFlag(CONTROLLER_P1) == true) && (lpCntMng.GetGoalFlag(CONTROLLER_P2) == true))
+	//{
+	//	StopSoundMem(bgm);
+	//	lpFader.SetFadeOut(8);
+	//	lpCntMng.SetGoalFlag(false ,CONTROLLER_P1);
+	//	lpCntMng.SetGoalFlag(false, CONTROLLER_P2);
+	//}
+
+	//if (fadeFinish)
+	//{
+	//	if (lpFader.GetFadeState() == FADE_OUT_END)
+	//	{
+	//		SceneCnt += 1;
+	//		lpCntMng.SetCnt(SceneCnt);
+	//		lpPlayer.SetRestartHpFlag(true);
+	//		return std::make_unique<EditScene>();
+	//	}
+	//}
+
+	//bGetCtr = controller.GetCtr(INPUT_BUTTON_A, CONTROLLER_P1);
+
+	//lpMapCtl.Updata();
+
+	//for (auto itr = objList->begin(); itr != objList->end(); itr++)
+	//{
+	//	(*itr)->UpData(objList, controller);
+	//}
+	////–qŠÖ”(ÌßÚÃÞ¨¹°Ä)‚Æremove_if‚ð—p‚¢‚é
+
+	//objList->remove_if([](sharedObj& obj) {return obj->CheckDeth(); });
+	//GameDraw();
+	//lpFader.Updata();
+	//lpScreenShake.UpData();
+	//return std::move(own);
+	int a = lpCntMng.GetCnt();
+
 	if (!fadeFinish)
 	{
 		if (lpFader.GetFadeState() == FADE_OUT_END)
@@ -60,18 +105,25 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		StopSoundMem(bgm);
 		lpFader.SetFadeOut(8);
-		lpCntMng.SetGoalFlag(false ,CONTROLLER_P1);
-		lpCntMng.SetGoalFlag(false, CONTROLLER_P2);
+		lpCntMng.GetGoalFlag(CONTROLLER_P1) = false;
+		lpCntMng.GetGoalFlag(CONTROLLER_P2) = false;
 	}
 
-	if (fadeFinish)
+	if (fadeFinish || CheckHitKey(KEY_INPUT_E))
 	{
-		if (lpFader.GetFadeState() == FADE_OUT_END)
+		if (lpFader.GetFadeState() == FADE_OUT_END || CheckHitKey(KEY_INPUT_E))
 		{
-			SceneCnt += 1;
-			lpCntMng.SetCnt(SceneCnt);
-			lpPlayer.SetRestartHpFlag(true);
-			return std::make_unique<EditScene>();
+			StopSoundMem(bgm);
+			if (a <= 2)
+			{
+				lpPlayer.SetRestartHpFlag(false);
+				return std::make_unique<EditScene>();
+			}
+			if (a > 2)
+			{
+				lpCntMng.SetCnt(-3);
+				return std::make_unique<ResultScene>();
+			}
 		}
 	}
 

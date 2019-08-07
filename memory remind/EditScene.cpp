@@ -51,8 +51,60 @@ EditScene::~EditScene()
 
 unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 {
-	int a = lpCntMng.GetCnt();
+	//int a = lpCntMng.GetCnt();
 
+	//if (!fadeFinish)
+	//{
+	//	if (lpFader.GetFadeState() == FADE_OUT_END)
+	//	{
+	//		lpFader.SetFadeIn(8);
+	//		fadeFinish = true;
+	//	}
+	//}
+
+	//if ((lpCntMng.GetEditFlag(CONTROLLER_P1) == true)
+	//&& (lpCntMng.GetEditFlag(CONTROLLER_P2) == true))
+	//{
+	//	MapCtl::GetInstance().MapSave();
+	//	lpFader.SetFadeOut(8);
+	//	lpCntMng.SetEditFlag(false,CONTROLLER_P1);
+	//	lpCntMng.SetEditFlag(false, CONTROLLER_P2);
+	//}
+
+	//if (fadeFinish)
+	//{
+	//	if (lpFader.GetFadeState() == FADE_OUT_END)
+	//	{
+	//		StopSoundMem(bgm);
+	//		if (a <= 3)
+	//		{
+	//			lpPlayer.SetRestartHpFlag(false);
+	//			return std::make_unique<GameScene>();
+	//		}
+	//		if (a > 3)
+	//		{
+	//			lpCntMng.SetCnt(-4);
+	//			return std::make_unique<ResultScene>();
+	//		}
+	//	}
+	//}
+
+	////if (controller.GetCtr(KEY_TYPE_NOW)[KEY_INPUT_F2]) //現在のｷｰ情報を取得
+	////{
+	////	//ﾛｰﾄﾞ
+	////	if (MessageBox(NULL, "エディット内容をリセットしますか？", "確認ダイアログ", MB_OKCANCEL) == IDOK)	//返り値で帰ってきてる
+	////	{
+	////		Init();
+	////	}
+	////}
+
+	//for (auto itr = objList->begin(); itr != objList->end(); itr++)
+	//{
+	//	(*itr)->UpData(objList, controller);
+	//}
+	//EditDraw();
+	//lpFader.Updata();
+	//return std::move(own);
 	if (!fadeFinish)
 	{
 		if (lpFader.GetFadeState() == FADE_OUT_END)
@@ -63,29 +115,28 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 	}
 
 	if ((lpCntMng.GetEditFlag(CONTROLLER_P1) == true)
-	&& (lpCntMng.GetEditFlag(CONTROLLER_P2) == true))
+		&& (lpCntMng.GetEditFlag(CONTROLLER_P2) == true))
 	{
 		MapCtl::GetInstance().MapSave();
 		lpFader.SetFadeOut(8);
-		lpCntMng.SetEditFlag(false,CONTROLLER_P1);
+		lpCntMng.SetEditFlag(false, CONTROLLER_P1);
 		lpCntMng.SetEditFlag(false, CONTROLLER_P2);
 	}
 
-	if (fadeFinish)
+	if (fadeFinish || CheckHitKey(KEY_INPUT_W))
 	{
-		if (lpFader.GetFadeState() == FADE_OUT_END)
+		if (lpFader.GetFadeState() == FADE_OUT_END || CheckHitKey(KEY_INPUT_W))
 		{
-			StopSoundMem(bgm);
-			if (a <= 3)
-			{
-				lpPlayer.SetRestartHpFlag(false);
-				return std::make_unique<GameScene>();
-			}
-			if (a > 3)
-			{
-				lpCntMng.SetCnt(-4);
-				return std::make_unique<ResultScene>();
-			}
+			SceneCnt += 1;
+			lpCntMng.SetCnt(SceneCnt);
+			lpPlayer.SetRestartHpFlag(true);
+			lpPlayer.SetSlimePlayerDamage(0);
+			lpPlayer.SetCarbunclePlayerDamage(0);
+			lpPlayer.SetSkeletonPlayerDamage(0);
+			lpPlayer.SetSlimePlayerDamage2(0);
+			lpPlayer.SetCarbunclePlayerDamage2(0);
+			lpPlayer.SetSkeletonPlayerDamage2(0);
+			return std::make_unique<GameScene>();
 		}
 	}
 

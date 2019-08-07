@@ -119,7 +119,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P1) == PAD_PUSH)
 		{
-			/*PlaySoundMem(choice, DX_PLAYTYPE_BACK);
+			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
 			if (lpSelCur.GetCharData(CONTROLLER_P1) == 1)
 			{
 				id = (MAP_ID)(id + 1);
@@ -129,11 +129,11 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 			}
 
-			if (lpSelCur.GetCharData(CONTROLLER_P1) == 2 && id == MAP_ID::HOLE)
+			if (lpSelCur.GetCharData(CONTROLLER_P1) == 3 && id == MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 4);
 			}
-			else if (lpSelCur.GetCharData(CONTROLLER_P1) == 2 && id != MAP_ID::HOLE)
+			else if (lpSelCur.GetCharData(CONTROLLER_P1) == 3 && id != MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 1);
 
@@ -143,11 +143,11 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 			}
 
-			if (lpSelCur.GetCharData(CONTROLLER_P1) == 3 && id == MAP_ID::HOLE)
+			if (lpSelCur.GetCharData(CONTROLLER_P1) == 2 && id == MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 7);
 			}
-			else if (lpSelCur.GetCharData(CONTROLLER_P1) == 3 && id != MAP_ID::HOLE)
+			else if (lpSelCur.GetCharData(CONTROLLER_P1) == 2 && id != MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 1);
 
@@ -155,12 +155,12 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 				{
 					id = MAP_ID::HOLE;
 				}
-			}*/
-			id = (MAP_ID)(id + 1);
-			if (id > MAP_ID::TOOL)
-			{
-				id = MAP_ID::HOLE;
 			}
+			//id = (MAP_ID)(id + 1);
+			//if (id > MAP_ID::TOOL)
+			//{
+			//	id = MAP_ID::HOLE;
+			//}
 		}
 	}
 

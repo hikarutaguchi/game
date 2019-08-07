@@ -25,4 +25,5 @@ private:
 
 	//ƒTƒEƒ“ƒh
 	int bgm;
+	int SceneCnt;
 };

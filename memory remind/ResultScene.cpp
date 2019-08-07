@@ -145,42 +145,41 @@ void ResultScene::Draw()
 	DrawFormatString(0, 260, 0xffff00, "resultFlag2= %d", (int)FlameFlag2);
 #endif
 	DrawGraph(0, 0, lpImageMng.GetID("image/ëêå¥.png")[0], true);
-	DrawGraph(0, 0, lpImageMng.GetID("image/kannbann.png")[0], true);
 
 	switch (lpSelCur.GetCharData(CONTROLLER_P1))
 	{
 	case 1:
-		DrawBox(180, 600 - PointUpDrawPos().y, 243, 600, 0xff0000, true);
-		DrawGraph(180, 500 - PointUpDrawPos().y, lpImageMng.GetID("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+		DrawBox(368, 600 - PointUpDrawPos().y, 432, 600, 0xff0000, true);
+		DrawGraph(368, 500 - PointUpDrawPos().y, lpImageMng.GetID("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 
 		break;
 
 	case 2:
-		DrawBox(180, 600 - PointUpDrawPos().y, 243, 600, 0xff0000, true);
-		DrawGraph(180, 500 - PointUpDrawPos().y, lpImageMng.GetID("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+		DrawBox(368, 600 - PointUpDrawPos().y, 432, 600, 0xff0000, true);
+		DrawGraph(368, 500 - PointUpDrawPos().y, lpImageMng.GetID("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 		break;
 
 	case 3:
-		DrawBox(180, 600 - PointUpDrawPos().y, 243, 600, 0xff0000, true);
-		DrawGraph(180, 500 - PointUpDrawPos().y, lpImageMng.GetID("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+		DrawBox(368, 600 - PointUpDrawPos().y, 432, 600, 0xff0000, true);
+		DrawGraph(368, 500 - PointUpDrawPos().y, lpImageMng.GetID("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 		break;
 	}
 
 	switch (lpSelCur.GetCharData(CONTROLLER_P2))
 	{
 	case 1:
-		DrawBox(540, 600 - PointUpDrawPos2().y, 603, 600, 0xff0f00, true);
-		DrawGraph(540, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+		DrawBox(668, 600 - PointUpDrawPos2().y, 768, 600, 0xff0f00, true);
+		DrawGraph(668, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 		break;
 
 	case 2:
-		DrawBox(540, 600 - PointUpDrawPos2().y, 603, 600, 0xff0f00, true);
-		DrawGraph(540, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+		DrawBox(668, 600 - PointUpDrawPos2().y, 768, 600, 0xff0f00, true);
+		DrawGraph(668, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 		break;
 
 	case 3:
-		DrawBox(540, 600 - PointUpDrawPos2().y, 603, 600, 0xff0f00, true);
-		DrawGraph(540, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
+		DrawBox(668, 600 - PointUpDrawPos2().y, 768, 600, 0xff0f00, true);
+		DrawGraph(668, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 		break;
 	}
 
