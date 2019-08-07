@@ -12,6 +12,7 @@
 SelectScene::SelectScene()
 {
 	Init();
+	lpSelCur.Init();
 }
 
 

@@ -38,6 +38,7 @@ public:
 	SelectCur();
 	~SelectCur();
 
+	void Init();
 	int GetCharData(P_TYPE playerNum);		// 選択されたCharIDを返す
 
 	void MoveCur(Game_ctr & controller);	// 選択カーソル

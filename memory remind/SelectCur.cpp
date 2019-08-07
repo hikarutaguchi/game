@@ -7,13 +7,14 @@
 
 SelectCur::SelectCur()
 {
+
 	playerFlag = {
 		false,		// P1
 		false,		// P2
 		false,		// P3
 		false		// P4
 	};
-
+	
 	CharFlag = {
 		true,		// P1
 		true,		// P2
@@ -93,7 +94,7 @@ SelectCur::SelectCur()
 	default:
 		break;
 	}
-
+	
 	lpImageMng.GetID("image/yubis_s.png", VECTOR2(64, 64), VECTOR2(4, 1));		//
 	lpImageMng.GetID("image/selectf.png", VECTOR2(300, 300), VECTOR2(1, 2));		//プレイヤーのフレームを読み込み
 	lpImageMng.GetID("image/selectf_s.png", VECTOR2(300, 300), VECTOR2(2, 2));		//プレイヤーのフレームを読み込み
@@ -156,6 +157,7 @@ void SelectCur::Draw(void)
 
 void SelectCur::MoveCur(Game_ctr & controller)
 {
+
 	VECTOR2 tmpPos1(posTBL[CONTROLLER_P1]);		//仮移動変数	
 	VECTOR2 tmpPos2(posTBL[CONTROLLER_P2]);		//仮移動変数	
 	VECTOR2 tmpPos3(posTBL[CONTROLLER_P3]);		//仮移動変数	
@@ -554,3 +556,10 @@ bool SelectCur::GetPlayerFlag(P_TYPE pType)
 	return playerFlag[pType];
 }
 
+void SelectCur::Init()
+{
+
+	CharFlag[0] = false;
+	//CharFlag[1] = false;
+
+}
