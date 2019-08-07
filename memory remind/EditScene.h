@@ -22,7 +22,7 @@ private:
 	VECTOR2 Drawpos;
 	int bGetCtr;
 	bool padFlag;
-
+	unsigned int animCnt;
 	//ƒTƒEƒ“ƒh
 	int bgm;
 	int SceneCnt;

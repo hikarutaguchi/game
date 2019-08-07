@@ -117,7 +117,7 @@ void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
 		if (controller.GetCtr(INPUT_BUTTON_Y, CONTROLLER_P2) == PAD_PUSH)
 		{
 			PlaySoundMem(choice, DX_PLAYTYPE_BACK);
-			/*if (lpSelCur.GetCharData(CONTROLLER_P2) == 1)
+			if (lpSelCur.GetCharData(CONTROLLER_P2) == 1)
 			{
 				id = (MAP_ID)(id + 1);
 				if (id > MAP_ID::NULLL)
@@ -152,11 +152,6 @@ void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
 				{
 					id = MAP_ID::HOLE;
 				}
-			}*/
-			id = (MAP_ID)(id + 1);
-			if (id > MAP_ID::TOOL)
-			{
-				id = MAP_ID::HOLE;
 			}
 		}
 	}
@@ -165,40 +160,43 @@ void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P2) == PAD_PUSH)
 		{
-			if (count < 2)
+			if (pos.x > 128 && pos.x < 768)
 			{
-				switch (count)
+				if (count < 2)
 				{
-				case 0:
-					lpMapCtl.SetMapData(pos, id);
-					befo2pos = pos;
-					befo2ID = id;
-					if (lpMapCtl.SetMapData(pos, id) != false)
+					switch (count)
 					{
-						count += 1;
+					case 0:
+						lpMapCtl.SetMapData(pos, id);
+						befo2pos = pos;
+						befo2ID = id;
+						if (lpMapCtl.SetMapData(pos, id) != false)
+						{
+							count += 1;
+						}
+						PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+						break;
+					case 1:
+						lpMapCtl.SetMapData(pos, id);
+						beforepos = pos;
+						beforeID = id;
+						if (lpMapCtl.SetMapData(pos, id) != false)
+						{
+							count += 1;
+							lpCntMng.SetEditFlag(true, CONTROLLER_P2);
+						}
+						PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+						break;
+					default:
+						break;
 					}
-					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
-					break;
-				case 1:
-					lpMapCtl.SetMapData(pos, id);
-					beforepos = pos;
-					beforeID = id;
-					if (lpMapCtl.SetMapData(pos, id) != false)
-					{
-						count += 1;
-						lpCntMng.SetEditFlag(true, CONTROLLER_P2);
-					}
-					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
-					break;
-				default:
-					break;
 				}
-			}
-			else
-			{
-				if (CheckSoundMem(bu_bu) == 0)
+				else
 				{
-					PlaySoundMem(bu_bu, DX_PLAYTYPE_BACK);
+					if (CheckSoundMem(bu_bu) == 0)
+					{
+						PlaySoundMem(bu_bu, DX_PLAYTYPE_BACK);
+					}
 				}
 			}
 		}

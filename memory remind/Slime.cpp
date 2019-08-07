@@ -213,6 +213,11 @@ void Slime::ColTrap(CharacterStatusData * charData)
 	default:
 		break;
 	}
+	if (charData->DethFlag == true)
+	{
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
+		visible = false;
+	}
 }
 
 void Slime::ColTrap2(CharacterStatusData * charData)
@@ -336,6 +341,11 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		break;
 	default:
 		break;
+	}
+	if (charData->DethFlag == true)
+	{
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
+		visible = false;
 	}
 }
 

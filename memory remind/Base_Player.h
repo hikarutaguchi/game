@@ -61,29 +61,7 @@ public:
 
 private:
 
-	//void SetMove(weekListObj objList, const Game_ctr &controller);		//　ﾌﾟﾚｲﾔｰ移動,当たり判定
-	//bool CheckObjType(OBJ_TYPE type);									//　ｵﾌﾞｼﾞｪｸﾄﾀｲﾌﾟﾁｪｯｸ
-	//bool afterkeyFlag;													//　ｻﾌﾞｷｰ入力ﾌﾗｸﾞ
-	//bool DethProcess();													//	死ぬ時処理
-	//bool PassF();
-	//void GetItem(void);													//	item取得時の処理
-	//int fireLength;
 
-	//int cnt;
-	//int life;
-	//int count;
-	//int speed;
-
-	//DIR_TBL_ARRAY speedTbl;		// ｽﾋﾟｰﾄﾞﾃｰﾌﾞﾙ
-	//DIR_TBL_PTR_ARRAY posTbl;	// 座標ﾃｰﾌﾞﾙ
-	//DIR_TBL_DIR dirTbl;			// 方向ﾃｰﾌﾞﾙ
-	//MAP_MOVE_TBL mapMove;		// ｵﾌﾞｼﾞｪｸﾄ移動判定ﾃｰﾌﾞﾙ
-
-	//MAP_ID id;
-
-	//unsigned int reStartCnt;	// こいつが時間値を持つ間は無敵
-
-	//unsigned int fireGuardFlag;
 protected:
 	void SetMove(weekListObj objList, const Game_ctr &controller);		//　ﾌﾟﾚｲﾔｰ移動,当たり判定
 	bool CheckObjType(OBJ_TYPE type);									//　ｵﾌﾞｼﾞｪｸﾄﾀｲﾌﾟﾁｪｯｸ

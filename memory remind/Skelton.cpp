@@ -213,6 +213,12 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		break;
 	}
 
+	if (charData->DethFlag == true)
+	{
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
+		visible = false;
+	}
+
 }
 
 void Skelton::ColTrap2(CharacterStatusData * charData)
@@ -336,6 +342,11 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		break;
 	default:
 		break;
+	}
+	if (charData->DethFlag == true)
+	{
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
+		visible = false;
 	}
 }
 

@@ -47,6 +47,7 @@ void EditCursor::Draw(void)
 	Obj::Draw((int)id);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	animCnt += 10;
+	DrawFormatString(0, 300, 0xff2134, "count = %d", count);
 }
 
 void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
@@ -168,40 +169,43 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	{
 		if (controller.GetCtr(INPUT_BUTTON_B, CONTROLLER_P1) == PAD_PUSH)
 		{
-			if (count < 2)
+			if (pos.x > 128 && pos.x < 768)
 			{
-				switch (count)
+				if (count < 2)
 				{
-				case 0:
-					lpMapCtl.SetMapData(pos, id);
-					befo2pos = pos;
-					befo2ID = id;
-					if (lpMapCtl.SetMapData(pos, id) != false)
+					switch (count)
 					{
-						count += 1;
+					case 0:
+						lpMapCtl.SetMapData(pos, id);
+						befo2pos = pos;
+						befo2ID = id;
+						if (lpMapCtl.SetMapData(pos, id) != false)
+						{
+							count += 1;
+						}
+						PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+						break;
+					case 1:
+						lpMapCtl.SetMapData(pos, id);
+						beforepos = pos;
+						beforeID = id;
+						if (lpMapCtl.SetMapData(pos, id) != false)
+						{
+							count += 1;
+							lpCntMng.SetEditFlag(true, CONTROLLER_P1);
+						}
+						PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
+						break;
+					default:
+						break;
 					}
-					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
-					break;
-				case 1:
-					lpMapCtl.SetMapData(pos, id);
-					beforepos = pos;
-					beforeID = id;
-					if (lpMapCtl.SetMapData(pos, id) != false)
-					{
-						count += 1;
-						lpCntMng.SetEditFlag(true, CONTROLLER_P1);
-					}
-					PlaySoundMem(kettei, DX_PLAYTYPE_BACK);
-					break;
-				default:
-					break;
 				}
-			}
-			else
-			{
-				if (CheckSoundMem(bu_bu) == 0)
+				else
 				{
-					PlaySoundMem(bu_bu, DX_PLAYTYPE_BACK);
+					if (CheckSoundMem(bu_bu) == 0)
+					{
+						PlaySoundMem(bu_bu, DX_PLAYTYPE_BACK);
+					}
 				}
 			}
 		}
@@ -237,7 +241,7 @@ void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)
 	resetButton = controller.GetCtr(INPUT_BUTTON_X, CONTROLLER_P1);
 
 	lpMapCtl.GetMapID(pos,id);
-
+	
 }
 
 bool EditCursor::CheckObjType(OBJ_TYPE type)

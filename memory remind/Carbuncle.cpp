@@ -213,6 +213,11 @@ void Carbuncle::ColTrap(CharacterStatusData * charData)
 	default:
 		break;
 	}
+	if (charData->DethFlag == true)
+	{
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
+		visible = false;
+	}
 }
 
 void Carbuncle::ColTrap2(CharacterStatusData * charData)
@@ -337,7 +342,11 @@ void Carbuncle::ColTrap2(CharacterStatusData * charData)
 		break;
 	default:
 		break;
-
+	}
+	if (charData->DethFlag == true)
+	{
+		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
+		visible = false;
 	}
 }
 

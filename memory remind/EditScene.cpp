@@ -148,7 +148,7 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 	//		Init();
 	//	}
 	//}
-
+	animCnt+=3;
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
 		(*itr)->UpData(objList, controller);
@@ -161,8 +161,14 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 bool EditScene::EditDraw(void)
 {
 	ClsDrawScreen();
+
 	DrawGraph(0, 0, lpImageMng.GetID("image/game.png")[0], true);
 	lpMapCtl.Draw(true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);		//‘¼‚ÌŠ‚ÅBLEND‚ð‚µ‚ÄŒ³‚É–ß‚·‚Ì‚ð–Y‚ê‚Ä‚¢‚½Žž‚Ì‚½‚ß‚Ì¶Þ°ÄÞˆ—	
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, abs((float)(animCnt % 512) - 256));
+	DrawBox(185, 185, 312, 760, 0xff0000, true);
+	DrawBox(890, 185, 1017, 760, 0xff0000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
 		(*itr)->Draw();
