@@ -93,22 +93,4 @@ FADE_STATE Fader::GetFadeState()
 
 void Fader::Draw()
 {
-	if (fadeState == FADE_IN_START)
-	{
-		DrawFormatString(0, 900, 0xff0000, "åªç›ÇÃfadeèÛë‘ÇÕFADE_IN_START");
-	}
-	else if (fadeState == FADE_IN_END)
-	{
-		DrawFormatString(0, 900, 0xff0000, "åªç›ÇÃfadeèÛë‘ÇÕFADE_IN_END");
-	}
-	else if (fadeState == FADE_OUT_START)
-	{
-		DrawFormatString(0, 900, 0xff0000, "åªç›ÇÃfadeèÛë‘ÇÕFADE_OUT_START");
-	}
-	else if (fadeState == FADE_OUT_END)
-	{
-		DrawFormatString(0, 900, 0xff0000, "åªç›ÇÃfadeèÛë‘ÇÕFADE_OUT_END");
-	}
-
-	DrawFormatString(0, 920, 0xff0000, "ãPìx = %d", brightness);
 }

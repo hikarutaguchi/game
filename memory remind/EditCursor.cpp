@@ -47,7 +47,7 @@ void EditCursor::Draw(void)
 	Obj::Draw((int)id);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	animCnt += 10;
-	DrawFormatString(0, 300, 0xff2134, "count = %d", count);
+	DrawFormatString(pos.x + lpSceneMng.GetDrawOffset().x + 25, pos.y + lpSceneMng.GetDrawOffset().y, 0xff1111, "P1");
 }
 
 void EditCursor::SetMove(weekListObj objList, const Game_ctr &controller)

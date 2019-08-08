@@ -1,55 +1,42 @@
-#include "DxLib.h"
+#include<DxLib.h>
+#include<cassert>
 #include "ScreenShake.h"
 
 
 
-ScreenShake::ScreenShake()
+ScreenShaker::ScreenShaker() :_shakeScale(0)
 {
-	Init();
+	//assert(DxLib::DxLib_IsInit());
+	int w, h, bit;
+	GetScreenState(&w, &h, &bit);
+	_screenH = MakeScreen(w, h);
+
 }
 
 
-ScreenShake::~ScreenShake()
+ScreenShaker::~ScreenShaker()
 {
 }
 
-void ScreenShake::UpData()
-{
-	if (shakeFlag)
-	{
-		pos = tmpPos;
-
-		shakeTime--;
-
-		if (shakeTime == 0)
-		{
-			shakeFlag = false;
-		}
-
-		pos.x += GetRand(shakeSize + shakeTime);
-		pos.x -= GetRand(shakeSize + shakeTime);
-		pos.y += GetRand(shakeSize + shakeTime);
-		pos.y -= GetRand(shakeSize + shakeTime);
-	}
+//—h‚êƒgƒŠƒK[
+void
+ScreenShaker::Shake() {
+	_shakeScale = 10.0f;
 }
 
-void ScreenShake::SetShake(int ShakeSize, int ShakeTime)
-{
-	this->shakeTime = ShakeTime;
-	this->shakeSize = ShakeSize;
-	shakeFlag = true;
+//‰æ–Ê—h‚ê€”õ()
+void
+ScreenShaker::PrepareShake() {
+	SetDrawScreen(_screenH);
 }
 
-VECTOR2 ScreenShake::SetPos()
-{
-	return pos;
-}
-
-int ScreenShake::Init()
-{
-	tmpPos = { 0,0 };
-	shakeTime = 0;
-	pos = { 0,0 };
-	shakeFlag = false;
-	return 0;
+//‰æ–Ê—h‚êXV
+void
+ScreenShaker::UpdateShake() {
+	SetDrawScreen(DX_SCREEN_BACK);
+	//ClearDrawScreen();
+	auto sx = DxLib::GetRand(6) - 3;
+	auto sy = DxLib::GetRand(6) - 3;
+	DrawGraph(sx*_shakeScale, sy*_shakeScale, _screenH, true);
+	_shakeScale *= 0.95f;
 }

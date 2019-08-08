@@ -90,6 +90,7 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 	//lpFader.Updata();
 	//lpScreenShake.UpData();
 	//return std::move(own);
+
 	int a = lpCntMng.GetCnt();
 
 	if (!fadeFinish)
@@ -140,7 +141,6 @@ unique_Base GameScene::Updata(unique_Base own, Game_ctr & controller)
 	objList->remove_if([](sharedObj& obj) {return obj->CheckDeth(); });
 	GameDraw();
 	lpFader.Updata();
-	lpScreenShake.UpData();
 	return std::move(own);
 }
 
@@ -195,12 +195,6 @@ bool GameScene::GameDraw(void)
 	//std::for_each((objList)->begin(), (objList)->end(), [](std::shared_ptr<Obj> &itr) {itr->Draw(); });
 
 	DrawGraph(SCREEN_SIZE_X / 2 - 100, 0, lpImageMng.GetID("image/kannbann.png")[0], true);
-
-	//プレイヤーのフレームを表示
-	DrawGraph(0, 0, lpImageMng.GetID("image/flame.png")[0], true);
-	DrawGraph(SCREEN_SIZE_X - 120, 0, lpImageMng.GetID("image/flame.png")[1], true);
-	DrawGraph(0, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[2], true);
-	DrawGraph(SCREEN_SIZE_X - 120, SCREEN_SIZE_Y - 120, lpImageMng.GetID("image/flame.png")[3], true);
 
 	//時間表示
 

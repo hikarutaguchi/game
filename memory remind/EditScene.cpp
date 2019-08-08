@@ -127,6 +127,7 @@ unique_Base EditScene::Updata(unique_Base own, Game_ctr & controller)
 	{
 		if (lpFader.GetFadeState() == FADE_OUT_END || CheckHitKey(KEY_INPUT_W))
 		{
+			StopSoundMem(bgm);
 			SceneCnt += 1;
 			lpCntMng.SetCnt(SceneCnt);
 			lpPlayer.SetRestartHpFlag(true);

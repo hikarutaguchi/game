@@ -1,6 +1,7 @@
 #include "Skelton.h"
 #include "PlayerMng.h"
 #include "CntMng.h"
+#include "ScreenShake.h"
 
 Skelton::Skelton(VECTOR2 drawOffset) :Obj(drawOffset)
 {
@@ -105,6 +106,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 	case (MAP_ID::IWA):
 		break;
 	case (MAP_ID::UNTI):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -115,6 +117,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::EKI):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -125,6 +128,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::NULLL):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -134,6 +138,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::WIND):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -143,6 +148,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::MAGIC):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 3;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -152,6 +158,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::MAGIC1):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 4;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -161,6 +168,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::BORN):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -170,6 +178,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::ESA):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -179,6 +188,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::TOOL):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
@@ -188,14 +198,15 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::HOLE):
+		lpScreenShaker.Shake();
 		(*posTbl[Base_Player::dir][TBL_MAIN]) += huttobi[Base_Player::dir];
 		charData->HP = charData->HP - 1;
 		nDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage(nDamage);
 
-		nGoalCnt[0]++;
+		//nGoalCnt[0]++;
 
-		lpCntMng.GoalSetCnt(nGoalCnt[0], CONTROLLER_P1);		// デバック用
+		//lpCntMng.GoalSetCnt(nGoalCnt[0], CONTROLLER_P1);		// デバック用
 
 		if (charData->HP == 0)
 		{
@@ -203,9 +214,12 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::GOAL):
-		//nGoalCnt[0]++;
+		if (visible)
+		{
+			nGoalCnt[0]++;
+		}
 
-		//lpCntMng.GoalSetCnt(nGoalCnt[0], CONTROLLER_P1);		
+		lpCntMng.GoalSetCnt(nGoalCnt[0], CONTROLLER_P1);		
 		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
 		visible = false;
 		break;
@@ -215,6 +229,7 @@ void Skelton::ColTrap(CharacterStatusData * charData)
 
 	if (charData->DethFlag == true)
 	{
+		lpScreenShaker.Shake();
 		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
 		visible = false;
 	}
@@ -236,6 +251,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 	case (MAP_ID::IWA):
 		break;
 	case (MAP_ID::UNTI):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -246,6 +262,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::EKI):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -256,6 +273,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::NULLL):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -265,6 +283,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::WIND):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -274,6 +293,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::MAGIC):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 3;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -283,6 +303,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::MAGIC1):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 4;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -292,6 +313,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::BORN):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -301,6 +323,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::ESA):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -310,6 +333,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::TOOL):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
@@ -319,14 +343,15 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::HOLE):
+		lpScreenShaker.Shake();
 		(*posTbl2[Base_Player::dir2][TBL_MAIN]) += huttobi[Base_Player::dir2];
 		charData->HP = charData->HP - 1;
 		nDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSkeletonPlayerDamage2(nDamage2);
 
-		nGoalCnt[1]++;
+		//nGoalCnt[1]++;
 
-		lpCntMng.GoalSetCnt(nGoalCnt[1], CONTROLLER_P2);		// デバック用
+		//lpCntMng.GoalSetCnt(nGoalCnt[1], CONTROLLER_P2);		// デバック用
 
 		if (charData->HP == 0)
 		{
@@ -334,9 +359,12 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::GOAL):
-	/*	nGoalCnt[1]++;
+		if (visible)
+		{
+			nGoalCnt[1]++;
+		}
 
-		lpCntMng.GoalSetCnt(nGoalCnt[1], CONTROLLER_P2);*/	
+		lpCntMng.GoalSetCnt(nGoalCnt[1], CONTROLLER_P2);	
 		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
 		visible = false;
 		break;
@@ -345,6 +373,7 @@ void Skelton::ColTrap2(CharacterStatusData * charData)
 	}
 	if (charData->DethFlag == true)
 	{
+		lpScreenShaker.Shake();
 		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
 		visible = false;
 	}

@@ -1,25 +1,29 @@
 #pragma once
-#include "VECTOR2.h"
+//‰æ–Ê—h‚êƒNƒ‰ƒX
 
-#define lpScreenShake ScreenShake::GetInstance()
-class ScreenShake
+#define lpScreenShaker ScreenShaker::GetInstance()
+
+class ScreenShaker
 {
+private:
+	int _screenH;//‰æ–Ê
+	float _shakeScale;//—h‚ê•
+	ScreenShaker();
+	~ScreenShaker();
 public:
-	static ScreenShake &GetInstance(void)
+
+	//—h‚êƒgƒŠƒK[
+	void Shake();
+
+	//‰æ–Ê—h‚ê€”õ()
+	void PrepareShake();
+
+	//‰æ–Ê—h‚êXV
+	void UpdateShake();
+	static ScreenShaker &GetInstance(void)											// Ã“I‚È¼İ¸ŞÙÄİ
 	{
-		static ScreenShake s_instance;
+		static ScreenShaker s_instance;
 		return s_instance;
 	}
-	ScreenShake();
-	~ScreenShake();
-	void UpData();
-	void SetShake(int ShakeSize, int ShakeTime);
-	VECTOR2 SetPos();
-private:
-	int Init();
-	bool shakeFlag;		//—h‚ê‚½‚©‚Ç‚¤‚©
-	int shakeSize;		//—h‚ê‚é‘å‚«‚³
-	int shakeTime;		//—h‚ê‚éŠÔ
-	VECTOR2 pos;		//—h‚ç‚µ‚½‚¢‰æ‘œ‚É“n‚·’l
-	VECTOR2 tmpPos;		//•Û‘¶—p	
+
 };

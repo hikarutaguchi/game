@@ -8,6 +8,7 @@
 #include "MapCtl.h"
 #include "PlayerMng.h"
 #include "Game_ctr.h"
+#include "ScreenShake.h"
 
 
 
@@ -28,8 +29,10 @@ void SceneMng::Run(void)
 	// ---------- ¹Þ°ÑÙ°Ìß
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
+		lpScreenShaker.PrepareShake();
 		gameCtr->Updata();
 		activeScene = activeScene->Updata(std::move(activeScene), *gameCtr);
+		lpScreenShaker.UpdateShake();
 	}
 
 }

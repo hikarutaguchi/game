@@ -11,6 +11,11 @@
 
 EditCursor2::EditCursor2(VECTOR2 drawOffset, int pad) :Obj(drawOffset)
 {
+	kettei = LoadSoundMem("sound/allScene/se_kettei.mp3");
+	cansell = LoadSoundMem("sound/allScene/se_cansell.mp3");
+	choice = LoadSoundMem("sound/allScene/se_choice.mp3");
+	bu_bu = LoadSoundMem("sound/allScene/se_modoru.mp3");
+
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	inputFram = EDIT_KEY_GET_DEF_RNG;
 	id = static_cast<MAP_ID>(MAP_ID::HOLE);
@@ -47,6 +52,7 @@ void EditCursor2::Draw(void)
 	Obj::Draw((int)id);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	animCnt += 10;
+	DrawFormatString(pos.x + lpSceneMng.GetDrawOffset().x + 25, pos.y + lpSceneMng.GetDrawOffset().y, 0xff1111, "P2");
 }
 
 void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
@@ -126,11 +132,11 @@ void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 			}
 
-			if (lpSelCur.GetCharData(CONTROLLER_P2) == 2 && id == MAP_ID::HOLE)
+			if (lpSelCur.GetCharData(CONTROLLER_P2) == 3 && id == MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 4);
 			}
-			else if (lpSelCur.GetCharData(CONTROLLER_P2) == 2 && id != MAP_ID::HOLE)
+			else if (lpSelCur.GetCharData(CONTROLLER_P2) == 3 && id != MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 1);
 
@@ -140,11 +146,11 @@ void EditCursor2::SetMove(weekListObj objList, const Game_ctr &controller)
 				}
 			}
 
-			if (lpSelCur.GetCharData(CONTROLLER_P2) == 3 && id == MAP_ID::HOLE)
+			if (lpSelCur.GetCharData(CONTROLLER_P2) == 2 && id == MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 7);
 			}
-			else if (lpSelCur.GetCharData(CONTROLLER_P2) == 3 && id != MAP_ID::HOLE)
+			else if (lpSelCur.GetCharData(CONTROLLER_P2) == 2 && id != MAP_ID::HOLE)
 			{
 				id = (MAP_ID)(id + 1);
 

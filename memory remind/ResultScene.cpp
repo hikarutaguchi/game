@@ -168,17 +168,17 @@ void ResultScene::Draw()
 	switch (lpSelCur.GetCharData(CONTROLLER_P2))
 	{
 	case 1:
-		DrawBox(668, 600 - PointUpDrawPos2().y, 768, 600, 0xff0f00, true);
+		DrawBox(668, 600 - PointUpDrawPos2().y, 732, 600, 0xff0f00, true);
 		DrawGraph(668, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/slimes.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 		break;
 
 	case 2:
-		DrawBox(668, 600 - PointUpDrawPos2().y, 768, 600, 0xff0f00, true);
+		DrawBox(668, 600 - PointUpDrawPos2().y, 732, 600, 0xff0f00, true);
 		DrawGraph(668, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/skeleton.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 		break;
 
 	case 3:
-		DrawBox(668, 600 - PointUpDrawPos2().y, 768, 600, 0xff0f00, true);
+		DrawBox(668, 600 - PointUpDrawPos2().y, 732, 600, 0xff0f00, true);
 		DrawGraph(668, 500 - PointUpDrawPos2().y, lpImageMng.GetID("image/Carbuncle.png", VECTOR2(64, 100), VECTOR2(4, 4))[1], true);
 		break;
 	}

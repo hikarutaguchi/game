@@ -1,6 +1,7 @@
 #include "Slime.h"
 #include "PlayerMng.h"
 #include "CntMng.h"
+#include "ScreenShake.h"
 
 Slime::Slime(VECTOR2 drawOffset) :Obj(drawOffset)
 {
@@ -106,6 +107,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 	case (MAP_ID::IWA):
 		break;
 	case (MAP_ID::UNTI):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -116,6 +118,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::EKI):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 3;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -126,6 +129,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::NULLL):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 4;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -135,6 +139,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::WIND):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -144,6 +149,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::MAGIC):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -153,6 +159,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::MAGIC1):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -162,6 +169,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::BORN):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -171,6 +179,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::ESA):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -180,6 +189,7 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::TOOL):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
@@ -193,10 +203,10 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		charData->HP = charData->HP - 1;
 		sDamage = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage(sDamage);
+		lpScreenShaker.Shake();
+		//GoalCnt[0]++;
 
-		sGoalCnt[0]++;
-
-		lpCntMng.GoalSetCnt(sGoalCnt[0], CONTROLLER_P1);		// デバック用
+		//lpCntMng.GoalSetCnt(sGoalCnt[0], CONTROLLER_P1);		// デバック用s
 
 		if (charData->HP == 0)
 		{
@@ -204,9 +214,12 @@ void Slime::ColTrap(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::GOAL):
-		//sGoalCnt++;
+		if (visible)
+		{
+			sGoalCnt[0]++;
+		}
 
-		//lpCntMng.GoalSetCnt(sGoalCnt, CONTROLLER_P1);
+		lpCntMng.GoalSetCnt(sGoalCnt[0], CONTROLLER_P1);
 		lpCntMng.SetGoalFlag(true, CONTROLLER_P1);
 		visible = false;
 		break;
@@ -235,6 +248,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 	case (MAP_ID::IWA):
 		break;
 	case (MAP_ID::UNTI):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -245,6 +259,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::EKI):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 3;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -255,6 +270,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::NULLL):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 4;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -264,6 +280,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::WIND):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -273,6 +290,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::MAGIC):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -282,6 +300,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::MAGIC1):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -291,6 +310,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::BORN):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -300,6 +320,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::ESA):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -309,6 +330,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::TOOL):
+		lpScreenShaker.Shake();
 		charData->HP = charData->HP - 2;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
@@ -318,14 +340,15 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::HOLE):
+		lpScreenShaker.Shake();
 		(*posTbl2[Base_Player::dir2][TBL_MAIN]) += huttobi[Base_Player::dir2];
 		charData->HP = charData->HP - 1;
 		sDamage2 = PLAYER_DEF_LIFE - charData->HP;
 		lpPlayer.SetSlimePlayerDamage2(sDamage2);
 
-		sGoalCnt[1]++;
+		//sGoalCnt[1]++;
 
-		lpCntMng.GoalSetCnt(sGoalCnt[1], CONTROLLER_P2);		// デバック用
+		//lpCntMng.GoalSetCnt(sGoalCnt[1], CONTROLLER_P2);		// デバック用
 
 		if (charData->HP == 0)
 		{
@@ -333,9 +356,12 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 		}
 		break;
 	case (MAP_ID::GOAL):
-		/*sGoalCnt2++;
+		if (visible)
+		{
+			sGoalCnt[1]++;
+		}
 
-		lpCntMng.GoalSetCnt(sGoalCnt2, CONTROLLER_P1);*/
+		lpCntMng.GoalSetCnt(sGoalCnt[1], CONTROLLER_P2);
 		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
 		visible = false;
 		break;
@@ -344,6 +370,7 @@ void Slime::ColTrap2(CharacterStatusData * charData)
 	}
 	if (charData->DethFlag == true)
 	{
+		lpScreenShaker.Shake();
 		lpCntMng.SetGoalFlag(true, CONTROLLER_P2);
 		visible = false;
 	}
